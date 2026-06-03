@@ -39,6 +39,14 @@ build/Release
 
 # Dependency directories
 node_modules/
+.next/
+out/
+dist/
+coverage/
+.env
+.env*.local
+.webserbisyo/
+*.snapshot.json
 jspm_packages/
 
 # Snowpack dependency directory (https://snowpack.dev/)

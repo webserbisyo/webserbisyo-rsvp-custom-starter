@@ -1,0 +1,20 @@
+import { Button } from "@/components/ui/Button";
+import { Section } from "@/components/ui/Section";
+import { field } from "@/components/sections/field-utils";
+import type { WeddingSectionProps } from "@/components/sections/section-props";
+
+export function RsvpCallToActionSection({ section, event }: WeddingSectionProps) {
+  return (
+    <Section className="bg-terracotta text-white">
+      <div className="mx-auto max-w-2xl text-center">
+        <h2 className="font-serif text-4xl">{field(section.content, ["title"]) || "Confirm your attendance"}</h2>
+        <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-white/85">
+          {field(section.content, ["body", "description"]) || "Please RSVP through the official WebSerbisyo RSVP page."}
+        </p>
+        <div className="mt-7">
+          <Button href={event.rsvpUrl} variant="secondary">{field(section.content, ["buttonLabel", "ctaLabel"]) || "Open RSVP"}</Button>
+        </div>
+      </div>
+    </Section>
+  );
+}

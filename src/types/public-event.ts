@@ -1,0 +1,114 @@
+export type PublicEventStatus = "published" | "unpublished" | "draft" | string;
+
+export type WeddingSectionKey =
+  | "host_info"
+  | "countdown"
+  | "music_effects"
+  | "main_event"
+  | "venue"
+  | "secondary_event"
+  | "timeline_program"
+  | "entourage"
+  | "principal_sponsors"
+  | "attire_motif"
+  | "extra_info"
+  | "rsvp_form"
+  | "gift_details"
+  | "guestbook"
+  | "story_message"
+  | "contact_socials";
+
+export type PublicRsvpState = {
+  enabled?: boolean | null;
+  url?: string | null;
+  deadline?: string | null;
+  note?: string | null;
+};
+
+export type GuestbookMessage = {
+  id?: string | number | null;
+  name?: string | null;
+  message?: string | null;
+  createdAt?: string | null;
+  isApproved?: boolean | null;
+};
+
+export type PublicEventSection = {
+  key?: string | null;
+  type?: string | null;
+  title?: string | null;
+  enabled?: boolean | null;
+  isEnabled?: boolean | null;
+  visible?: boolean | null;
+  order?: number | null;
+  content?: Record<string, unknown> | null;
+  data?: Record<string, unknown> | null;
+  items?: unknown[] | null;
+};
+
+export type EventWebsiteContent = {
+  sections?: PublicEventSection[] | Record<string, unknown> | null;
+  sectionOrder?: string[] | null;
+  rsvp?: PublicRsvpState | null;
+  guestbookMessages?: GuestbookMessage[] | null;
+  [key: string]: unknown;
+};
+
+export type PublicEventDto = {
+  id?: string | null;
+  slug?: string | null;
+  eventSlug?: string | null;
+  title?: string | null;
+  name?: string | null;
+  status?: PublicEventStatus | null;
+  eventType?: string | null;
+  eventDate?: string | null;
+  date?: string | null;
+  timezone?: string | null;
+  website?: EventWebsiteContent | null;
+  websiteContent?: EventWebsiteContent | null;
+  sections?: PublicEventSection[] | Record<string, unknown> | null;
+  rsvp?: PublicRsvpState | null;
+  publicUrl?: string | null;
+  fallbackUrl?: string | null;
+  [key: string]: unknown;
+};
+
+export type PublicEventApiResponse = {
+  data: PublicEventDto;
+};
+
+export type PublicEventApiError = {
+  error: {
+    code: string;
+    message: string;
+    scope: string;
+    fieldErrors?: Record<string, string[] | undefined>;
+  };
+};
+
+export type NormalizedSection = {
+  key: string;
+  title?: string;
+  enabled: boolean;
+  content: Record<string, unknown>;
+};
+
+export type EventWebsiteRenderModel = {
+  source: "design" | "live";
+  eventSlug: string;
+  title: string;
+  status?: PublicEventStatus | null;
+  eventDate?: string | null;
+  timezone?: string | null;
+  publicUrl?: string | null;
+  rsvpUrl: string;
+  sections: NormalizedSection[];
+  raw: PublicEventDto;
+};
+
+export type PublicEventResult =
+  | { status: "available"; event: EventWebsiteRenderModel }
+  | { status: "unavailable"; code?: string; message: string }
+  | { status: "setup_error"; message: string }
+  | { status: "network_error"; message: string };
