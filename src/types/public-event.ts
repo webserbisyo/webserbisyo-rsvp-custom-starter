@@ -12,6 +12,7 @@ export type WeddingSectionKey =
   | "principal_sponsors"
   | "attire_motif"
   | "extra_info"
+  | "gallery"
   | "rsvp_form"
   | "gift_details"
   | "guestbook"
@@ -112,8 +113,10 @@ export type PublicEventDto = {
   rsvp?: PublicRsvpState | null;
   urls?: PublicEventUrls | null;
   formatted?: PublicEventFormatted | null;
+  sectionsByKey?: Record<string, unknown> | null;
   assets?: Record<string, PublicMediaAsset | string | null | undefined> | PublicMediaAsset[] | null;
   guestbookMessages?: GuestbookMessage[] | null;
+  publicGuestbookMessages?: GuestbookMessage[] | null;
   publicUrl?: string | null;
   fallbackUrl?: string | null;
   rsvpUrl?: string | null;
@@ -142,8 +145,10 @@ export type NormalizedSection = {
 
 export type EventWebsiteRenderModel = {
   source: "design" | "snapshot" | "live";
+  previewMode?: "dashboard";
   eventSlug: string;
   title: string;
+  coupleDisplayName: string;
   status?: PublicEventStatus | null;
   eventDate?: string | null;
   eventDateLabel?: string | null;

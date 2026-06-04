@@ -24,3 +24,12 @@ Rules:
 - No fake QR or fake media in live mode.
 - No admin, billing, payment, auth, or private RSVP response logic.
 - No secrets in `NEXT_PUBLIC_*`; these values are browser-public.
+- No query-string API base URL override.
+- No dashboard preview canonical metadata.
+- No direct header RSVP jump to the platform form; scroll to the custom RSVP section first.
+
+Protected preview behavior:
+
+- `eventSlug` query override is allowed only for local/design/dashboard preview contexts.
+- `preview=dashboard` or `source=dashboard` may show `Custom Preview`.
+- Hidden custom frontend origins must stay out of UI, metadata, and public env.

@@ -6,20 +6,27 @@ import { getPublicEnv } from "@/lib/env";
 import { fetchPublicEvent } from "@/lib/public-event-api";
 import { getDesignEvent } from "@/lib/placeholders";
 import { buildPageDescription, buildPageTitle, safePublicCanonicalUrl } from "@/lib/metadata";
+import { getPreviewContext, type PreviewQuery } from "@/lib/preview-context";
 
-async function loadEvent() {
+type PageProps = {
+  searchParams?: Promise<PreviewQuery>;
+};
+
+async function loadEvent(searchParams?: PreviewQuery) {
   const env = getPublicEnv();
   const apiBaseUrl = env.apiBaseUrl || "https://webserbisyo.com";
+  const preview = getPreviewContext(env, searchParams);
 
   if (env.designMode) {
-    return { status: "available" as const, event: await getDesignEvent(apiBaseUrl, env.eventSlug) };
+    return { status: "available" as const, event: await getDesignEvent(apiBaseUrl, preview.eventSlug, preview.previewMode) };
   }
 
-  return fetchPublicEvent({ apiBaseUrl: env.apiBaseUrl, eventSlug: env.eventSlug });
+  return fetchPublicEvent({ apiBaseUrl: env.apiBaseUrl, eventSlug: preview.eventSlug, previewMode: preview.previewMode });
 }
 
-export async function generateMetadata(): Promise<Metadata> {
-  const result = await loadEvent();
+export async function generateMetadata({ searchParams }: PageProps = {}): Promise<Metadata> {
+  const resolvedSearchParams = await searchParams;
+  const result = await loadEvent(resolvedSearchParams);
 
   if (result.status !== "available") {
     return {
@@ -28,15 +35,18 @@ export async function generateMetadata(): Promise<Metadata> {
     };
   }
 
+  const canonical = result.event.previewMode === "dashboard" ? undefined : safePublicCanonicalUrl(result.event.publicUrl);
+
   return {
     title: buildPageTitle(result.event),
     description: buildPageDescription(result.event),
-    alternates: safePublicCanonicalUrl(result.event.publicUrl) ? { canonical: safePublicCanonicalUrl(result.event.publicUrl) } : undefined
+    alternates: canonical ? { canonical } : undefined,
+    robots: result.event.previewMode === "dashboard" ? { index: false, follow: false } : undefined
   };
 }
 
-export default async function HomePage() {
-  const result = await loadEvent();
+export default async function HomePage({ searchParams }: PageProps) {
+  const result = await loadEvent(await searchParams);
 
   if (result.status === "setup_error") {
     return <EmptyState title="Website setup required" message={result.message} />;

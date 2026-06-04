@@ -15,16 +15,17 @@ function isSnapshotResponse(value: unknown): value is PublicEventApiResponse {
   );
 }
 
-export function getSampleEvent(apiBaseUrl: string, eventSlug: string): EventWebsiteRenderModel {
+export function getSampleEvent(apiBaseUrl: string, eventSlug: string, previewMode?: "dashboard"): EventWebsiteRenderModel {
   return normalizePublicEvent({
     event: sampleEvent as PublicEventDto,
     source: "design",
+    previewMode,
     apiBaseUrl,
     eventSlug: eventSlug || "sample-wedding"
   });
 }
 
-export async function getDesignEvent(apiBaseUrl: string, eventSlug: string): Promise<EventWebsiteRenderModel> {
+export async function getDesignEvent(apiBaseUrl: string, eventSlug: string, previewMode?: "dashboard"): Promise<EventWebsiteRenderModel> {
   const snapshotPath = join(process.cwd(), ".webserbisyo", "event.snapshot.json");
 
   try {
@@ -33,6 +34,7 @@ export async function getDesignEvent(apiBaseUrl: string, eventSlug: string): Pro
       return normalizePublicEvent({
         event: snapshot.data,
         source: "snapshot",
+        previewMode,
         apiBaseUrl,
         eventSlug: eventSlug || snapshot.data.slug || snapshot.data.eventSlug || "snapshot-wedding"
       });
@@ -41,5 +43,5 @@ export async function getDesignEvent(apiBaseUrl: string, eventSlug: string): Pro
     // Snapshot mode is optional and local-only. Missing or malformed snapshots fall back to sample data.
   }
 
-  return getSampleEvent(apiBaseUrl, eventSlug);
+  return getSampleEvent(apiBaseUrl, eventSlug, previewMode);
 }

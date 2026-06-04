@@ -21,3 +21,11 @@ Guests still use `https://{clientSubdomain}.rsvp.webserbisyo.com`. The main plat
 Do not expose the hidden `.vercel.app` origin in metadata, canonical URLs, UI, docs for guests, or public env values. `NEXT_PUBLIC_*` values are browser-public and must never contain secrets.
 
 Snapshots in `.webserbisyo/` are local-only and ignored by git. They must not be deployed as a live data source.
+
+Dashboard preview:
+
+- The platform may iframe or open the hidden custom origin for preview.
+- Supported query params are `eventSlug`, `preview`, and `source`.
+- Use `preview=dashboard` or `source=dashboard` when the platform needs a dashboard preview badge.
+- Do not add query params for API base URL, auth, admin, billing, payment, or RSVP submission.
+- Dashboard preview metadata is noindex and does not emit canonical URLs.

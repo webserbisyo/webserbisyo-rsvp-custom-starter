@@ -44,6 +44,8 @@ GET {NEXT_PUBLIC_WEBSERBISYO_API_URL}/api/public/events/{NEXT_PUBLIC_EVENT_SLUG}
 
 The API path is centralized in `src/lib/urls.ts` and `src/lib/public-event-api.ts`.
 
+Dashboard preview may pass `eventSlug`, `preview`, and `source`. The query slug is accepted only for local/design/dashboard preview contexts. The API base URL is never accepted from query params.
+
 ## Prefetch
 
 ```bash
@@ -66,4 +68,6 @@ https://{clientSubdomain}.rsvp.webserbisyo.com
 
 The main platform will later proxy that public wildcard URL to the hidden custom frontend origin.
 
-See `docs/MODES.md`, `docs/DATA_CONTRACT.md`, `docs/ASSET_SYSTEM.md`, `docs/MEDIA_GUIDE.md`, and `docs/THEME_SYSTEM.md` before customizing the starter.
+The header RSVP button scrolls to the custom RSVP section first. The section CTA links to the central platform RSVP form and does not submit RSVP responses directly.
+
+See `docs/MODES.md`, `docs/DATA_CONTRACT.md`, `docs/PREVIEW_INTEGRATION.md`, `docs/ASSET_SYSTEM.md`, `docs/MEDIA_GUIDE.md`, and `docs/THEME_SYSTEM.md` before customizing the starter.

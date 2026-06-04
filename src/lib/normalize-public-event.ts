@@ -12,6 +12,7 @@ import type {
 type NormalizeInput = {
   event: PublicEventDto;
   source: "design" | "snapshot" | "live";
+  previewMode?: "dashboard";
   apiBaseUrl: string;
   eventSlug: string;
 };
@@ -56,12 +57,13 @@ function normalizeSections(event: PublicEventDto): NormalizedSection[] {
   const websiteLayout = record(website.layout);
   const contentSections = record(content.sections);
   const websiteSections = record(website.sections);
+  const sectionsByKey = record(event.sectionsByKey);
   const enabledSections = record(layout.enabledSections ?? websiteLayout.enabledSections);
   const rawSections = event.sections ?? content.sections ?? website.sections;
 
   if (Array.isArray(event.sections) && event.sections.every((section) => typeof section === "string")) {
     const order = arrayOfStrings(event.sections);
-    return order.map((key) => sectionFromObject(key, contentSections[key] ?? websiteSections[key], boolValue(enabledSections[key])));
+    return order.map((key) => sectionFromObject(key, sectionsByKey[key] ?? contentSections[key] ?? websiteSections[key], boolValue(enabledSections[key])));
   }
 
   if (Array.isArray(rawSections)) {
@@ -81,7 +83,7 @@ function normalizeSections(event: PublicEventDto): NormalizedSection[] {
       .filter((section): section is NormalizedSection => Boolean(section));
   }
 
-  const sectionsRecord = record(rawSections) || contentSections || websiteSections;
+  const sectionsRecord = record(rawSections);
   const order = arrayOfStrings(event.sections).length
     ? arrayOfStrings(event.sections)
     : arrayOfStrings(layout.sectionOrder).length
@@ -90,15 +92,21 @@ function normalizeSections(event: PublicEventDto): NormalizedSection[] {
         ? arrayOfStrings(websiteLayout.sectionOrder)
         : arrayOfStrings(website.sectionOrder).length
           ? arrayOfStrings(website.sectionOrder)
-    : Object.keys(sectionsRecord);
+          : Object.keys(sectionsRecord).length
+            ? Object.keys(sectionsRecord)
+            : Object.keys(sectionsByKey).length
+              ? Object.keys(sectionsByKey)
+              : Object.keys(contentSections).length
+                ? Object.keys(contentSections)
+                : Object.keys(websiteSections);
 
-  return order.map((key) => sectionFromObject(key, sectionsRecord[key], boolValue(enabledSections[key])));
+  return order.map((key) => sectionFromObject(key, sectionsByKey[key] ?? sectionsRecord[key] ?? contentSections[key] ?? websiteSections[key], boolValue(enabledSections[key])));
 }
 
 function normalizeGuestbookMessages(event: PublicEventDto): GuestbookMessage[] {
   const content = record(event.content);
   const website = record(event.website ?? event.websiteContent);
-  const messages = event.guestbookMessages ?? content.guestbookMessages ?? website.guestbookMessages;
+  const messages = event.publicGuestbookMessages ?? event.guestbookMessages ?? content.publicGuestbookMessages ?? content.guestbookMessages ?? website.publicGuestbookMessages ?? website.guestbookMessages;
   return arrayOfRecords(messages)
     .filter((message) => message.isApproved !== false && stringValue(message.message))
     .map((message) => ({
@@ -140,14 +148,28 @@ function normalizeAssets(event: PublicEventDto): Record<string, PublicMediaAsset
   return output;
 }
 
+function normalizeCoupleDisplayName(sections: NormalizedSection[], fallbackTitle: string): string {
+  const hostInfo = sections.find((section) => section.key === "host_info");
+  const content = hostInfo?.content ?? {};
+  return (
+    stringValue(content.coupleNames) ||
+    stringValue(content.names) ||
+    stringValue(content.displayName) ||
+    stringValue(content.title) ||
+    fallbackTitle
+  );
+}
+
 export function normalizePublicEvent({
   event,
   source,
+  previewMode,
   apiBaseUrl,
   eventSlug
 }: NormalizeInput): EventWebsiteRenderModel {
   const slug = stringValue(event.slug ?? event.eventSlug) || eventSlug;
   const title = stringValue(event.title ?? event.name) || "WebSerbisyo RSVP Event";
+  const sections = normalizeSections(event);
   const urls = record(event.urls);
   const formatted = record(event.formatted);
   const eventDate = stringValue(event.eventDate ?? event.date);
@@ -156,8 +178,10 @@ export function normalizePublicEvent({
 
   return {
     source,
+    previewMode,
     eventSlug: slug,
     title,
+    coupleDisplayName: normalizeCoupleDisplayName(sections, title),
     status: event.status,
     eventDate,
     eventDateLabel: stringValue(formatted.eventDate) || formatDate(eventDate, timezone),
@@ -167,7 +191,7 @@ export function normalizePublicEvent({
     timezone,
     publicUrl: stringValue(urls.publicWebsiteUrl ?? event.publicUrl ?? urls.fallbackUrl ?? event.fallbackUrl),
     rsvpUrl: buildRsvpUrl({ apiBaseUrl, eventSlug: slug, event }),
-    sections: normalizeSections(event),
+    sections,
     guestbookMessages: normalizeGuestbookMessages(event),
     assets: normalizeAssets(event),
     raw: event

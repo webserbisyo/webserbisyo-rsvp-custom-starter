@@ -13,7 +13,7 @@ export function RsvpCallToActionSection({ section, event }: WeddingSectionProps)
         </p>
         {event.rsvpDeadlineLabel ? <p className="mt-3 text-xs font-semibold uppercase tracking-[0.16em] text-white/75">{event.rsvpDeadlineLabel}</p> : null}
         <div className="mt-7">
-          <Button href={event.rsvpUrl} variant="secondary">{field(section.content, ["buttonLabel", "ctaLabel"]) || "Open RSVP"}</Button>
+          <Button href={event.rsvpUrl} variant="secondary">{field(section.content, ["buttonLabel", "ctaLabel"]) || "Continue to RSVP Form"}</Button>
         </div>
       </div>
     </Section>

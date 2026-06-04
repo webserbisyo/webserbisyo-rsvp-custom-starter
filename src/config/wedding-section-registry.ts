@@ -5,6 +5,7 @@ import { CountdownSection } from "@/components/sections/CountdownSection";
 import { CoupleInfoSection } from "@/components/sections/CoupleInfoSection";
 import { EntourageSection } from "@/components/sections/EntourageSection";
 import { ExtraInfoSection } from "@/components/sections/ExtraInfoSection";
+import { GallerySection } from "@/components/sections/GallerySection";
 import { GiftDetailsSection } from "@/components/sections/GiftDetailsSection";
 import { GuestbookSection } from "@/components/sections/GuestbookSection";
 import { LoveStorySection } from "@/components/sections/LoveStorySection";
@@ -27,6 +28,7 @@ export const weddingSectionRegistry = {
   principal_sponsors: PrincipalSponsorsSection,
   attire_motif: AttireMotifSection,
   extra_info: ExtraInfoSection,
+  gallery: GallerySection,
   rsvp_form: RsvpCallToActionSection,
   gift_details: GiftDetailsSection,
   guestbook: GuestbookSection,

@@ -26,6 +26,15 @@ Token families:
 - shadow
 - success / warning / error
 
+Default starter tone:
+
+- ivory base
+- sage support
+- terracotta primary
+- gold accent
+
+Keep client-specific design work token-driven before changing component color classes. Countdown animation uses CSS only and must respect `prefers-reduced-motion`.
+
 Future preset names:
 
 - `tagaytay-garden-classic`

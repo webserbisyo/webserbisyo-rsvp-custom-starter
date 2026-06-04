@@ -21,6 +21,11 @@ export function SiteShell({ event, children }: SiteShellProps) {
           Design Mode · Snapshot Data
         </div>
       ) : null}
+      {event.previewMode === "dashboard" ? (
+        <div className="sticky top-0 z-30 bg-white/90 px-4 py-2 text-center text-xs font-semibold uppercase tracking-[0.18em] text-cocoa/70 backdrop-blur">
+          Custom Preview
+        </div>
+      ) : null}
       <SiteHeader event={event} />
       <main>{children}</main>
       <SiteFooter />

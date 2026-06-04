@@ -12,6 +12,7 @@ export const optionalWeddingSections = [
   "principal_sponsors",
   "attire_motif",
   "extra_info",
+  "gallery",
   "gift_details",
   "guestbook",
   "story_message",

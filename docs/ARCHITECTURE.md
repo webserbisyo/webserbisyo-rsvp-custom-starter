@@ -13,3 +13,5 @@ https://{clientSubdomain}.rsvp.webserbisyo.com
 The platform event slug is the data key. The custom frontend origin URL is the hidden deployed origin stored later in Super Admin as `custom_frontend_origin_url`.
 
 Future wildcard proxy behavior: the main platform serves the custom design behind the public subdomain. This repo must be proxy-aware but must not implement the proxy.
+
+Dashboard preview behavior: the main platform may iframe or open the hidden custom origin with safe query params such as `eventSlug`, `preview=dashboard`, and `source=dashboard`. The custom starter may use the query slug only for local/design/dashboard preview contexts and must never read an API base URL from the query string.

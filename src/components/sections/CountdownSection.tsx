@@ -17,8 +17,9 @@ export function CountdownSection({ section, event }: WeddingSectionProps) {
 
   return (
     <Section title={field(section.content, ["label", "title"]) || "Counting down"}>
-      <div className="rounded-lg border border-cocoa/10 bg-white/60 p-8 text-center shadow-soft">
-        <p className="font-serif text-6xl text-terracotta">{days ?? 0}</p>
+      <div className="countdown-card relative overflow-hidden rounded-lg border border-cocoa/10 bg-white/70 p-8 text-center shadow-soft">
+        <div className="countdown-progress absolute inset-x-0 top-0 h-1 bg-gold" />
+        <p className="countdown-number font-serif text-6xl text-terracotta sm:text-7xl">{days ?? 0}</p>
         <p className="mt-2 text-sm font-semibold uppercase tracking-[0.22em] text-cocoa/70">days to go</p>
       </div>
     </Section>

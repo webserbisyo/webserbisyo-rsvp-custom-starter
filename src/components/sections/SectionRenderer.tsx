@@ -12,6 +12,26 @@ function renderSection(event: EventWebsiteRenderModel, section: NormalizedSectio
   return <Component event={event} section={section} />;
 }
 
+const sectionAnchors: Record<string, string> = {
+  host_info: "couple",
+  countdown: "countdown",
+  music_effects: "music-effects",
+  main_event: "ceremony",
+  venue: "venue",
+  secondary_event: "reception",
+  timeline_program: "timeline",
+  entourage: "entourage",
+  principal_sponsors: "principal-sponsors",
+  attire_motif: "attire",
+  extra_info: "extra-info",
+  gallery: "gallery",
+  gift_details: "gifts",
+  guestbook: "messages",
+  story_message: "love-story",
+  rsvp_form: "rsvp",
+  contact_socials: "contact"
+};
+
 export function SectionRenderer({ event }: SectionRendererProps) {
   const visibleSections = event.sections.filter((section) => shouldRenderSection(section, event.source));
   const footerSections = visibleSections.filter((section) => section.key === "contact_socials");
@@ -20,10 +40,10 @@ export function SectionRenderer({ event }: SectionRendererProps) {
   return (
     <>
       {mainSections.map((section, index) => (
-        <div key={`${section.key}-${index}`}>{renderSection(event, section)}</div>
+        <div className="scroll-mt-24" id={sectionAnchors[section.key]} key={`${section.key}-${index}`}>{renderSection(event, section)}</div>
       ))}
       {footerSections.map((section, index) => (
-        <div key={`${section.key}-${index}`}>{renderSection(event, section)}</div>
+        <div className="scroll-mt-24" id={sectionAnchors[section.key]} key={`${section.key}-${index}`}>{renderSection(event, section)}</div>
       ))}
     </>
   );

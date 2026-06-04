@@ -5,6 +5,7 @@ import type { PublicEventApiError, PublicEventApiResponse, PublicEventResult } f
 type FetchInput = {
   apiBaseUrl: string;
   eventSlug: string;
+  previewMode?: "dashboard";
 };
 
 function isApiResponse(value: unknown): value is PublicEventApiResponse {
@@ -27,7 +28,7 @@ function debugFetchIssue(message: string, details?: Record<string, unknown>): vo
   console.warn(`[webserbisyo-public-api] ${message}`, details ?? {});
 }
 
-export async function fetchPublicEvent({ apiBaseUrl, eventSlug }: FetchInput): Promise<PublicEventResult> {
+export async function fetchPublicEvent({ apiBaseUrl, eventSlug, previewMode }: FetchInput): Promise<PublicEventResult> {
   if (!apiBaseUrl || !eventSlug) {
     return {
       status: "setup_error",
@@ -67,6 +68,7 @@ export async function fetchPublicEvent({ apiBaseUrl, eventSlug }: FetchInput): P
       event: normalizePublicEvent({
         event: payload.data,
         source: "live",
+        previewMode,
         apiBaseUrl,
         eventSlug
       })

@@ -22,9 +22,12 @@ Never expose hidden custom frontend origins in UI, metadata, or public env.
 Never hardcode couple names, dates, venues, sponsors, gifts, or contact details in components.
 Never rename platform section keys without updating the registry, docs, and types.
 Never put secrets in `NEXT_PUBLIC_*`; these values are browser-public and may be inlined at build time.
+Never allow query params to override `NEXT_PUBLIC_WEBSERBISYO_API_URL`.
 
 Always render from platform section order.
 Always skip unknown section keys safely.
 Always use the central RSVP route for v1.
 Always customize themes through CSS variables/tokens before changing component colors.
 Always run typecheck, lint, and build before delivery.
+
+Dashboard preview may pass safe query params such as `eventSlug`, `preview`, and `source`. `eventSlug` can override the configured slug only in local/design/dashboard preview contexts. Guest/live production must not show debug chrome unless design or snapshot mode is active.
