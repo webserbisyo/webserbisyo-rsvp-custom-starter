@@ -12,7 +12,7 @@ export function ReceptionSection({ section, event }: WeddingSectionProps) {
   return (
     <Section eyebrow="After Ceremony" title={label} className="bg-linen">
       <div className="space-y-3 rounded-lg border border-cocoa/10 bg-white/70 p-6">
-        {dateTime ? <p className="font-semibold text-charcoal">{formatDateTime(dateTime, event.timezone)}</p> : null}
+        {dateTime && formatDateTime(dateTime, event.timezone) ? <p className="font-semibold text-charcoal">{formatDateTime(dateTime, event.timezone)}</p> : null}
         {venue ? <p>{venue}</p> : null}
         {note ? <p className="text-sm leading-7 text-cocoa/75">{note}</p> : null}
       </div>

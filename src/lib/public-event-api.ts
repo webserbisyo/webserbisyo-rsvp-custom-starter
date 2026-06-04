@@ -8,11 +8,23 @@ type FetchInput = {
 };
 
 function isApiResponse(value: unknown): value is PublicEventApiResponse {
-  return Boolean(value && typeof value === "object" && "data" in value);
+  return Boolean(
+    value &&
+      typeof value === "object" &&
+      "data" in value &&
+      (value as { data?: unknown }).data &&
+      typeof (value as { data?: unknown }).data === "object" &&
+      !Array.isArray((value as { data?: unknown }).data)
+  );
 }
 
 function isApiError(value: unknown): value is PublicEventApiError {
   return Boolean(value && typeof value === "object" && "error" in value);
+}
+
+function debugFetchIssue(message: string, details?: Record<string, unknown>): void {
+  if (process.env.NODE_ENV !== "development") return;
+  console.warn(`[webserbisyo-public-api] ${message}`, details ?? {});
 }
 
 export async function fetchPublicEvent({ apiBaseUrl, eventSlug }: FetchInput): Promise<PublicEventResult> {
@@ -43,8 +55,9 @@ export async function fetchPublicEvent({ apiBaseUrl, eventSlug }: FetchInput): P
     }
 
     if (!isApiResponse(payload)) {
+      debugFetchIssue("Malformed public API response.", { status: response.status });
       return {
-        status: "unavailable",
+        status: "malformed_response",
         message: "The public event API returned an unexpected response."
       };
     }
@@ -58,7 +71,8 @@ export async function fetchPublicEvent({ apiBaseUrl, eventSlug }: FetchInput): P
         eventSlug
       })
     };
-  } catch {
+  } catch (error) {
+    debugFetchIssue("Public API request failed.", { message: error instanceof Error ? error.message : "Unknown error" });
     return {
       status: "network_error",
       message: "Could not reach the WebSerbisyo public API."

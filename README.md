@@ -20,6 +20,8 @@ Default design mode uses safe sample data:
 NEXT_PUBLIC_DESIGN_MODE=true
 ```
 
+Design mode displays a visible badge. If `.webserbisyo/event.snapshot.json` exists, design mode may use it for local layout testing.
+
 Live mode requires:
 
 ```env
@@ -28,7 +30,9 @@ NEXT_PUBLIC_EVENT_SLUG=your-platform-event-slug
 NEXT_PUBLIC_DESIGN_MODE=false
 ```
 
-Live mode never falls back to sample data. Missing config renders an unavailable/setup state.
+Live mode never falls back to sample data or snapshots. Missing config renders an unavailable/setup state.
+
+All `NEXT_PUBLIC_*` values are browser-public and can be inlined at build time. Never put secrets, hidden custom origins, admin tokens, service role keys, database URLs, or payment secrets there.
 
 ## Public API
 
@@ -43,10 +47,12 @@ The API path is centralized in `src/lib/urls.ts` and `src/lib/public-event-api.t
 ## Prefetch
 
 ```bash
-npm run prefetch:event -- alexander-morales-wedding-rsvp-20260513-9435
+npm run prefetch:event -- your-platform-event-slug
 ```
 
 This writes `.webserbisyo/event.snapshot.json`. Snapshots are ignored by git.
+
+Snapshots are local-only and are never used when `NEXT_PUBLIC_DESIGN_MODE=false`.
 
 ## Deploy
 
@@ -59,3 +65,5 @@ https://{clientSubdomain}.rsvp.webserbisyo.com
 ```
 
 The main platform will later proxy that public wildcard URL to the hidden custom frontend origin.
+
+See `docs/MODES.md`, `docs/DATA_CONTRACT.md`, `docs/ASSET_SYSTEM.md`, `docs/MEDIA_GUIDE.md`, and `docs/THEME_SYSTEM.md` before customizing the starter.

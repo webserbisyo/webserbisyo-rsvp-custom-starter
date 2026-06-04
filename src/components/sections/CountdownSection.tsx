@@ -1,11 +1,12 @@
 import { Section } from "@/components/ui/Section";
 import { field } from "@/components/sections/field-utils";
+import { parseDate } from "@/lib/formatters";
 import type { WeddingSectionProps } from "@/components/sections/section-props";
 
 function daysUntil(dateValue?: string | null): number | null {
   if (!dateValue) return null;
-  const target = new Date(dateValue);
-  if (Number.isNaN(target.getTime())) return null;
+  const target = parseDate(dateValue);
+  if (!target) return null;
   const days = Math.ceil((target.getTime() - Date.now()) / 86_400_000);
   return Math.max(days, 0);
 }

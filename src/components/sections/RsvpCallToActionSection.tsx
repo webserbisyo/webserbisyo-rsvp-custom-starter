@@ -11,6 +11,7 @@ export function RsvpCallToActionSection({ section, event }: WeddingSectionProps)
         <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-white/85">
           {field(section.content, ["body", "description"]) || "Please RSVP through the official WebSerbisyo RSVP page."}
         </p>
+        {event.rsvpDeadlineLabel ? <p className="mt-3 text-xs font-semibold uppercase tracking-[0.16em] text-white/75">{event.rsvpDeadlineLabel}</p> : null}
         <div className="mt-7">
           <Button href={event.rsvpUrl} variant="secondary">{field(section.content, ["buttonLabel", "ctaLabel"]) || "Open RSVP"}</Button>
         </div>

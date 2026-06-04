@@ -1,11 +1,12 @@
 import { field } from "@/components/sections/field-utils";
+import { formatDate } from "@/lib/formatters";
 import type { WeddingSectionProps } from "@/components/sections/section-props";
 
 export function CoupleInfoSection({ section, event }: WeddingSectionProps) {
   const kicker = field(section.content, ["kicker", "subtitle"]);
   const coupleNames = field(section.content, ["coupleNames", "names", "title"]) || event.title;
   const hostCopy = field(section.content, ["hostCopy", "description", "body"]);
-  const dateText = field(section.content, ["dateText", "date"]);
+  const dateText = field(section.content, ["dateText"]) || event.eventDateLabel || formatDate(field(section.content, ["date"]), event.timezone);
 
   return (
     <section className="relative overflow-hidden bg-cream py-20 sm:py-24">

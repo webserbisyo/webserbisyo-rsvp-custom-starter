@@ -2,8 +2,9 @@ import { Section } from "@/components/ui/Section";
 import { field, records } from "@/components/sections/field-utils";
 import type { WeddingSectionProps } from "@/components/sections/section-props";
 
-export function GuestbookSection({ section }: WeddingSectionProps) {
-  const messages = records(section.content.messages).filter((message) => message.isApproved !== false && field(message, ["message"]));
+export function GuestbookSection({ section, event }: WeddingSectionProps) {
+  const sectionMessages = records(section.content.messages).filter((message) => message.isApproved !== false && field(message, ["message"]));
+  const messages = event.guestbookMessages.length ? event.guestbookMessages : sectionMessages;
 
   return (
     <Section eyebrow="Guestbook" title={field(section.content, ["title"]) || "Messages from guests"}>

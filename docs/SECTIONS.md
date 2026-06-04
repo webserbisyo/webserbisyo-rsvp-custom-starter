@@ -26,3 +26,12 @@ Optional sections: `countdown`, `music_effects`, `secondary_event`, `timeline_pr
 Future keys visible in platform config but not implemented here: `overview`, `gallery`, `style_theme`.
 
 Live mode renders enabled sections in API order, hides empty optional sections, and skips unknown keys safely.
+
+Current supported order sources, in priority order:
+
+- `data.sections` as an ordered string array.
+- `data.content.layout.sectionOrder`.
+- Legacy website section order fields.
+- Object key order as a final fallback.
+
+The platform section keys above are protected. Do not rename them for design work.

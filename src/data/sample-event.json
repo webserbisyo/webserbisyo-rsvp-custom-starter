@@ -6,8 +6,9 @@
   "eventType": "wedding",
   "eventDate": "2026-10-18T15:30:00+08:00",
   "timezone": "Asia/Manila",
-  "website": {
-    "sectionOrder": [
+  "content": {
+    "layout": {
+      "sectionOrder": [
       "host_info",
       "countdown",
       "music_effects",
@@ -24,7 +25,26 @@
       "guestbook",
       "story_message",
       "contact_socials"
-    ],
+      ],
+      "enabledSections": {
+        "host_info": true,
+        "countdown": true,
+        "music_effects": true,
+        "main_event": true,
+        "venue": true,
+        "secondary_event": true,
+        "timeline_program": true,
+        "entourage": true,
+        "principal_sponsors": true,
+        "attire_motif": true,
+        "extra_info": true,
+        "rsvp_form": true,
+        "gift_details": true,
+        "guestbook": true,
+        "story_message": true,
+        "contact_socials": true
+      }
+    },
     "sections": {
       "host_info": {
         "enabled": true,
@@ -162,5 +182,9 @@
         }
       }
     }
+  },
+  "urls": {
+    "rsvpUrl": "https://webserbisyo.com/r/sample-wedding/rsvp",
+    "publicWebsiteUrl": "https://sample-wedding.rsvp.webserbisyo.com"
   }
 }

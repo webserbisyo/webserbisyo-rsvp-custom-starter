@@ -30,7 +30,7 @@ function hasValue(value: unknown): boolean {
   return true;
 }
 
-export function shouldRenderSection(section: NormalizedSection, source: "design" | "live"): boolean {
+export function shouldRenderSection(section: NormalizedSection, source: "design" | "snapshot" | "live"): boolean {
   if (!isWeddingSectionKey(section.key) || !section.enabled) return false;
   if (source === "design") return true;
   if ((requiredWeddingSections as readonly string[]).includes(section.key)) return true;

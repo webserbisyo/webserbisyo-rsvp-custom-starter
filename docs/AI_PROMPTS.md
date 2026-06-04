@@ -2,7 +2,7 @@
 
 ## Styling-only edits
 
-Read `AGENTS.md`, `docs/DO_NOT_BREAK.md`, `docs/DATA_CONTRACT.md`, `docs/SECTIONS.md`, and `docs/ARCHITECTURE.md`. Update only styling and frontend components. Do not change API paths, env names, section keys, RSVP behavior, or live placeholder rules.
+Read `AGENTS.md`, `docs/DO_NOT_BREAK.md`, `docs/DATA_CONTRACT.md`, `docs/SECTIONS.md`, `docs/ARCHITECTURE.md`, `docs/MODES.md`, and `docs/THEME_SYSTEM.md`. Update only styling, CSS variables, and frontend components. Do not change API paths, env names, section keys, RSVP behavior, or live placeholder rules.
 
 ## Adding a section
 
@@ -11,6 +11,10 @@ Read `AGENTS.md`, `docs/DO_NOT_BREAK.md`, `docs/DATA_CONTRACT.md`, `docs/SECTION
 ## Debugging fetch/data issues
 
 Read `AGENTS.md`, `docs/DO_NOT_BREAK.md`, `docs/DATA_CONTRACT.md`, `docs/SECTIONS.md`, and `docs/ARCHITECTURE.md`. Inspect `src/lib/env.ts`, `src/lib/urls.ts`, `src/lib/public-event-api.ts`, and `src/lib/normalize-public-event.ts`. Do not add admin APIs, Supabase, or draft content fetching.
+
+## Media or gift QR edits
+
+Read `docs/ASSET_SYSTEM.md` and `docs/MEDIA_GUIDE.md`. Demo media is allowed only in design mode. Live mode must render real public media from the platform or text-only/neutral missing-media UI.
 
 ## Preparing a per-client custom repo
 

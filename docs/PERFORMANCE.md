@@ -5,3 +5,5 @@ Keep assets, images, fonts, and bundles light. Proxy overhead is not the main is
 Avoid large animation packages and unnecessary UI libraries.
 
 Live fetches currently use conservative `cache: "no-store"` for launch safety. Revisit caching only when platform publish/unpublish behavior and proxy behavior are confirmed.
+
+Media should stay public, optimized, and provider-aware. If `next/image` is introduced, use explicit approved `remotePatterns`; do not add broad wildcard image hosts.

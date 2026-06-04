@@ -17,10 +17,14 @@ Never add payment secrets.
 Never add auth, billing, payment, or admin logic.
 Never bypass the WebSerbisyo public API.
 Never show placeholders in live mode.
+Never use `.webserbisyo/event.snapshot.json` in live mode.
+Never expose hidden custom frontend origins in UI, metadata, or public env.
 Never hardcode couple names, dates, venues, sponsors, gifts, or contact details in components.
 Never rename platform section keys without updating the registry, docs, and types.
+Never put secrets in `NEXT_PUBLIC_*`; these values are browser-public and may be inlined at build time.
 
 Always render from platform section order.
 Always skip unknown section keys safely.
 Always use the central RSVP route for v1.
+Always customize themes through CSS variables/tokens before changing component colors.
 Always run typecheck, lint, and build before delivery.

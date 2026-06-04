@@ -21,6 +21,7 @@ export type WeddingSectionKey =
 export type PublicRsvpState = {
   enabled?: boolean | null;
   url?: string | null;
+  rsvpUrl?: string | null;
   deadline?: string | null;
   note?: string | null;
 };
@@ -47,10 +48,49 @@ export type PublicEventSection = {
 };
 
 export type EventWebsiteContent = {
-  sections?: PublicEventSection[] | Record<string, unknown> | null;
+  layout?: {
+    sectionOrder?: string[] | null;
+    enabledSections?: Record<string, boolean | null | undefined> | null;
+  } | null;
+  sections?: PublicEventSection[] | string[] | Record<string, unknown> | null;
   sectionOrder?: string[] | null;
   rsvp?: PublicRsvpState | null;
   guestbookMessages?: GuestbookMessage[] | null;
+  [key: string]: unknown;
+};
+
+export type PublicEventUrls = {
+  rsvpUrl?: string | null;
+  publicWebsiteUrl?: string | null;
+  fallbackUrl?: string | null;
+  [key: string]: unknown;
+};
+
+export type PublicEventFormatted = {
+  eventDate?: string | null;
+  eventTime?: string | null;
+  eventDateTime?: string | null;
+  rsvpDeadline?: string | null;
+  [key: string]: unknown;
+};
+
+export type PublicAssetSlot =
+  | "hero_background"
+  | "couple_photo"
+  | "venue_photo"
+  | "gallery_image"
+  | "gift_qr"
+  | "monogram"
+  | "section_decoration";
+
+export type PublicMediaAsset = {
+  slot?: PublicAssetSlot | string | null;
+  url?: string | null;
+  src?: string | null;
+  alt?: string | null;
+  width?: number | null;
+  height?: number | null;
+  provider?: string | null;
   [key: string]: unknown;
 };
 
@@ -65,12 +105,18 @@ export type PublicEventDto = {
   eventDate?: string | null;
   date?: string | null;
   timezone?: string | null;
+  content?: EventWebsiteContent | null;
   website?: EventWebsiteContent | null;
   websiteContent?: EventWebsiteContent | null;
-  sections?: PublicEventSection[] | Record<string, unknown> | null;
+  sections?: PublicEventSection[] | string[] | Record<string, unknown> | null;
   rsvp?: PublicRsvpState | null;
+  urls?: PublicEventUrls | null;
+  formatted?: PublicEventFormatted | null;
+  assets?: Record<string, PublicMediaAsset | string | null | undefined> | PublicMediaAsset[] | null;
+  guestbookMessages?: GuestbookMessage[] | null;
   publicUrl?: string | null;
   fallbackUrl?: string | null;
+  rsvpUrl?: string | null;
   [key: string]: unknown;
 };
 
@@ -95,15 +141,21 @@ export type NormalizedSection = {
 };
 
 export type EventWebsiteRenderModel = {
-  source: "design" | "live";
+  source: "design" | "snapshot" | "live";
   eventSlug: string;
   title: string;
   status?: PublicEventStatus | null;
   eventDate?: string | null;
+  eventDateLabel?: string | null;
+  eventTimeLabel?: string | null;
+  eventDateTimeLabel?: string | null;
+  rsvpDeadlineLabel?: string | null;
   timezone?: string | null;
   publicUrl?: string | null;
   rsvpUrl: string;
   sections: NormalizedSection[];
+  guestbookMessages: GuestbookMessage[];
+  assets: Record<string, PublicMediaAsset>;
   raw: PublicEventDto;
 };
 
@@ -111,4 +163,5 @@ export type PublicEventResult =
   | { status: "available"; event: EventWebsiteRenderModel }
   | { status: "unavailable"; code?: string; message: string }
   | { status: "setup_error"; message: string }
-  | { status: "network_error"; message: string };
+  | { status: "network_error"; message: string }
+  | { status: "malformed_response"; message: string };

@@ -1,14 +1,17 @@
 import { buildRsvpUrl } from "@/lib/rsvp-url";
+import { formatDate, formatDateTime, formatRsvpDeadline, formatTime } from "@/lib/formatters";
 import type {
   EventWebsiteRenderModel,
+  GuestbookMessage,
   NormalizedSection,
+  PublicMediaAsset,
   PublicEventDto,
   PublicEventSection
 } from "@/types/public-event";
 
 type NormalizeInput = {
   event: PublicEventDto;
-  source: "design" | "live";
+  source: "design" | "snapshot" | "live";
   apiBaseUrl: string;
   eventSlug: string;
 };
@@ -21,29 +24,56 @@ function stringValue(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
 }
 
-function sectionFromObject(key: string, value: unknown): NormalizedSection {
+function boolValue(value: unknown): boolean | undefined {
+  return typeof value === "boolean" ? value : undefined;
+}
+
+function arrayOfStrings(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return value.map((item) => stringValue(item)).filter(Boolean);
+}
+
+function arrayOfRecords(value: unknown): Record<string, unknown>[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter((item): item is Record<string, unknown> => Boolean(item && typeof item === "object" && !Array.isArray(item)));
+}
+
+function sectionFromObject(key: string, value: unknown, enabledOverride?: boolean): NormalizedSection {
   const section = record(value);
+  const ownEnabled = boolValue(section.enabled ?? section.isEnabled ?? section.visible);
   return {
     key,
     title: stringValue(section.title),
-    enabled: section.enabled !== false && section.isEnabled !== false && section.visible !== false,
+    enabled: enabledOverride ?? ownEnabled ?? true,
     content: record(section.content ?? section.data ?? section)
   };
 }
 
 function normalizeSections(event: PublicEventDto): NormalizedSection[] {
+  const content = record(event.content);
+  const layout = record(content.layout);
   const website = record(event.website ?? event.websiteContent);
-  const rawSections = event.sections ?? website.sections;
+  const websiteLayout = record(website.layout);
+  const contentSections = record(content.sections);
+  const websiteSections = record(website.sections);
+  const enabledSections = record(layout.enabledSections ?? websiteLayout.enabledSections);
+  const rawSections = event.sections ?? content.sections ?? website.sections;
+
+  if (Array.isArray(event.sections) && event.sections.every((section) => typeof section === "string")) {
+    const order = arrayOfStrings(event.sections);
+    return order.map((key) => sectionFromObject(key, contentSections[key] ?? websiteSections[key], boolValue(enabledSections[key])));
+  }
 
   if (Array.isArray(rawSections)) {
     return rawSections
       .map((section: PublicEventSection) => {
         const key = stringValue(section.key ?? section.type);
         if (!key) return null;
+        const ownEnabled = boolValue(section.enabled ?? section.isEnabled ?? section.visible);
         const normalized: NormalizedSection = {
           key,
           title: stringValue(section.title) || undefined,
-          enabled: section.enabled !== false && section.isEnabled !== false && section.visible !== false,
+          enabled: boolValue(enabledSections[key]) ?? ownEnabled ?? true,
           content: record(section.content ?? section.data ?? section)
         };
         return normalized;
@@ -51,12 +81,63 @@ function normalizeSections(event: PublicEventDto): NormalizedSection[] {
       .filter((section): section is NormalizedSection => Boolean(section));
   }
 
-  const sectionsRecord = record(rawSections);
-  const order = Array.isArray(website.sectionOrder)
-    ? website.sectionOrder.map((key) => stringValue(key)).filter(Boolean)
+  const sectionsRecord = record(rawSections) || contentSections || websiteSections;
+  const order = arrayOfStrings(event.sections).length
+    ? arrayOfStrings(event.sections)
+    : arrayOfStrings(layout.sectionOrder).length
+      ? arrayOfStrings(layout.sectionOrder)
+      : arrayOfStrings(websiteLayout.sectionOrder).length
+        ? arrayOfStrings(websiteLayout.sectionOrder)
+        : arrayOfStrings(website.sectionOrder).length
+          ? arrayOfStrings(website.sectionOrder)
     : Object.keys(sectionsRecord);
 
-  return order.map((key) => sectionFromObject(key, sectionsRecord[key]));
+  return order.map((key) => sectionFromObject(key, sectionsRecord[key], boolValue(enabledSections[key])));
+}
+
+function normalizeGuestbookMessages(event: PublicEventDto): GuestbookMessage[] {
+  const content = record(event.content);
+  const website = record(event.website ?? event.websiteContent);
+  const messages = event.guestbookMessages ?? content.guestbookMessages ?? website.guestbookMessages;
+  return arrayOfRecords(messages)
+    .filter((message) => message.isApproved !== false && stringValue(message.message))
+    .map((message) => ({
+      id: (typeof message.id === "string" || typeof message.id === "number") ? message.id : undefined,
+      name: stringValue(message.name) || undefined,
+      message: stringValue(message.message),
+      createdAt: stringValue(message.createdAt) || undefined,
+      isApproved: message.isApproved === true
+    }));
+}
+
+function normalizeAssets(event: PublicEventDto): Record<string, PublicMediaAsset> {
+  const output: Record<string, PublicMediaAsset> = {};
+  const content = record(event.content);
+  const assetSource = event.assets ?? content.assets;
+
+  if (Array.isArray(assetSource)) {
+    for (const item of assetSource) {
+      const asset = record(item) as PublicMediaAsset;
+      const slot = stringValue(asset.slot);
+      const url = stringValue(asset.url ?? asset.src);
+      if (slot && url) output[slot] = { ...asset, slot, url };
+    }
+    return output;
+  }
+
+  for (const [slot, value] of Object.entries(record(assetSource))) {
+    if (typeof value === "string") {
+      const url = stringValue(value);
+      if (url) output[slot] = { slot, url };
+      continue;
+    }
+
+    const asset = record(value) as PublicMediaAsset;
+    const url = stringValue(asset.url ?? asset.src);
+    if (url) output[slot] = { ...asset, slot: stringValue(asset.slot) || slot, url };
+  }
+
+  return output;
 }
 
 export function normalizePublicEvent({
@@ -67,17 +148,28 @@ export function normalizePublicEvent({
 }: NormalizeInput): EventWebsiteRenderModel {
   const slug = stringValue(event.slug ?? event.eventSlug) || eventSlug;
   const title = stringValue(event.title ?? event.name) || "WebSerbisyo RSVP Event";
+  const urls = record(event.urls);
+  const formatted = record(event.formatted);
+  const eventDate = stringValue(event.eventDate ?? event.date);
+  const timezone = stringValue(event.timezone) || "Asia/Manila";
+  const rsvpDeadline = stringValue(event.rsvp?.deadline ?? record(event.content).rsvpDeadline);
 
   return {
     source,
     eventSlug: slug,
     title,
     status: event.status,
-    eventDate: stringValue(event.eventDate ?? event.date),
-    timezone: stringValue(event.timezone),
-    publicUrl: stringValue(event.publicUrl ?? event.fallbackUrl),
+    eventDate,
+    eventDateLabel: stringValue(formatted.eventDate) || formatDate(eventDate, timezone),
+    eventTimeLabel: stringValue(formatted.eventTime) || formatTime(eventDate, timezone),
+    eventDateTimeLabel: stringValue(formatted.eventDateTime) || formatDateTime(eventDate, timezone),
+    rsvpDeadlineLabel: stringValue(formatted.rsvpDeadline) || formatRsvpDeadline(rsvpDeadline, timezone),
+    timezone,
+    publicUrl: stringValue(urls.publicWebsiteUrl ?? event.publicUrl ?? urls.fallbackUrl ?? event.fallbackUrl),
     rsvpUrl: buildRsvpUrl({ apiBaseUrl, eventSlug: slug, event }),
     sections: normalizeSections(event),
+    guestbookMessages: normalizeGuestbookMessages(event),
+    assets: normalizeAssets(event),
     raw: event
   };
 }
