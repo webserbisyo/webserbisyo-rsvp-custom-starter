@@ -8,6 +8,8 @@ This repo remains frontend-only. It still fetches event data only from:
 {NEXT_PUBLIC_WEBSERBISYO_API_URL}/api/public/events/{eventSlug}
 ```
 
+The default preview output should use the same platform-compatible public renderer baseline as the main account preview. Dashboard preview chrome or badges must remain isolated from normal guest runtime.
+
 ## Safe Query Params
 
 Supported preview query params:
@@ -27,7 +29,7 @@ The API base URL is never read from the query string. It must come from `NEXT_PU
 
 ## Dashboard Badge
 
-`preview=dashboard` or `source=dashboard` may show a subtle `Custom Preview` badge. Guest/live production mode should not show debug badges unless design mode or snapshot mode is active.
+`preview=dashboard` or `source=dashboard` may show isolated dashboard context when intentionally implemented. Guest/live production mode should not show debug badges unless design mode or snapshot mode is active.
 
 ## Public URL Rules
 

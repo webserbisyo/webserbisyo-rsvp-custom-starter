@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
+import { PublicEventPageContent } from "@/components/platform/PublicEventPageContent";
 import { EmptyState } from "@/components/ui/EmptyState";
-import { SiteShell } from "@/components/layout/SiteShell";
-import { SectionRenderer } from "@/components/sections/SectionRenderer";
 import { getPublicEnv } from "@/lib/env";
 import { fetchPublicEvent } from "@/lib/public-event-api";
 import { getDesignEvent } from "@/lib/placeholders";
@@ -56,9 +55,5 @@ export default async function HomePage({ searchParams }: PageProps) {
     return <EmptyState title="Event unavailable" message={result.message} />;
   }
 
-  return (
-    <SiteShell event={result.event}>
-      <SectionRenderer event={result.event} />
-    </SiteShell>
-  );
+  return <PublicEventPageContent event={result.event} />;
 }

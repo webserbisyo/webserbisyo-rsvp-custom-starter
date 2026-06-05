@@ -6,6 +6,8 @@ This repo renders public design only. It fetches published event data from the m
 
 It is not the main platform, not a per-client repo, not an admin app, not a database, and not an RSVP submission backend.
 
+The default runtime baseline mirrors the main platform wedding public/account preview renderer. New client repos should start from that platform-compatible `event-preview-*` section/card structure before any client design work happens.
+
 ## Quick Start
 
 ```bash
@@ -68,6 +70,6 @@ https://{clientSubdomain}.rsvp.webserbisyo.com
 
 The main platform will later proxy that public wildcard URL to the hidden custom frontend origin.
 
-The header RSVP button scrolls to the custom RSVP section first. The section CTA links to the central platform RSVP form and does not submit RSVP responses directly.
+The RSVP section links to the central platform RSVP form and does not submit RSVP responses directly.
 
 See `docs/MODES.md`, `docs/DATA_CONTRACT.md`, `docs/PREVIEW_INTEGRATION.md`, `docs/ASSET_SYSTEM.md`, `docs/MEDIA_GUIDE.md`, and `docs/THEME_SYSTEM.md` before customizing the starter.

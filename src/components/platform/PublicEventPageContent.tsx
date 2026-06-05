@@ -1,0 +1,26 @@
+import { EventWebsiteRenderer } from "@/components/platform/EventWebsiteRenderer";
+import { buildPlatformRendererContext } from "@/lib/platform-render-model";
+import type { EventWebsiteRenderModel } from "@/types/public-event";
+
+export function PublicEventPageContent({ event }: { event: EventWebsiteRenderModel }) {
+  const context = buildPlatformRendererContext(event);
+
+  return (
+    <main
+      className="event-website-public-page min-h-screen text-slate-900"
+      data-preview-mode={context.previewMode}
+    >
+      <div className="event-preview-public-shell">
+        <div className="event-preview-frame event-preview-frame--public">
+          <EventWebsiteRenderer
+            draft={context.draft}
+            guestbookMessages={context.guestbookMessages}
+            hideEmptyGuestbook={event.source === "live"}
+            rsvpUrl={context.rsvpUrl}
+            sections={context.sections}
+          />
+        </div>
+      </div>
+    </main>
+  );
+}

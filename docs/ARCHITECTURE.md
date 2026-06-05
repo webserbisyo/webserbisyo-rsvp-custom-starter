@@ -4,6 +4,14 @@ The main platform repo `webserbisyo-rsvp` owns truth and URLs: wildcard subdomai
 
 This custom repo renders design only. It fetches published public event data through the public API and connects to one platform event by `NEXT_PUBLIC_EVENT_SLUG`.
 
+The protected runtime has three layers:
+
+- Platform renderer baseline: `src/components/platform/*`, which mirrors the main platform `EventWebsiteRenderer` public template and `event-preview-*` CSS rhythm.
+- Data adapter layer: public API data is normalized and adapted into the platform-compatible render model without changing API ownership.
+- Customization layer: cloned client repos may add approved theme overrides, custom assets, and optional section styling after the baseline is validated.
+
+The starter default must not introduce a separate marketing shell, navbar, hero, client theme, or custom UI kit. Those belong only in cloned client repos.
+
 Public guest URL remains the client editable subdomain:
 
 ```txt

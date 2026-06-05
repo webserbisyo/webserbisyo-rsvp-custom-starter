@@ -2,15 +2,15 @@
 
 Section order comes from the public API. The starter must not hardcode a live default order.
 
-The starter should remain close to the main platform wedding preview structure. It should read as a neutral reusable base, not as a finished client theme.
+The starter default runtime must mirror the main platform wedding preview/public renderer structure. It should read as the reusable platform baseline, not as a landing page, marketing website, or finished client theme.
 
 Required wedding sections are `host_info`, `main_event`, `venue`, and `rsvp_form`.
 
 Optional sections render only when enabled and non-empty in live mode.
 
-The reusable wedding flow should preserve the full custom website experience, not collapse into a simple landing page:
+The reusable wedding flow should preserve the platform preview section/card rhythm:
 
-- Couple Info / Hero
+- Couple Info
 - Countdown
 - Music & Effects
 - Ceremony
@@ -29,14 +29,14 @@ The reusable wedding flow should preserve the full custom website experience, no
 
 Gallery is a future platform-supported foundation section. In live mode, render it only when the public API provides real gallery images. Design mode may include an empty gallery note for implementation review.
 
-`contact_socials` is displayed as a footer-style section when included. The platform may not force it last, so `SectionRenderer` collects it and renders it after main sections.
+`contact_socials` is displayed as a footer-style section inside the same platform frame when included.
 
 The RSVP section is CTA-only and links to the central route. It does not submit directly.
 
-Header RSVP behavior:
+Default header behavior:
 
-- Header RSVP scrolls to `#rsvp` inside the custom website first.
-- The visible RSVP section contains the `Continue to RSVP Form` CTA.
+- The starter default does not render a marketing navbar because the main platform public renderer does not.
+- The visible RSVP section contains the `Continue to RSVP Form` CTA and keeps the `#rsvp` anchor.
 - The CTA leaves the custom site for the central RSVP route only after the guest chooses to continue.
 
 RSVP URL priority:

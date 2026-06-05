@@ -2,23 +2,23 @@
 
 Wedding registry keys:
 
-- `host_info` -> `CoupleInfoSection`
-- `countdown` -> `CountdownSection`
-- `music_effects` -> `MusicEffectsSection`
-- `main_event` -> `CeremonySection`
-- `venue` -> `VenueSection`
-- `secondary_event` -> `ReceptionSection`
-- `timeline_program` -> `TimelineProgramSection`
-- `entourage` -> `EntourageSection`
-- `principal_sponsors` -> `PrincipalSponsorsSection`
-- `attire_motif` -> `AttireMotifSection`
-- `extra_info` -> `ExtraInfoSection`
-- `gallery` -> `GallerySection`
-- `rsvp_form` -> `RsvpCallToActionSection`
-- `gift_details` -> `GiftDetailsSection`
-- `guestbook` -> `GuestbookSection`
-- `story_message` -> `LoveStorySection`
-- `contact_socials` -> `ContactFooterSection`
+- `host_info` -> platform Couple Info section
+- `countdown` -> platform Countdown section
+- `music_effects` -> platform Music section
+- `main_event` -> platform Ceremony section
+- `venue` -> platform Venue section
+- `secondary_event` -> platform Reception section
+- `timeline_program` -> platform Timeline section
+- `entourage` -> platform Entourage section
+- `principal_sponsors` -> platform Principal Sponsors section
+- `attire_motif` -> platform Attire section
+- `extra_info` -> platform Extra Info section
+- `gallery` -> future platform-supported gallery foundation
+- `rsvp_form` -> platform RSVP CTA-only section
+- `gift_details` -> platform Gift Details section
+- `guestbook` -> platform Guestbook section
+- `story_message` -> platform Love Story section
+- `contact_socials` -> platform Contact/Socials footer section
 
 Required sections: `host_info`, `main_event`, `venue`, `rsvp_form`.
 
@@ -30,7 +30,7 @@ Future keys visible in platform config but not implemented here: `overview`, `st
 
 Live mode renders enabled sections in API order, hides empty optional sections, and skips unknown keys safely.
 
-The starter default should remain close to the main platform wedding preview flow:
+The starter default must use the same general section/card rhythm as the main platform wedding preview flow:
 
 - Couple Info
 - Countdown
@@ -62,15 +62,15 @@ The platform section keys above are protected. Do not rename them for design wor
 
 Stable anchor mapping:
 
-- `host_info` -> `#couple`
+- `host_info` -> `data-preview-section="host_info"`
 - `countdown` -> `#countdown`
-- `main_event` -> `#ceremony`
-- `venue` -> `#venue`
-- `secondary_event` -> `#reception`
-- `timeline_program` -> `#timeline`
-- `attire_motif` -> `#attire`
-- `gallery` -> `#gallery`
-- `gift_details` -> `#gifts`
-- `guestbook` -> `#messages`
+- `main_event` -> `data-preview-section="main_event"`
+- `venue` -> `data-preview-section="venue"`
+- `secondary_event` -> `data-preview-section="secondary_event"`
+- `timeline_program` -> `data-preview-section="timeline_program"`
+- `attire_motif` -> `data-preview-section="attire_motif"`
+- `gallery` -> future platform-supported anchor only when implemented
+- `gift_details` -> `data-preview-section="gift_details"`
+- `guestbook` -> `data-preview-section="guestbook"`
 - `rsvp_form` -> `#rsvp`
-- `contact_socials` -> `#contact`
+- `contact_socials` -> `data-preview-section="contact_socials"`

@@ -5,12 +5,20 @@ const root = process.cwd();
 const runtimeDirs = ["src"];
 const forbidden = [
   "Tagaytay Garden Classic",
+  "Tagaytay",
   "Alex Lisa",
   "Alex & Lisa",
   "alex-lisa",
   "The Garden Hall",
   "Formal garden attire",
-  "client-specific"
+  "client-specific default theme"
+];
+const forbiddenEnvNames = [
+  "SUPABASE_SERVICE_ROLE_KEY",
+  "DATABASE_URL",
+  "RESEND_API_KEY",
+  "PAYMENT_PROVIDER_SECRET",
+  "ADMIN_SECRET"
 ];
 
 async function walk(dir) {
@@ -37,7 +45,32 @@ for (const dir of runtimeDirs) {
     for (const term of forbidden) {
       if (content.includes(term)) failures.push(`${file.replace(`${root}/`, "")}: contains "${term}"`);
     }
+    for (const term of forbiddenEnvNames) {
+      if (content.includes(term)) failures.push(`${file.replace(`${root}/`, "")}: contains forbidden env name "${term}"`);
+    }
   }
+}
+
+const appPagePath = join(root, "src", "app", "page.tsx");
+const appPage = await readFile(appPagePath, "utf8");
+
+for (const term of ["SiteShell", "SiteHeader", "SiteFooter", "SectionRenderer"]) {
+  if (appPage.includes(term)) failures.push(`src/app/page.tsx: default runtime imports or uses ${term}`);
+}
+
+for (const pattern of ["sticky top-0", "min-h-[54vh]", "min-h-[60vh]", "bg-terracotta text-white"]) {
+  if (appPage.includes(pattern)) failures.push(`src/app/page.tsx: contains landing-page runtime pattern "${pattern}"`);
+}
+
+const platformRendererPath = join(root, "src", "components", "platform", "EventWebsiteRenderer.tsx");
+const platformRenderer = await readFile(platformRendererPath, "utf8");
+
+for (const term of ["event-preview-section", "event-preview-section-anchor", "data-preview-section"]) {
+  if (!platformRenderer.includes(term)) failures.push(`src/components/platform/EventWebsiteRenderer.tsx: missing ${term}`);
+}
+
+for (const term of ["PublicRsvpResponseForm", "onSubmit", "type=\"submit\""]) {
+  if (platformRenderer.includes(term)) failures.push(`src/components/platform/EventWebsiteRenderer.tsx: contains direct RSVP submission pattern "${term}"`);
 }
 
 if (failures.length) {

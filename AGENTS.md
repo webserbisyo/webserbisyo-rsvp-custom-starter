@@ -36,6 +36,9 @@ Starter neutrality:
 - Client-specific visual themes must never be committed as starter defaults.
 - Theme presets may exist only as documented optional examples, not default runtime styles.
 - Every client custom design belongs in the cloned client repo.
-- Keep the starter close to the main platform wedding preview structure and section rhythm.
+- The default runtime must track the main platform `EventWebsiteRenderer` and public `event-preview-*` CSS baseline.
+- Do not invent a separate default starter UI, shell, marketing navbar, landing hero, or editorial layout.
+- Keep client customization layered above the protected platform renderer/data adapter baseline.
+- Extra UI libraries such as shadcn, ReactBits, Motion, GSAP, or Framer Motion belong in cloned client repos after baseline validation unless explicitly approved for the starter.
 
 Dashboard preview may pass safe query params such as `eventSlug`, `preview`, and `source`. `eventSlug` can override the configured slug only in local/design/dashboard preview contexts. Guest/live production must not show debug chrome unless design or snapshot mode is active.

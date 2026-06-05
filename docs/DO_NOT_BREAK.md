@@ -7,6 +7,9 @@ Protected files:
 - `src/lib/public-event-api.ts`
 - `src/lib/normalize-public-event.ts`
 - `src/lib/rsvp-url.ts`
+- `src/lib/platform-render-model.ts`
+- `src/components/platform/EventWebsiteRenderer.tsx`
+- `src/components/platform/PublicEventPageContent.tsx`
 - `src/config/wedding-section-registry.ts`
 - `src/types/public-event.ts`
 - `docs/DATA_CONTRACT.md`
@@ -29,6 +32,8 @@ Rules:
 - No direct header RSVP jump to the platform form; scroll to the custom RSVP section first.
 - No client-specific theme, venue, couple, visual identity, or editorial treatment as the starter default.
 - No theme preset as default runtime styling. Presets may be documented examples only.
+- No invented default starter shell, marketing navbar, landing hero, or separate renderer.
+- No UI libraries such as shadcn, ReactBits, Motion, GSAP, or Framer Motion in the starter unless explicitly approved.
 
 Protected preview behavior:
 
@@ -40,4 +45,5 @@ Protected starter shape:
 
 - The starter stays neutral and reusable.
 - Client visual design work belongs in cloned client repos.
-- Default styling should remain close to the main platform wedding preview structure.
+- Default runtime must track the main platform `EventWebsiteRenderer` public template and `event-preview-*` CSS structure.
+- The platform renderer and data adapter are protected base layers; client customization is a separate layer.
