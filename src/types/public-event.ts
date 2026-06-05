@@ -62,6 +62,7 @@ export type EventWebsiteContent = {
 
 export type PublicEventUrls = {
   rsvpUrl?: string | null;
+  rsvpEmbedUrl?: string | null;
   publicWebsiteUrl?: string | null;
   fallbackUrl?: string | null;
   [key: string]: unknown;
@@ -157,6 +158,7 @@ export type EventWebsiteRenderModel = {
   rsvpDeadlineLabel?: string | null;
   timezone?: string | null;
   publicUrl?: string | null;
+  rsvpEmbedUrl?: string | null;
   rsvpUrl: string;
   sections: NormalizedSection[];
   guestbookMessages: GuestbookMessage[];

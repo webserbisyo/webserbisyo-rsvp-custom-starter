@@ -153,6 +153,7 @@ export type PlatformRendererContext = {
   eventSlug: string;
   guestbookMessages: PlatformGuestbookMessage[];
   previewMode?: "dashboard";
+  rsvpEmbedUrl: string | null;
   rsvpUrl: string;
   sections: PlatformSectionKey[];
 };
@@ -191,6 +192,7 @@ export function buildPlatformRendererContext(event: EventWebsiteRenderModel): Pl
     eventSlug: event.eventSlug,
     guestbookMessages: normalizePlatformGuestbookMessages(event.guestbookMessages),
     previewMode: event.previewMode,
+    rsvpEmbedUrl: event.rsvpEmbedUrl ?? null,
     rsvpUrl: event.rsvpUrl,
     sections
   };

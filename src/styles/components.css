@@ -626,6 +626,33 @@
   background: #2f2822;
 }
 
+.event-website-public-page .event-preview-rsvp-embed {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  gap: 12px;
+}
+
+.event-website-public-page .event-preview-rsvp-embed-frame {
+  display: block;
+  width: 100%;
+  min-height: 760px;
+  border: 1px solid #e8e5e1;
+  border-radius: 18px;
+  background: #fff8ef;
+}
+
+.event-website-public-page .event-preview-rsvp-embed-fallback {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #7a746f;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
 .event-website-public-page .event-preview-major-divider {
   display: flex;
   align-items: center;

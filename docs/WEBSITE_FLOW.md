@@ -31,18 +31,24 @@ Gallery is a future platform-supported foundation section. In live mode, render 
 
 `contact_socials` is displayed as a footer-style section inside the same platform frame when included.
 
-The RSVP section is CTA-only and links to the central route. It does not submit directly.
+The RSVP section supports platform-owned modes only:
 
-Embedded RSVP is deferred until the main platform exposes a supported public custom frontend submission contract with validation, CSRF/rate-limit, and error handling rules. Do not copy platform server actions into custom starter or client repos.
+- `iframe`: render the official platform RSVP embed when `data.urls.rsvpEmbedUrl` exists.
+- `cta`: fall back to the central route when no embed URL is provided.
+- `future-api`: reserved until the main platform publishes a supported public custom frontend submission contract with validation, CSRF/rate-limit, and error handling rules.
+
+Do not copy platform server actions, Supabase logic, or direct RSVP submission handlers into custom starter or client repos.
 
 Default header behavior:
 
 - The starter default does not render a marketing navbar because the main platform public renderer does not.
-- The visible RSVP section contains the `Continue to RSVP Form` CTA and keeps the `#rsvp` anchor.
-- The CTA leaves the custom site for the central RSVP route only after the guest chooses to continue.
+- The visible RSVP section keeps the `#rsvp` anchor.
+- If an official embed URL exists, the RSVP form appears inside the section through an iframe.
+- If the embed URL is missing or blocked, the fallback CTA opens the central RSVP route.
 
 RSVP URL priority:
 
+- Embed iframe source: `data.urls.rsvpEmbedUrl` only.
 - `data.urls.rsvpUrl`
 - `data.rsvp.url` or compatible public RSVP URL fields
 - `{NEXT_PUBLIC_WEBSERBISYO_API_URL}/r/{slug}/rsvp`

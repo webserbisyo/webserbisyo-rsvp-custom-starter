@@ -25,6 +25,7 @@ Rules:
 - No direct RSVP submission.
 - No platform server actions copied into the starter.
 - No hidden origin exposure.
+- No `.vercel.app` iframe, CTA, canonical, or guest-facing URL.
 - No snapshot usage in live mode.
 - No fake QR or fake media in live mode.
 - No admin, billing, payment, auth, or private RSVP response logic.
@@ -32,6 +33,7 @@ Rules:
 - No query-string API base URL override.
 - No dashboard preview canonical metadata.
 - No direct header RSVP jump to the platform form; scroll to the custom RSVP section first.
+- No direct RSVP API submission until the main platform publishes an official public submission contract.
 - No client-specific theme, venue, couple, visual identity, or editorial treatment as the starter default.
 - No theme preset as default runtime styling. Presets may be documented examples only.
 - No invented default starter shell, marketing navbar, landing hero, or separate renderer.

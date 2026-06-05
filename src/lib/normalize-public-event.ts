@@ -1,4 +1,4 @@
-import { buildRsvpUrl } from "@/lib/rsvp-url";
+import { buildRsvpEmbedUrl, buildRsvpUrl } from "@/lib/rsvp-url";
 import { formatDate, formatDateTime, formatRsvpDeadline, formatTime } from "@/lib/formatters";
 import type {
   EventWebsiteRenderModel,
@@ -218,6 +218,7 @@ export function normalizePublicEvent({
     rsvpDeadlineLabel: stringValue(formatted.rsvpDeadline) || formatRsvpDeadline(rsvpDeadline, timezone),
     timezone,
     publicUrl: stringValue(urls.publicWebsiteUrl ?? event.publicUrl ?? urls.fallbackUrl ?? event.fallbackUrl),
+    rsvpEmbedUrl: buildRsvpEmbedUrl({ apiBaseUrl, eventSlug: slug, event }),
     rsvpUrl: buildRsvpUrl({ apiBaseUrl, eventSlug: slug, event }),
     sections,
     guestbookMessages: normalizeGuestbookMessages(event),

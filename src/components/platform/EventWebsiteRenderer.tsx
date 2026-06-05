@@ -23,6 +23,7 @@ type EventWebsiteRendererProps = {
   draft: PlatformRenderModel;
   guestbookMessages?: PlatformGuestbookMessage[];
   hideEmptyGuestbook?: boolean;
+  rsvpEmbedUrl?: string | null;
   rsvpUrl: string;
   sections: PlatformSectionKey[];
 };
@@ -50,6 +51,7 @@ export function EventWebsiteRenderer({
   draft,
   guestbookMessages = [],
   hideEmptyGuestbook = false,
+  rsvpEmbedUrl = null,
   rsvpUrl,
   sections
 }: EventWebsiteRendererProps) {
@@ -66,6 +68,7 @@ export function EventWebsiteRenderer({
           key={sectionKey}
           draft={draft}
           guestbookMessages={guestbookMessages}
+          rsvpEmbedUrl={rsvpEmbedUrl}
           rsvpUrl={rsvpUrl}
           sectionKey={sectionKey}
           showDivider={index > 0}
@@ -78,12 +81,14 @@ export function EventWebsiteRenderer({
 function SectionRouter({
   draft,
   guestbookMessages,
+  rsvpEmbedUrl,
   rsvpUrl,
   sectionKey,
   showDivider
 }: {
   draft: PlatformRenderModel;
   guestbookMessages: PlatformGuestbookMessage[];
+  rsvpEmbedUrl: string | null;
   rsvpUrl: string;
   sectionKey: PlatformSectionKey;
   showDivider: boolean;
@@ -103,7 +108,7 @@ function SectionRouter({
         {sectionKey === "principal_sponsors" ? <PrincipalSponsorsSection draft={draft} /> : null}
         {sectionKey === "attire_motif" ? <AttireSection draft={draft} /> : null}
         {sectionKey === "extra_info" ? <ExtraInfoSection draft={draft} /> : null}
-        {sectionKey === "rsvp_form" ? <RsvpFormSection rsvpUrl={rsvpUrl} /> : null}
+        {sectionKey === "rsvp_form" ? <RsvpFormSection rsvpEmbedUrl={rsvpEmbedUrl} rsvpUrl={rsvpUrl} /> : null}
         {sectionKey === "gift_details" ? <GiftDetailsSection draft={draft} /> : null}
         {sectionKey === "guestbook" ? (
           <GuestbookSection draft={draft} guestbookMessages={guestbookMessages} />
@@ -419,7 +424,34 @@ function ExtraInfoSection({ draft }: { draft: PlatformRenderModel }) {
   );
 }
 
-function RsvpFormSection({ rsvpUrl }: { rsvpUrl: string }) {
+function RsvpFormSection({
+  rsvpEmbedUrl,
+  rsvpUrl
+}: {
+  rsvpEmbedUrl: string | null;
+  rsvpUrl: string;
+}) {
+  const [iframeHeight, setIframeHeight] = useState(760);
+  const iframeOrigin = rsvpEmbedUrl ? getUrlOrigin(rsvpEmbedUrl) : null;
+
+  useEffect(() => {
+    if (!iframeOrigin) return;
+
+    function handleMessage(event: MessageEvent) {
+      if (event.origin !== iframeOrigin) return;
+      if (!event.data || typeof event.data !== "object") return;
+      if ((event.data as { type?: unknown }).type !== "webserbisyo:rsvp-embed:resize") return;
+
+      const height = (event.data as { height?: unknown }).height;
+
+      if (typeof height !== "number" || !Number.isFinite(height)) return;
+      setIframeHeight(Math.min(2200, Math.max(560, Math.ceil(height))));
+    }
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, [iframeOrigin]);
+
   return (
     <section className="event-preview-section">
       <SectionLabel>RSVP</SectionLabel>
@@ -427,17 +459,51 @@ function RsvpFormSection({ rsvpUrl }: { rsvpUrl: string }) {
       <p className="event-preview-copy">
         Please confirm your attendance through the secure WebSerbisyo RSVP form so the hosts can prepare your seat and celebration details.
       </p>
-      <div className="event-preview-rsvp-card event-preview-rsvp-state">
-        <div className="event-preview-rsvp-state-copy">
-          <h4>Ready to respond?</h4>
-          <p>The RSVP form opens on the official WebSerbisyo RSVP route.</p>
+      {rsvpEmbedUrl ? (
+        <div className="event-preview-rsvp-embed">
+          <iframe
+            className="event-preview-rsvp-embed-frame"
+            title="WebSerbisyo RSVP form"
+            src={rsvpEmbedUrl}
+            sandbox="allow-forms allow-same-origin allow-scripts"
+            referrerPolicy="strict-origin-when-cross-origin"
+            loading="lazy"
+            style={{ height: iframeHeight }}
+          />
+          <div className="event-preview-rsvp-embed-fallback">
+            <span>Having trouble loading the form?</span>
+            <a className="event-preview-button" href={rsvpUrl}>
+              Open RSVP Form
+            </a>
+          </div>
         </div>
-        <a className="event-preview-submit-button event-preview-button" href={rsvpUrl}>
-          Continue to RSVP Form
-        </a>
-      </div>
+      ) : (
+        <RsvpCtaCard rsvpUrl={rsvpUrl} />
+      )}
     </section>
   );
+}
+
+function RsvpCtaCard({ rsvpUrl }: { rsvpUrl: string }) {
+  return (
+    <div className="event-preview-rsvp-card event-preview-rsvp-state">
+      <div className="event-preview-rsvp-state-copy">
+        <h4>Ready to respond?</h4>
+        <p>The RSVP form opens on the official WebSerbisyo RSVP route.</p>
+      </div>
+      <a className="event-preview-submit-button event-preview-button" href={rsvpUrl}>
+        Continue to RSVP Form
+      </a>
+    </div>
+  );
+}
+
+function getUrlOrigin(value: string): string | null {
+  try {
+    return new URL(value).origin;
+  } catch {
+    return null;
+  }
 }
 
 function GiftDetailsSection({ draft }: { draft: PlatformRenderModel }) {

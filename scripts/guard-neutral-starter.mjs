@@ -87,6 +87,28 @@ for (const term of ["@/server/", "@/server", "server/actions", "server/queries"]
   if (platformRenderer.includes(term)) failures.push(`src/components/platform/EventWebsiteRenderer.tsx: contains platform-owned server import pattern "${term}"`);
 }
 
+for (const term of ["PublicRsvpResponseForm", "submitRsvpResponseAction", "@supabase/", "@supabase"]) {
+  for (const file of await walk(join(root, "src"))) {
+    const content = await readFile(file, "utf8");
+    if (content.includes(term)) failures.push(`${file.replace(`${root}/`, "")}: contains forbidden RSVP/backend pattern "${term}"`);
+  }
+}
+
+const rsvpUrlPath = join(root, "src", "lib", "rsvp-url.ts");
+const rsvpUrl = await readFile(rsvpUrlPath, "utf8");
+
+if (!rsvpUrl.includes("isVercelUrl")) {
+  failures.push("src/lib/rsvp-url.ts: RSVP embed URLs must reject .vercel.app origins");
+}
+
+if (platformRenderer.includes(".vercel.app")) {
+  failures.push("src/components/platform/EventWebsiteRenderer.tsx: iframe source must not allow .vercel.app origins");
+}
+
+if (platformRenderer.includes("<iframe") && !platformRenderer.includes("src={rsvpEmbedUrl}")) {
+  failures.push("src/components/platform/EventWebsiteRenderer.tsx: RSVP iframe must use normalized rsvpEmbedUrl only");
+}
+
 if (failures.length) {
   console.error("Neutral starter guard failed:");
   for (const failure of failures) console.error(`- ${failure}`);
