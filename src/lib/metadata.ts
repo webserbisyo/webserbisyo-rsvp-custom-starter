@@ -14,10 +14,11 @@ export function safePublicCanonicalUrl(value?: string | null): string | undefine
 }
 
 export function buildPageTitle(event?: EventWebsiteRenderModel): string {
-  return event?.title ? `${event.title} | WebSerbisyo RSVP` : "WebSerbisyo RSVP Event";
+  const displayName = event?.coupleDisplayName || event?.title;
+  return displayName ? `${displayName} | WebSerbisyo RSVP` : "WebSerbisyo RSVP Event";
 }
 
 export function buildPageDescription(event?: EventWebsiteRenderModel): string {
   if (!event) return "A public event website powered by WebSerbisyo RSVP.";
-  return `Public event website for ${event.title}.`;
+  return `Public event website for ${event.coupleDisplayName || event.title}.`;
 }

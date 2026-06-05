@@ -2,6 +2,8 @@
 
 Section order comes from the public API. The starter must not hardcode a live default order.
 
+The starter should remain close to the main platform wedding preview structure. It should read as a neutral reusable base, not as a finished client theme.
+
 Required wedding sections are `host_info`, `main_event`, `venue`, and `rsvp_form`.
 
 Optional sections render only when enabled and non-empty in live mode.
@@ -24,6 +26,8 @@ The reusable wedding flow should preserve the full custom website experience, no
 - Love Story
 - RSVP CTA section
 - Contact / Footer
+
+Gallery is a future platform-supported foundation section. In live mode, render it only when the public API provides real gallery images. Design mode may include an empty gallery note for implementation review.
 
 `contact_socials` is displayed as a footer-style section when included. The platform may not force it last, so `SectionRenderer` collects it and renders it after main sections.
 

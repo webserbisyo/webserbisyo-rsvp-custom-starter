@@ -27,9 +27,17 @@ Rules:
 - No query-string API base URL override.
 - No dashboard preview canonical metadata.
 - No direct header RSVP jump to the platform form; scroll to the custom RSVP section first.
+- No client-specific theme, venue, couple, visual identity, or editorial treatment as the starter default.
+- No theme preset as default runtime styling. Presets may be documented examples only.
 
 Protected preview behavior:
 
 - `eventSlug` query override is allowed only for local/design/dashboard preview contexts.
 - `preview=dashboard` or `source=dashboard` may show `Custom Preview`.
 - Hidden custom frontend origins must stay out of UI, metadata, and public env.
+
+Protected starter shape:
+
+- The starter stays neutral and reusable.
+- Client visual design work belongs in cloned client repos.
+- Default styling should remain close to the main platform wedding preview structure.

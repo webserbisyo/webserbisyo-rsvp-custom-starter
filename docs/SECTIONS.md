@@ -30,6 +30,27 @@ Future keys visible in platform config but not implemented here: `overview`, `st
 
 Live mode renders enabled sections in API order, hides empty optional sections, and skips unknown keys safely.
 
+The starter default should remain close to the main platform wedding preview flow:
+
+- Couple Info
+- Countdown
+- Music & Effects
+- Ceremony
+- Venue
+- Reception
+- Timeline / Program
+- Entourage
+- Principal Sponsors
+- Attire / Motif
+- Extra Info
+- Gift Details
+- Guestbook
+- Love Story
+- RSVP CTA
+- Contact/Footer
+
+Gallery is future platform-supported. Keep the foundation section, but do not render Gallery in live mode unless the public API provides real gallery data. Design mode may show an empty gallery note for review.
+
 Current supported order sources, in priority order:
 
 - `data.sections` as an ordered string array.

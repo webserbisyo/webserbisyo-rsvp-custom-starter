@@ -8,63 +8,12 @@
 }
 
 .countdown-card::after {
-  position: absolute;
-  inset: 18%;
-  z-index: 0;
-  border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent);
-  border-radius: 999px;
-  content: "";
-  opacity: 0.28;
-  animation: countdown-pulse 3.6s ease-in-out infinite;
+  content: none;
 }
 
 .countdown-card > * {
   position: relative;
   z-index: 1;
-}
-
-.countdown-number {
-  animation: countdown-lift 2.8s ease-in-out infinite;
-}
-
-.countdown-progress {
-  transform-origin: left center;
-  animation: countdown-progress 6s ease-in-out infinite;
-}
-
-@keyframes countdown-pulse {
-  0%,
-  100% {
-    opacity: 0.18;
-    transform: scale(0.94);
-  }
-
-  50% {
-    opacity: 0.38;
-    transform: scale(1.04);
-  }
-}
-
-@keyframes countdown-lift {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-3px);
-  }
-}
-
-@keyframes countdown-progress {
-  0%,
-  100% {
-    transform: scaleX(0.18);
-  }
-
-  50% {
-    transform: scaleX(1);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

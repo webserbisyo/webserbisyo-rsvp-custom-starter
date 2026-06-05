@@ -80,7 +80,7 @@
       "venue": {
         "enabled": true,
         "content": {
-          "name": "The Garden Hall",
+          "name": "Sample Events Place",
           "address": "123 Sample Avenue, Makati City",
           "mapsUrl": "https://maps.google.com",
           "note": "Parking is available near the main entrance."
@@ -91,7 +91,7 @@
         "content": {
           "label": "Reception",
           "dateTime": "2026-10-18T18:00:00+08:00",
-          "venue": "The Garden Hall Ballroom",
+          "venue": "Sample Events Place Reception Hall",
           "note": "Dinner and program follow after cocktails."
         }
       },
@@ -123,7 +123,7 @@
       "attire_motif": {
         "enabled": true,
         "content": {
-          "dressCode": "Formal garden attire",
+          "dressCode": "Formal wedding attire",
           "motif": "Terracotta, cocoa, and ivory",
           "notes": "Please avoid white and very bright neon colors."
         }

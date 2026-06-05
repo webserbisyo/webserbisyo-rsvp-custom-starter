@@ -1,14 +1,14 @@
 :root {
   --background: #fffaf1;
   --surface: #ffffff;
-  --surface-muted: #fbf2e7;
+  --surface-muted: #f8efe3;
   --text: #302722;
   --text-muted: #725d4f;
   --primary: #b8644a;
   --primary-foreground: #ffffff;
-  --sage: #8a9a78;
+  --sage: #8f8a80;
   --sage-foreground: #ffffff;
-  --gold: #c99a45;
+  --gold: #b99466;
   --border: rgba(92, 70, 56, 0.14);
   --focus: #b8644a;
   --success: #4f7d5a;

@@ -29,13 +29,14 @@ Token families:
 Default starter tone:
 
 - ivory base
-- sage support
 - terracotta primary
-- gold accent
+- clean white/linen cards
+- centered invitation sections
+- restrained platform-preview rhythm
 
-Keep client-specific design work token-driven before changing component color classes. Countdown animation uses CSS only and must respect `prefers-reduced-motion`.
+The starter runtime must not ship a client-specific default theme. Client-specific visual direction belongs only in cloned client repos, and should be token-driven before changing component color classes.
 
-Future preset names:
+Optional preset examples may be documented for future client repos, but must not become starter defaults:
 
 - `tagaytay-garden-classic`
 - `filipiniana-ivory`

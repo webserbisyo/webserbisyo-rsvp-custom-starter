@@ -11,6 +11,8 @@ Client repos may customize:
 - Client-specific token presets
 - Client-approved public gallery styling after platform/API gallery data exists
 
+Every client custom design belongs in the cloned client repo. Do not commit client-specific visual identity, venue language, couple names, theme names, or one-off editorial layout back into this reusable starter.
+
 Client repos must not customize:
 
 - Public API path
@@ -25,3 +27,5 @@ Client repos must not customize:
 Keep the starter contract intact. If a platform section key changes, update registry, docs, types, and normalizer together.
 
 Do not hardcode couple names, dates, venues, sponsors, gifts, photos, QR images, or contact details in reusable starter components. Use the public API render model and theme tokens instead.
+
+Theme presets may exist only as documented optional examples. They must not be imported, selected, or applied as default runtime styles in the starter.

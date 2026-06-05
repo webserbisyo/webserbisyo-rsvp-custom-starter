@@ -30,4 +30,12 @@ Always use the central RSVP route for v1.
 Always customize themes through CSS variables/tokens before changing component colors.
 Always run typecheck, lint, and build before delivery.
 
+Starter neutrality:
+
+- The starter must stay a neutral reusable WebSerbisyo wedding base.
+- Client-specific visual themes must never be committed as starter defaults.
+- Theme presets may exist only as documented optional examples, not default runtime styles.
+- Every client custom design belongs in the cloned client repo.
+- Keep the starter close to the main platform wedding preview structure and section rhythm.
+
 Dashboard preview may pass safe query params such as `eventSlug`, `preview`, and `source`. `eventSlug` can override the configured slug only in local/design/dashboard preview contexts. Guest/live production must not show debug chrome unless design or snapshot mode is active.

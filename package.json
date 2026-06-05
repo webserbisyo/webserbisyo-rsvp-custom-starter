@@ -9,6 +9,8 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
+    "guard:neutral-starter": "node scripts/guard-neutral-starter.mjs",
+    "validate": "npm run guard:neutral-starter && npm run typecheck && npm run lint && npm run build",
     "prefetch:event": "tsx scripts/prefetch-event.ts"
   },
   "repository": {

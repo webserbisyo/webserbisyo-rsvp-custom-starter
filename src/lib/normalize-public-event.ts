@@ -39,6 +39,14 @@ function arrayOfRecords(value: unknown): Record<string, unknown>[] {
   return value.filter((item): item is Record<string, unknown> => Boolean(item && typeof item === "object" && !Array.isArray(item)));
 }
 
+function firstString(...values: unknown[]): string {
+  for (const value of values) {
+    const next = stringValue(value);
+    if (next) return next;
+  }
+  return "";
+}
+
 function sectionFromObject(key: string, value: unknown, enabledOverride?: boolean): NormalizedSection {
   const section = record(value);
   const ownEnabled = boolValue(section.enabled ?? section.isEnabled ?? section.visible);
@@ -148,15 +156,33 @@ function normalizeAssets(event: PublicEventDto): Record<string, PublicMediaAsset
   return output;
 }
 
+function personName(value: unknown): string {
+  const person = record(value);
+  return firstString(
+    person.displayName,
+    person.fullName,
+    [stringValue(person.firstName), stringValue(person.lastName)].filter(Boolean).join(" "),
+    person.name
+  );
+}
+
+function joinedCoupleNames(content: Record<string, unknown>): string {
+  const groomName = firstString(content.groomName, content.groom, personName(content.groom));
+  const brideName = firstString(content.brideName, content.bride, personName(content.bride));
+  return groomName && brideName ? `${groomName} & ${brideName}` : groomName || brideName;
+}
+
 function normalizeCoupleDisplayName(sections: NormalizedSection[], fallbackTitle: string): string {
   const hostInfo = sections.find((section) => section.key === "host_info");
   const content = hostInfo?.content ?? {};
   return (
+    firstString(content.displayAs, record(content.host_info).displayAs, record(content.hostInfo).displayAs) ||
+    joinedCoupleNames(content) ||
     stringValue(content.coupleNames) ||
     stringValue(content.names) ||
     stringValue(content.displayName) ||
-    stringValue(content.title) ||
-    fallbackTitle
+    fallbackTitle ||
+    "WebSerbisyo RSVP Event"
   );
 }
 
@@ -168,8 +194,10 @@ export function normalizePublicEvent({
   eventSlug
 }: NormalizeInput): EventWebsiteRenderModel {
   const slug = stringValue(event.slug ?? event.eventSlug) || eventSlug;
-  const title = stringValue(event.title ?? event.name) || "WebSerbisyo RSVP Event";
   const sections = normalizeSections(event);
+  const eventTitle = stringValue(event.title ?? event.name);
+  const coupleDisplayName = normalizeCoupleDisplayName(sections, eventTitle);
+  const title = coupleDisplayName || eventTitle || "WebSerbisyo RSVP Event";
   const urls = record(event.urls);
   const formatted = record(event.formatted);
   const eventDate = stringValue(event.eventDate ?? event.date);
@@ -181,7 +209,7 @@ export function normalizePublicEvent({
     previewMode,
     eventSlug: slug,
     title,
-    coupleDisplayName: normalizeCoupleDisplayName(sections, title),
+    coupleDisplayName,
     status: event.status,
     eventDate,
     eventDateLabel: stringValue(formatted.eventDate) || formatDate(eventDate, timezone),
