@@ -33,6 +33,8 @@ Gallery is a future platform-supported foundation section. In live mode, render 
 
 The RSVP section is CTA-only and links to the central route. It does not submit directly.
 
+Embedded RSVP is deferred until the main platform exposes a supported public custom frontend submission contract with validation, CSRF/rate-limit, and error handling rules. Do not copy platform server actions into custom starter or client repos.
+
 Default header behavior:
 
 - The starter default does not render a marketing navbar because the main platform public renderer does not.

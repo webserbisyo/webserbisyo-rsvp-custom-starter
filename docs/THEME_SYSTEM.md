@@ -46,4 +46,6 @@ Optional preset examples may be documented for future client repos, but must not
 
 Client repos may override tokens for approved design direction. Platform section keys and data parsing must not be changed for theme work.
 
+`lucide-react` is allowed in the starter only because it matches the platform visual baseline and is isolated behind `src/components/platform/platform-icons.tsx`.
+
 Do not install or import shadcn, ReactBits, Motion, GSAP, or Framer Motion in the starter default. Client repos may add those libraries after the platform baseline works and the customization notes document the contract risks.

@@ -2,6 +2,17 @@
 
 /* eslint-disable @next/next/no-img-element -- Public media hosts are controlled by the platform API; broad next/image remotePatterns are intentionally avoided in the starter. */
 import { useEffect, useMemo, useState } from "react";
+import {
+  PlatformCalendarIcon,
+  PlatformGiftIcon,
+  PlatformMailIcon,
+  PlatformMapPinIcon,
+  PlatformMessageIcon,
+  PlatformMusicIcon,
+  PlatformPhoneIcon,
+  PlatformPlayIcon,
+  PlatformUsersIcon
+} from "@/components/platform/platform-icons";
 import type {
   PlatformGuestbookMessage,
   PlatformRenderModel,
@@ -177,7 +188,7 @@ function MusicSection({ draft }: { draft: PlatformRenderModel }) {
       <SectionLabel>Music</SectionLabel>
       <div className="event-preview-music-card">
         <div className="event-preview-music-icon" aria-hidden="true">
-          Music
+          <PlatformMusicIcon className="size-4" />
         </div>
         <div className="event-preview-music-copy">
           <h4>{title}</h4>
@@ -185,12 +196,12 @@ function MusicSection({ draft }: { draft: PlatformRenderModel }) {
         </div>
         {musicLink ? (
           <a className="event-preview-button event-preview-music-button" href={musicLink} target="_blank" rel="noreferrer">
-            <span aria-hidden="true">Play</span>
+            <PlatformPlayIcon className="size-3.5" />
             {buttonLabel}
           </a>
         ) : (
           <button className="event-preview-button event-preview-music-button" type="button" disabled>
-            <span aria-hidden="true">Play</span>
+            <PlatformPlayIcon className="size-3.5" />
             {buttonLabel}
           </button>
         )}
@@ -243,7 +254,7 @@ function VenueSection({ draft }: { draft: PlatformRenderModel }) {
       <h3>{venue.venueName.trim() || "Venue"}</h3>
       {venue.address.trim() ? (
         <p className="event-preview-address-copy">
-          <span aria-hidden="true">Map</span>
+          <PlatformMapPinIcon className="size-4" />
           <span className="event-preview-address-text">{venue.address}</span>
         </p>
       ) : null}
@@ -278,7 +289,7 @@ function ReceptionSection({ draft }: { draft: PlatformRenderModel }) {
       <h3>{values.title.trim() || "Reception"}</h3>
       {[startTime, endTime].some(Boolean) ? (
         <div className="event-preview-inline-card">
-          <span aria-hidden="true">Time</span>
+          <PlatformCalendarIcon className="size-4" />
           <span>{[startTime, endTime].filter(Boolean).join(" - ")}</span>
         </div>
       ) : null}
@@ -414,12 +425,12 @@ function RsvpFormSection({ rsvpUrl }: { rsvpUrl: string }) {
       <SectionLabel>RSVP</SectionLabel>
       <h3>Confirm Your Attendance</h3>
       <p className="event-preview-copy">
-        Please confirm your attendance through the official WebSerbisyo RSVP form so the hosts can prepare your seat and celebration details.
+        Please confirm your attendance through the secure WebSerbisyo RSVP form so the hosts can prepare your seat and celebration details.
       </p>
       <div className="event-preview-rsvp-card event-preview-rsvp-state">
         <div className="event-preview-rsvp-state-copy">
           <h4>Ready to respond?</h4>
-          <p>The RSVP form opens on the central event route.</p>
+          <p>The RSVP form opens on the official WebSerbisyo RSVP route.</p>
         </div>
         <a className="event-preview-submit-button event-preview-button" href={rsvpUrl}>
           Continue to RSVP Form
@@ -494,7 +505,7 @@ function GuestbookMessageCard({ message }: { message: PlatformGuestbookMessage }
     <article className="event-preview-message-card">
       <div className="event-preview-message-card-inner">
         <span className="event-preview-message-icon" aria-hidden="true">
-          Note
+          <PlatformMessageIcon className="size-4" />
         </span>
         <div className="event-preview-message-body">
           <strong>{message.guestName}</strong>
@@ -557,19 +568,19 @@ function ContactSocialsSection({ draft }: { draft: PlatformRenderModel }) {
       <div className="event-preview-footer-card">
         {contactPerson ? (
           <span className="event-preview-footer-line">
-            <span aria-hidden="true">Contact</span>
+            <PlatformUsersIcon className="size-4" />
             <span className="event-preview-footer-text">{contactPerson}</span>
           </span>
         ) : null}
         {contactNumber ? (
           <span className="event-preview-footer-line">
-            <span aria-hidden="true">Phone</span>
+            <PlatformPhoneIcon className="size-4" />
             <span className="event-preview-footer-text">{contactNumber}</span>
           </span>
         ) : null}
         {email ? (
           <span className="event-preview-footer-line">
-            <span aria-hidden="true">Email</span>
+            <PlatformMailIcon className="size-4" />
             <span className="event-preview-footer-text">{email}</span>
           </span>
         ) : null}
@@ -591,8 +602,8 @@ function ContactSocialsSection({ draft }: { draft: PlatformRenderModel }) {
 function GiftPreviewMedia({ option }: { option: { imageAlt: string; imageUrl: string; title: string } }) {
   if (!option.imageUrl) {
     return (
-      <div className="event-preview-gift-placeholder">
-        <span>No image provided</span>
+      <div className="event-preview-gift-placeholder" aria-hidden="true">
+        <PlatformGiftIcon className="size-5" />
       </div>
     );
   }
@@ -614,7 +625,9 @@ function SectionLabel({ children }: { children: string }) {
 function MajorDivider() {
   return (
     <div className="event-preview-major-divider" aria-hidden="true">
-      <span />
+      <span className="event-preview-major-divider-line" />
+      <span className="event-preview-major-divider-marker" />
+      <span className="event-preview-major-divider-line" />
     </div>
   );
 }

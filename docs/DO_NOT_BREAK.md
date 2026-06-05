@@ -10,6 +10,7 @@ Protected files:
 - `src/lib/platform-render-model.ts`
 - `src/components/platform/EventWebsiteRenderer.tsx`
 - `src/components/platform/PublicEventPageContent.tsx`
+- `src/components/platform/platform-icons.tsx`
 - `src/config/wedding-section-registry.ts`
 - `src/types/public-event.ts`
 - `docs/DATA_CONTRACT.md`
@@ -22,6 +23,7 @@ Rules:
 - No Supabase packages.
 - No placeholders in live mode.
 - No direct RSVP submission.
+- No platform server actions copied into the starter.
 - No hidden origin exposure.
 - No snapshot usage in live mode.
 - No fake QR or fake media in live mode.
@@ -34,6 +36,7 @@ Rules:
 - No theme preset as default runtime styling. Presets may be documented examples only.
 - No invented default starter shell, marketing navbar, landing hero, or separate renderer.
 - No UI libraries such as shadcn, ReactBits, Motion, GSAP, or Framer Motion in the starter unless explicitly approved.
+- `lucide-react` is allowed only for platform visual parity and only behind `src/components/platform/platform-icons.tsx`.
 
 Protected preview behavior:
 
@@ -47,3 +50,4 @@ Protected starter shape:
 - Client visual design work belongs in cloned client repos.
 - Default runtime must track the main platform `EventWebsiteRenderer` public template and `event-preview-*` CSS structure.
 - The platform renderer and data adapter are protected base layers; client customization is a separate layer.
+- User-entered/client-entered text must wrap safely and never overflow its card or pill.

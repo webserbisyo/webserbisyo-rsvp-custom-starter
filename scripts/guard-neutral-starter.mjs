@@ -64,13 +64,27 @@ for (const pattern of ["sticky top-0", "min-h-[54vh]", "min-h-[60vh]", "bg-terra
 
 const platformRendererPath = join(root, "src", "components", "platform", "EventWebsiteRenderer.tsx");
 const platformRenderer = await readFile(platformRendererPath, "utf8");
+const platformIconsPath = join(root, "src", "components", "platform", "platform-icons.tsx");
+const platformIcons = await readFile(platformIconsPath, "utf8");
 
 for (const term of ["event-preview-section", "event-preview-section-anchor", "data-preview-section"]) {
   if (!platformRenderer.includes(term)) failures.push(`src/components/platform/EventWebsiteRenderer.tsx: missing ${term}`);
 }
 
-for (const term of ["PublicRsvpResponseForm", "onSubmit", "type=\"submit\""]) {
+if (!platformIcons.includes("lucide-react")) {
+  failures.push("src/components/platform/platform-icons.tsx: must own the lucide-react import");
+}
+
+if (platformRenderer.includes("lucide-react")) {
+  failures.push("src/components/platform/EventWebsiteRenderer.tsx: import icons from platform-icons.tsx, not lucide-react");
+}
+
+for (const term of ["PublicRsvpResponseForm", "submitRsvpResponseAction", "onSubmit", "type=\"submit\""]) {
   if (platformRenderer.includes(term)) failures.push(`src/components/platform/EventWebsiteRenderer.tsx: contains direct RSVP submission pattern "${term}"`);
+}
+
+for (const term of ["@/server/", "@/server", "server/actions", "server/queries"]) {
+  if (platformRenderer.includes(term)) failures.push(`src/components/platform/EventWebsiteRenderer.tsx: contains platform-owned server import pattern "${term}"`);
 }
 
 if (failures.length) {

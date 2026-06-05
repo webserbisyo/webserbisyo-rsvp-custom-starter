@@ -16,4 +16,6 @@ Design mode may render clearly marked demo media placeholders. Live mode must ne
 
 If a live gift option has text but no QR/image, render text-only or a neutral missing-media slot. Do not generate a QR in this repo.
 
+The default gift missing-media slot should match the platform dashed/icon placeholder. It is a neutral missing-media state, not a fake QR or photo.
+
 Media primitives live in `src/components/media`. Asset normalization helpers live in `src/lib/assets.ts`.

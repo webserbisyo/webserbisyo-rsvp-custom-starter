@@ -11,6 +11,7 @@ Client repos may customize:
 - Client-specific token presets
 - Client-approved public gallery styling after platform/API gallery data exists
 - Optional UI libraries after the starter baseline is validated
+- Icon swaps through the platform icon adapter
 
 Every client custom design belongs in the cloned client repo. Do not commit client-specific visual identity, venue language, couple names, theme names, or one-off editorial layout back into this reusable starter.
 
@@ -36,3 +37,5 @@ Do not hardcode couple names, dates, venues, sponsors, gifts, photos, QR images,
 Theme presets may exist only as documented optional examples. They must not be imported, selected, or applied as default runtime styles in the starter.
 
 Libraries such as shadcn, ReactBits, Motion, GSAP, and Framer Motion may be added in cloned client repos after baseline acceptance. Library usage must not change API fetching, section order, visibility logic, RSVP URL behavior, metadata safety, or live placeholder rules.
+
+Do not import icon libraries directly in protected renderer files. Swap or extend icons through `src/components/platform/platform-icons.tsx`.

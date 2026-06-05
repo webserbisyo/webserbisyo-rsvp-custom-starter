@@ -30,6 +30,8 @@ Future keys visible in platform config but not implemented here: `overview`, `st
 
 Live mode renders enabled sections in API order, hides empty optional sections, and skips unknown keys safely.
 
+Section text comes from clients and guests. Cards, pills, and footer lines must preserve the platform look while allowing long names, notes, and messages to wrap safely.
+
 The starter default must use the same general section/card rhythm as the main platform wedding preview flow:
 
 - Couple Info

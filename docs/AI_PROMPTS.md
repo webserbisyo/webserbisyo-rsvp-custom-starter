@@ -8,6 +8,8 @@ Read `AGENTS.md`, `docs/DO_NOT_BREAK.md`, `docs/DATA_CONTRACT.md`, `docs/SECTION
 
 Read the main platform `EventWebsiteRenderer`, public page wrapper, render model, public event DTO builder, and public `event-preview-*` CSS before changing runtime structure. The starter default must track that platform renderer. Do not invent a starter-only shell, marketing navbar, hero layout, direct RSVP form, or client theme.
 
+Icon polish must go through `src/components/platform/platform-icons.tsx`. Do not import icon libraries directly in the renderer.
+
 ## Adding a section
 
 Read `AGENTS.md`, `docs/DO_NOT_BREAK.md`, `docs/DATA_CONTRACT.md`, `docs/SECTIONS.md`, and `docs/ARCHITECTURE.md`. Add the section only if the platform key exists. Update registry, types, docs, visibility handling, and tests/checks. Unknown keys must remain safe.
@@ -19,6 +21,10 @@ Read `AGENTS.md`, `docs/DO_NOT_BREAK.md`, `docs/DATA_CONTRACT.md`, `docs/SECTION
 ## Media or gift QR edits
 
 Read `docs/ASSET_SYSTEM.md` and `docs/MEDIA_GUIDE.md`. Demo media is allowed only in design mode. Live mode must render real public media from the platform or text-only/neutral missing-media UI.
+
+## RSVP edits
+
+Starter RSVP is CTA-only for v1 and links to the central WebSerbisyo RSVP route. Do not copy platform server actions, `PublicRsvpResponseForm`, Supabase logic, or direct submission handlers. Embedded RSVP requires a future official public submission API contract.
 
 ## Preparing a per-client custom repo
 

@@ -10,6 +10,7 @@ Gift QR rules:
 - Snapshot mode may render QR URLs present in the snapshot.
 - Live mode may render only real QR/media URLs from the public API or public client repo assets.
 - Live mode must not invent QR codes.
+- Missing live gift media should use the neutral platform dashed/icon placeholder or render text-only gift information. It must not imply that a QR/photo exists.
 
 Accessibility:
 
