@@ -25,7 +25,7 @@ Client repos must not customize:
 - Backend/database/auth/payment/admin logic
 - Hidden custom origin exposure
 - Live placeholder behavior
-- RSVP anchor and CTA behavior
+- RSVP anchor and local scroll behavior
 - Query-string API base URL behavior
 - Platform renderer baseline behavior
 - Platform data adapter behavior
@@ -36,6 +36,8 @@ Do not hardcode couple names, dates, venues, sponsors, gifts, photos, QR images,
 
 Theme presets may exist only as documented optional examples. They must not be imported, selected, or applied as default runtime styles in the starter.
 
-Libraries such as shadcn, ReactBits, Motion, GSAP, and Framer Motion may be added in cloned client repos after baseline acceptance. Library usage must not change API fetching, section order, visibility logic, RSVP URL behavior, metadata safety, or live placeholder rules.
+Libraries such as shadcn, ReactBits, Motion, GSAP, and Framer Motion may be added in cloned client repos after baseline acceptance. Library usage must not change API fetching, section order, visibility logic, inline RSVP behavior, metadata safety, or live placeholder rules.
+
+Future client clones may add a local frontend `/rsvp` page only as a clone-specific layout decision. That optional page must remain frontend-local and must not depend on removed platform RSVP routes.
 
 Do not import icon libraries directly in protected renderer files. Swap or extend icons through `src/components/platform/platform-icons.tsx`.

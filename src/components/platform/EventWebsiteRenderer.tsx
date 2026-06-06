@@ -13,6 +13,7 @@ import {
   PlatformPlayIcon,
   PlatformUsersIcon
 } from "@/components/platform/platform-icons";
+import { RSVP_FORM_ID, RSVP_SECTION_ID } from "@/lib/rsvp-url";
 import type {
   PlatformGuestbookMessage,
   PlatformRenderModel,
@@ -23,8 +24,6 @@ type EventWebsiteRendererProps = {
   draft: PlatformRenderModel;
   guestbookMessages?: PlatformGuestbookMessage[];
   hideEmptyGuestbook?: boolean;
-  rsvpEmbedUrl?: string | null;
-  rsvpUrl: string;
   sections: PlatformSectionKey[];
 };
 
@@ -51,8 +50,6 @@ export function EventWebsiteRenderer({
   draft,
   guestbookMessages = [],
   hideEmptyGuestbook = false,
-  rsvpEmbedUrl = null,
-  rsvpUrl,
   sections
 }: EventWebsiteRendererProps) {
   const visibleSections = sections.filter(
@@ -68,8 +65,6 @@ export function EventWebsiteRenderer({
           key={sectionKey}
           draft={draft}
           guestbookMessages={guestbookMessages}
-          rsvpEmbedUrl={rsvpEmbedUrl}
-          rsvpUrl={rsvpUrl}
           sectionKey={sectionKey}
           showDivider={index > 0}
         />
@@ -81,22 +76,18 @@ export function EventWebsiteRenderer({
 function SectionRouter({
   draft,
   guestbookMessages,
-  rsvpEmbedUrl,
-  rsvpUrl,
   sectionKey,
   showDivider
 }: {
   draft: PlatformRenderModel;
   guestbookMessages: PlatformGuestbookMessage[];
-  rsvpEmbedUrl: string | null;
-  rsvpUrl: string;
   sectionKey: PlatformSectionKey;
   showDivider: boolean;
 }) {
   return (
     <>
       {showDivider ? <MajorDivider /> : null}
-      <div className="event-preview-section-anchor" data-preview-section={sectionKey} id={sectionKey === "rsvp_form" ? "rsvp" : undefined}>
+      <div className="event-preview-section-anchor" data-preview-section={sectionKey} id={sectionKey === "rsvp_form" ? RSVP_SECTION_ID : undefined}>
         {sectionKey === "host_info" ? <CoupleInfoSection draft={draft} /> : null}
         {sectionKey === "countdown" ? <CountdownSection draft={draft} /> : null}
         {sectionKey === "music_effects" ? <MusicSection draft={draft} /> : null}
@@ -108,7 +99,7 @@ function SectionRouter({
         {sectionKey === "principal_sponsors" ? <PrincipalSponsorsSection draft={draft} /> : null}
         {sectionKey === "attire_motif" ? <AttireSection draft={draft} /> : null}
         {sectionKey === "extra_info" ? <ExtraInfoSection draft={draft} /> : null}
-        {sectionKey === "rsvp_form" ? <RsvpFormSection rsvpEmbedUrl={rsvpEmbedUrl} rsvpUrl={rsvpUrl} /> : null}
+        {sectionKey === "rsvp_form" ? <RsvpFormSection draft={draft} /> : null}
         {sectionKey === "gift_details" ? <GiftDetailsSection draft={draft} /> : null}
         {sectionKey === "guestbook" ? (
           <GuestbookSection draft={draft} guestbookMessages={guestbookMessages} />
@@ -424,86 +415,73 @@ function ExtraInfoSection({ draft }: { draft: PlatformRenderModel }) {
   );
 }
 
-function RsvpFormSection({
-  rsvpEmbedUrl,
-  rsvpUrl
-}: {
-  rsvpEmbedUrl: string | null;
-  rsvpUrl: string;
-}) {
-  const [iframeHeight, setIframeHeight] = useState(760);
-  const iframeOrigin = rsvpEmbedUrl ? getUrlOrigin(rsvpEmbedUrl) : null;
-
-  useEffect(() => {
-    if (!iframeOrigin) return;
-
-    function handleMessage(event: MessageEvent) {
-      if (event.origin !== iframeOrigin) return;
-      if (!event.data || typeof event.data !== "object") return;
-      if ((event.data as { type?: unknown }).type !== "webserbisyo:rsvp-embed:resize") return;
-
-      const height = (event.data as { height?: unknown }).height;
-
-      if (typeof height !== "number" || !Number.isFinite(height)) return;
-      setIframeHeight(Math.min(2200, Math.max(560, Math.ceil(height))));
-    }
-
-    window.addEventListener("message", handleMessage);
-    return () => window.removeEventListener("message", handleMessage);
-  }, [iframeOrigin]);
+function RsvpFormSection({ draft }: { draft: PlatformRenderModel }) {
+  const values = draft.rsvpForm;
+  const title = values.title.trim() || "Confirm Your Attendance";
+  const body =
+    values.body.trim() ||
+    "Please let the hosts know if you can join the celebration. This starter keeps the RSVP experience inside the same page flow.";
+  const note =
+    values.note.trim() ||
+    "Online response collection can be connected here while keeping the RSVP experience inside the same page flow.";
+  const companionCopy = values.plusOneEnabled
+    ? `Guests may confirm up to ${values.companionLimit.trim() || "1"} companion${(values.companionLimit.trim() || "1") === "1" ? "" : "s"} when allowed by the invitation.`
+    : "Guest responses are limited to the invitee unless the hosts enable companion responses.";
+  const phoneCopy = values.phoneEnabled
+    ? "Contact number collection is enabled in the RSVP configuration."
+    : "Contact number collection is optional unless the hosts enable it later.";
 
   return (
     <section className="event-preview-section">
       <SectionLabel>RSVP</SectionLabel>
-      <h3>Confirm Your Attendance</h3>
-      <p className="event-preview-copy">
-        Please confirm your attendance through the secure WebSerbisyo RSVP form so the hosts can prepare your seat and celebration details.
-      </p>
-      {rsvpEmbedUrl ? (
-        <div className="event-preview-rsvp-embed">
-          <iframe
-            className="event-preview-rsvp-embed-frame"
-            title="WebSerbisyo RSVP form"
-            src={rsvpEmbedUrl}
-            sandbox="allow-forms allow-same-origin allow-scripts"
-            referrerPolicy="strict-origin-when-cross-origin"
-            loading="lazy"
-            style={{ height: iframeHeight }}
-          />
-          <div className="event-preview-rsvp-embed-fallback">
-            <span>Having trouble loading the form?</span>
-            <a className="event-preview-button" href={rsvpUrl}>
-              Open RSVP Form
-            </a>
+      <h3>{title}</h3>
+      <p className="event-preview-copy">{body}</p>
+      <div className="event-preview-rsvp-grid">
+        <div className="event-preview-rsvp-card event-preview-rsvp-state">
+          <div className="event-preview-rsvp-state-copy">
+            <h4>RSVP Details</h4>
+            <p>{companionCopy}</p>
+            <p>{phoneCopy}</p>
           </div>
         </div>
-      ) : (
-        <RsvpCtaCard rsvpUrl={rsvpUrl} />
-      )}
+        <div className="event-preview-rsvp-card event-preview-rsvp-foundation" id={RSVP_FORM_ID}>
+          <div className="event-preview-rsvp-foundation-copy">
+            <h4>Inline RSVP Foundation</h4>
+            <p>{note}</p>
+          </div>
+          <div className="event-preview-rsvp-form-preview" aria-hidden="true">
+            <div className="event-preview-rsvp-field">
+              <span>Guest Name</span>
+              <div className="event-preview-rsvp-input" />
+            </div>
+            <div className="event-preview-rsvp-field">
+              <span>Attendance</span>
+              <div className="event-preview-rsvp-choice-row">
+                <div className="event-preview-rsvp-choice">Attending</div>
+                <div className="event-preview-rsvp-choice">Unable to Attend</div>
+              </div>
+            </div>
+            {values.phoneEnabled ? (
+              <div className="event-preview-rsvp-field">
+                <span>Contact Number</span>
+                <div className="event-preview-rsvp-input" />
+              </div>
+            ) : null}
+            {values.plusOneEnabled ? (
+              <div className="event-preview-rsvp-field">
+                <span>Companions</span>
+                <div className="event-preview-rsvp-input" />
+              </div>
+            ) : null}
+            <div className="event-preview-rsvp-field">
+              <span>Message to the Hosts</span>
+              <div className="event-preview-rsvp-textarea" />
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
-}
-
-function RsvpCtaCard({ rsvpUrl }: { rsvpUrl: string }) {
-  return (
-    <div className="event-preview-rsvp-card event-preview-rsvp-state">
-      <div className="event-preview-rsvp-state-copy">
-        <h4>Ready to respond?</h4>
-        <p>The RSVP form opens on the official WebSerbisyo RSVP route.</p>
-      </div>
-      <a className="event-preview-submit-button event-preview-button" href={rsvpUrl}>
-        Continue to RSVP Form
-      </a>
-    </div>
-  );
-}
-
-function getUrlOrigin(value: string): string | null {
-  try {
-    return new URL(value).origin;
-  } catch {
-    return null;
-  }
 }
 
 function GiftDetailsSection({ draft }: { draft: PlatformRenderModel }) {

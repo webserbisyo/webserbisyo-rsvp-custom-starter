@@ -44,5 +44,4 @@ https://{clientSubdomain}.rsvp.webserbisyo.com
 The public canonical URL should prefer `data.urls.publicWebsiteUrl`. Dashboard preview mode omits canonical metadata and marks the page noindex so iframe/open preview cannot poison SEO.
 
 Never expose the hidden custom frontend origin in UI, public metadata, guest docs, or `NEXT_PUBLIC_*` values.
-
-The RSVP section may iframe the official platform embed URL from `data.urls.rsvpEmbedUrl`. The iframe source must stay on an official platform origin and must never use a hidden custom frontend origin or `.vercel.app` deployment URL.
+The RSVP section stays inline in the page flow. Preview integration must not revive removed platform RSVP routes or iframe/embed modes.

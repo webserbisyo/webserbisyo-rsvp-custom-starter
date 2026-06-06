@@ -69,7 +69,6 @@ export async function fetchPublicEvent({ apiBaseUrl, eventSlug, previewMode }: F
         event: payload.data,
         source: "live",
         previewMode,
-        apiBaseUrl,
         eventSlug
       })
     };

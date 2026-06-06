@@ -21,8 +21,6 @@ export type WeddingSectionKey =
 
 export type PublicRsvpState = {
   enabled?: boolean | null;
-  url?: string | null;
-  rsvpUrl?: string | null;
   deadline?: string | null;
   note?: string | null;
 };
@@ -61,8 +59,6 @@ export type EventWebsiteContent = {
 };
 
 export type PublicEventUrls = {
-  rsvpUrl?: string | null;
-  rsvpEmbedUrl?: string | null;
   publicWebsiteUrl?: string | null;
   fallbackUrl?: string | null;
   [key: string]: unknown;
@@ -120,7 +116,6 @@ export type PublicEventDto = {
   publicGuestbookMessages?: GuestbookMessage[] | null;
   publicUrl?: string | null;
   fallbackUrl?: string | null;
-  rsvpUrl?: string | null;
   [key: string]: unknown;
 };
 
@@ -158,8 +153,6 @@ export type EventWebsiteRenderModel = {
   rsvpDeadlineLabel?: string | null;
   timezone?: string | null;
   publicUrl?: string | null;
-  rsvpEmbedUrl?: string | null;
-  rsvpUrl: string;
   sections: NormalizedSection[];
   guestbookMessages: GuestbookMessage[];
   assets: Record<string, PublicMediaAsset>;

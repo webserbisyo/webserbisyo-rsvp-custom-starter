@@ -40,7 +40,7 @@ Starter neutrality:
 - Do not invent a separate default starter UI, shell, marketing navbar, landing hero, or editorial layout.
 - Keep client customization layered above the protected platform renderer/data adapter baseline.
 - Platform renderer icons must go through `src/components/platform/platform-icons.tsx`; do not scatter direct icon library imports across base renderer files.
-- The starter RSVP section may iframe the official platform RSVP embed URL when `data.urls.rsvpEmbedUrl` exists, and must keep the central WebSerbisyo RSVP route as a CTA fallback. Do not copy platform server actions or embedded RSVP submission logic into this repo.
+- The starter RSVP section must stay inline within the same one-page event flow. Do not depend on removed platform RSVP routes, iframe embeds, or copied platform submission logic.
 - Extra UI libraries such as shadcn, ReactBits, Motion, GSAP, or Framer Motion belong in cloned client repos after baseline validation unless explicitly approved for the starter.
 
 Dashboard preview may pass safe query params such as `eventSlug`, `preview`, and `source`. `eventSlug` can override the configured slug only in local/design/dashboard preview contexts. Guest/live production must not show debug chrome unless design or snapshot mode is active.

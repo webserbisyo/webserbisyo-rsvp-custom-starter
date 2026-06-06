@@ -133,9 +133,12 @@ export type PlatformRenderModel = {
     venueName: string;
   };
   rsvpForm: {
+    body: string;
     companionLimit: string;
+    note: string;
     phoneEnabled: boolean;
     plusOneEnabled: boolean;
+    title: string;
   };
   timelineProgram: {
     items: PlatformTimelineItem[];
@@ -153,8 +156,6 @@ export type PlatformRendererContext = {
   eventSlug: string;
   guestbookMessages: PlatformGuestbookMessage[];
   previewMode?: "dashboard";
-  rsvpEmbedUrl: string | null;
-  rsvpUrl: string;
   sections: PlatformSectionKey[];
 };
 
@@ -192,8 +193,6 @@ export function buildPlatformRendererContext(event: EventWebsiteRenderModel): Pl
     eventSlug: event.eventSlug,
     guestbookMessages: normalizePlatformGuestbookMessages(event.guestbookMessages),
     previewMode: event.previewMode,
-    rsvpEmbedUrl: event.rsvpEmbedUrl ?? null,
-    rsvpUrl: event.rsvpUrl,
     sections
   };
 }
@@ -362,9 +361,12 @@ function buildExtraInfo(content: Record<string, unknown> | undefined, rawRenderM
 function buildRsvpForm(content: Record<string, unknown> | undefined, rawRenderModel: Record<string, unknown>): PlatformRenderModel["rsvpForm"] {
   const raw = record(rawRenderModel.rsvpForm);
   return {
+    body: firstString(content?.body, content?.description, raw.body),
     companionLimit: firstString(content?.companionLimit, raw.companionLimit) || "1",
+    note: firstString(content?.note, raw.note),
     phoneEnabled: boolValue(content?.phoneEnabled, raw.phoneEnabled),
-    plusOneEnabled: boolValue(content?.plusOneEnabled, raw.plusOneEnabled)
+    plusOneEnabled: boolValue(content?.plusOneEnabled, raw.plusOneEnabled),
+    title: firstString(content?.title, content?.label, raw.title) || "Confirm Your Attendance"
   };
 }
 

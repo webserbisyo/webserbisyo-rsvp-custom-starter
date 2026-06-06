@@ -608,6 +608,13 @@
   text-align: center;
 }
 
+.event-website-public-page .event-preview-rsvp-grid {
+  display: grid;
+  width: 100%;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
 .event-website-public-page .event-preview-rsvp-state-copy h4 {
   margin: 0 0 4px;
   color: #312d2a;
@@ -615,42 +622,81 @@
   font-weight: 700;
 }
 
-.event-website-public-page .event-preview-submit-button {
-  width: 100%;
-  border-color: #cbb39a;
-  background: #3d342c;
-  color: #ffffff;
+.event-website-public-page .event-preview-rsvp-foundation {
+  align-content: start;
+  gap: 14px;
 }
 
-.event-website-public-page .event-preview-submit-button:hover {
-  background: #2f2822;
+.event-website-public-page .event-preview-rsvp-foundation-copy {
+  display: grid;
+  gap: 4px;
 }
 
-.event-website-public-page .event-preview-rsvp-embed {
+.event-website-public-page .event-preview-rsvp-foundation-copy h4 {
+  margin: 0;
+  color: #312d2a;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.event-website-public-page .event-preview-rsvp-foundation-copy p {
+  margin: 0;
+  color: #6c6661;
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+.event-website-public-page .event-preview-rsvp-form-preview {
   display: grid;
   width: 100%;
   min-width: 0;
   gap: 12px;
 }
 
-.event-website-public-page .event-preview-rsvp-embed-frame {
-  display: block;
-  width: 100%;
-  min-height: 760px;
-  border: 1px solid #e8e5e1;
-  border-radius: 18px;
-  background: #fff8ef;
+.event-website-public-page .event-preview-rsvp-field {
+  display: grid;
+  gap: 6px;
 }
 
-.event-website-public-page .event-preview-rsvp-embed-fallback {
+.event-website-public-page .event-preview-rsvp-field span {
+  color: #5c5752;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.event-website-public-page .event-preview-rsvp-input,
+.event-website-public-page .event-preview-rsvp-textarea,
+.event-website-public-page .event-preview-rsvp-choice {
+  border: 1px solid #e3dfda;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.event-website-public-page .event-preview-rsvp-input {
+  min-height: 44px;
+}
+
+.event-website-public-page .event-preview-rsvp-textarea {
+  min-height: 88px;
+}
+
+.event-website-public-page .event-preview-rsvp-choice-row {
   display: flex;
   flex-wrap: wrap;
+  gap: 8px;
+}
+
+.event-website-public-page .event-preview-rsvp-choice {
+  flex: 1 1 10rem;
+  min-height: 44px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  color: #7a746f;
-  font-size: 12px;
-  line-height: 1.4;
+  color: #6c6661;
+  font-size: 12.5px;
+  font-weight: 600;
 }
 
 .event-website-public-page .event-preview-major-divider {
@@ -751,7 +797,8 @@
   .event-website-public-page .event-preview-party-grid,
   .event-website-public-page .event-preview-guidance-grid,
   .event-website-public-page .event-preview-note-grid,
-  .event-website-public-page .event-preview-gift-grid {
+  .event-website-public-page .event-preview-gift-grid,
+  .event-website-public-page .event-preview-rsvp-grid {
     grid-template-columns: 1fr;
   }
 

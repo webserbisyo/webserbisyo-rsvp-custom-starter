@@ -1,4 +1,3 @@
-import { buildRsvpEmbedUrl, buildRsvpUrl } from "@/lib/rsvp-url";
 import { formatDate, formatDateTime, formatRsvpDeadline, formatTime } from "@/lib/formatters";
 import type {
   EventWebsiteRenderModel,
@@ -13,7 +12,6 @@ type NormalizeInput = {
   event: PublicEventDto;
   source: "design" | "snapshot" | "live";
   previewMode?: "dashboard";
-  apiBaseUrl: string;
   eventSlug: string;
 };
 
@@ -190,7 +188,6 @@ export function normalizePublicEvent({
   event,
   source,
   previewMode,
-  apiBaseUrl,
   eventSlug
 }: NormalizeInput): EventWebsiteRenderModel {
   const slug = stringValue(event.slug ?? event.eventSlug) || eventSlug;
@@ -218,8 +215,6 @@ export function normalizePublicEvent({
     rsvpDeadlineLabel: stringValue(formatted.rsvpDeadline) || formatRsvpDeadline(rsvpDeadline, timezone),
     timezone,
     publicUrl: stringValue(urls.publicWebsiteUrl ?? event.publicUrl ?? urls.fallbackUrl ?? event.fallbackUrl),
-    rsvpEmbedUrl: buildRsvpEmbedUrl({ apiBaseUrl, eventSlug: slug, event }),
-    rsvpUrl: buildRsvpUrl({ apiBaseUrl, eventSlug: slug, event }),
     sections,
     guestbookMessages: normalizeGuestbookMessages(event),
     assets: normalizeAssets(event),

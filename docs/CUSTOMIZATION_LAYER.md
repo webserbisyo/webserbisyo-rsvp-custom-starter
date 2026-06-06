@@ -9,7 +9,7 @@ Protected base:
 - normalized public event data
 - platform render model adapter
 - section order and visibility rules
-- RSVP URL builder
+- RSVP anchor helper
 - metadata safety
 - design/live/snapshot mode rules
 - media safety primitives
@@ -26,8 +26,10 @@ Client repos may add:
 - optional animation enhancements
 - future gallery styling when real platform gallery data exists
 
-Client customization must not change API ownership, section keys, RSVP URL behavior, direct submission rules, metadata safety, or live placeholder rules.
+Client customization must not change API ownership, section keys, inline RSVP section behavior, direct submission rules, metadata safety, or live placeholder rules.
 
 Client repos may swap the icon implementation through `src/components/platform/platform-icons.tsx`. Do not scatter direct icon library imports across protected renderer files.
 
 The reusable starter default must not become a custom theme, marketing page, or alternate renderer.
+
+If a client clone later adds a local `/rsvp` page, treat it as a clone-only layout decision. Do not reintroduce removed platform RSVP route dependencies or iframe embeds into the starter baseline.

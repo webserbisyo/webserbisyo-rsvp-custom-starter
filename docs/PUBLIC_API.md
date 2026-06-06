@@ -18,13 +18,11 @@ The fetcher supports only the public success envelope:
 
 Malformed responses render a controlled unavailable state. Raw errors are not thrown into the UI.
 
-Supported improved fields include `data.content.layout.sectionOrder`, `data.content.layout.enabledSections`, `data.content.sections`, `data.guestbookMessages`, `data.urls.rsvpUrl`, `data.urls.rsvpEmbedUrl`, `data.urls.publicWebsiteUrl`, and `data.formatted`.
+Supported improved fields include `data.content.layout.sectionOrder`, `data.content.layout.enabledSections`, `data.content.sections`, `data.guestbookMessages`, `data.urls.publicWebsiteUrl`, and `data.formatted`.
 
 Current supported public fields include:
 
 - `data.urls.fallbackUrl`
-- `data.urls.rsvpUrl`
-- `data.urls.rsvpEmbedUrl`
 - `data.urls.publicWebsiteUrl`
 - `data.formatted.*`
 - `data.sectionsByKey`
@@ -35,8 +33,4 @@ Current supported public fields include:
 
 Preview query params may choose a safe event slug, but they must never choose the API base URL. `NEXT_PUBLIC_WEBSERBISYO_API_URL` remains the only API origin.
 
-RSVP remains platform-owned. The starter renders iframe mode only when the platform provides `data.urls.rsvpEmbedUrl`; otherwise it resolves CTA URLs in this order:
-
-- `data.urls.rsvpUrl`
-- compatible normalized public RSVP URL fields
-- `{NEXT_PUBLIC_WEBSERBISYO_API_URL}/r/{slug}/rsvp`
+RSVP remains platform-owned. The starter keeps the RSVP section inline within the one-page event flow and does not depend on removed platform RSVP routes or iframe embeds. Any future submission wiring must use an official public contract published by the main platform.

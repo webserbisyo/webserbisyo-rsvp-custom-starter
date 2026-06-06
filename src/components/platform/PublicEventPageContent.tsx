@@ -16,8 +16,6 @@ export function PublicEventPageContent({ event }: { event: EventWebsiteRenderMod
             draft={context.draft}
             guestbookMessages={context.guestbookMessages}
             hideEmptyGuestbook={event.source === "live"}
-            rsvpEmbedUrl={context.rsvpEmbedUrl}
-            rsvpUrl={context.rsvpUrl}
             sections={context.sections}
           />
         </div>

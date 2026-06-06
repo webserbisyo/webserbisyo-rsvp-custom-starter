@@ -8,6 +8,6 @@
 - Compare the default runtime against the main platform public/account preview section/card rhythm.
 - Confirm live mode has required env values.
 - Confirm design mode sample content is not used in live mode.
-- Confirm RSVP iframe renders when `data.urls.rsvpEmbedUrl` is present.
-- Confirm RSVP CTA opens the central platform route when iframe URL is missing or blocked.
+- Confirm RSVP appears inline on the homepage and uses the local `#rsvp` section anchor.
+- Confirm no default runtime button redirects guests to removed platform RSVP routes.
 - Confirm live mode does not show fake QR/photos or gallery placeholders.

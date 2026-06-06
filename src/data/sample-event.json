@@ -141,8 +141,11 @@
         "enabled": true,
         "content": {
           "title": "Confirm your attendance",
-          "body": "Please RSVP through the official WebSerbisyo RSVP page.",
-          "buttonLabel": "Open RSVP"
+          "body": "Please let the hosts know if you can join the celebration. The inline RSVP section stays part of the same page flow.",
+          "note": "Online response collection can be connected here while keeping the RSVP experience inside the same page flow.",
+          "companionLimit": "1",
+          "plusOneEnabled": true,
+          "phoneEnabled": true
         }
       },
       "gift_details": {
@@ -184,7 +187,6 @@
     }
   },
   "urls": {
-    "rsvpUrl": "https://webserbisyo.com/r/sample-wedding/rsvp",
     "publicWebsiteUrl": "https://sample-wedding.rsvp.webserbisyo.com"
   }
 }

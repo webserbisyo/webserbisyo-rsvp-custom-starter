@@ -3,7 +3,21 @@ import { join } from "node:path";
 
 const root = process.cwd();
 const runtimeDirs = ["src"];
-const forbidden = [
+const docFiles = [
+  "AGENTS.md",
+  "README.md",
+  "docs/DATA_CONTRACT.md",
+  "docs/PUBLIC_API.md",
+  "docs/WEBSITE_FLOW.md",
+  "docs/PREVIEW_INTEGRATION.md",
+  "docs/DO_NOT_BREAK.md",
+  "docs/CLIENT_CUSTOMIZATION_RULES.md",
+  "docs/CUSTOMIZATION_LAYER.md",
+  "docs/AI_PROMPTS.md",
+  "docs/QA_CHECKLIST.md"
+];
+
+const forbiddenThemeTerms = [
   "Tagaytay Garden Classic",
   "Tagaytay",
   "Alex Lisa",
@@ -13,12 +27,24 @@ const forbidden = [
   "Formal garden attire",
   "client-specific default theme"
 ];
+
 const forbiddenEnvNames = [
   "SUPABASE_SERVICE_ROLE_KEY",
   "DATABASE_URL",
   "RESEND_API_KEY",
   "PAYMENT_PROVIDER_SECRET",
   "ADMIN_SECRET"
+];
+
+const runtimeForbiddenPatterns = [
+  "rsvpEmbedUrl",
+  'Continue to RSVP Form',
+  'official WebSerbisyo RSVP route',
+  'webserbisyo:rsvp-embed:resize',
+  '<iframe',
+  'postMessage',
+  '/r/${eventSlug}/rsvp',
+  '${apiBaseUrl}/r/${eventSlug}/rsvp'
 ];
 
 async function walk(dir) {
@@ -37,16 +63,23 @@ async function walk(dir) {
   return files;
 }
 
+function relative(path) {
+  return path.replace(`${root}/`, "");
+}
+
 const failures = [];
 
 for (const dir of runtimeDirs) {
   for (const file of await walk(join(root, dir))) {
     const content = await readFile(file, "utf8");
-    for (const term of forbidden) {
-      if (content.includes(term)) failures.push(`${file.replace(`${root}/`, "")}: contains "${term}"`);
+    for (const term of forbiddenThemeTerms) {
+      if (content.includes(term)) failures.push(`${relative(file)}: contains "${term}"`);
     }
     for (const term of forbiddenEnvNames) {
-      if (content.includes(term)) failures.push(`${file.replace(`${root}/`, "")}: contains forbidden env name "${term}"`);
+      if (content.includes(term)) failures.push(`${relative(file)}: contains forbidden env name "${term}"`);
+    }
+    for (const pattern of runtimeForbiddenPatterns) {
+      if (content.includes(pattern)) failures.push(`${relative(file)}: contains removed RSVP/runtime pattern "${pattern}"`);
     }
   }
 }
@@ -66,9 +99,15 @@ const platformRendererPath = join(root, "src", "components", "platform", "EventW
 const platformRenderer = await readFile(platformRendererPath, "utf8");
 const platformIconsPath = join(root, "src", "components", "platform", "platform-icons.tsx");
 const platformIcons = await readFile(platformIconsPath, "utf8");
+const rsvpHelperPath = join(root, "src", "lib", "rsvp-url.ts");
+const rsvpHelper = await readFile(rsvpHelperPath, "utf8");
 
 for (const term of ["event-preview-section", "event-preview-section-anchor", "data-preview-section"]) {
   if (!platformRenderer.includes(term)) failures.push(`src/components/platform/EventWebsiteRenderer.tsx: missing ${term}`);
+}
+
+for (const term of ['id={sectionKey === "rsvp_form" ? RSVP_SECTION_ID : undefined}', 'id={RSVP_FORM_ID}']) {
+  if (!platformRenderer.includes(term)) failures.push(`src/components/platform/EventWebsiteRenderer.tsx: missing inline RSVP anchor pattern "${term}"`);
 }
 
 if (!platformIcons.includes("lucide-react")) {
@@ -79,34 +118,35 @@ if (platformRenderer.includes("lucide-react")) {
   failures.push("src/components/platform/EventWebsiteRenderer.tsx: import icons from platform-icons.tsx, not lucide-react");
 }
 
-for (const term of ["PublicRsvpResponseForm", "submitRsvpResponseAction", "onSubmit", "type=\"submit\""]) {
-  if (platformRenderer.includes(term)) failures.push(`src/components/platform/EventWebsiteRenderer.tsx: contains direct RSVP submission pattern "${term}"`);
-}
-
-for (const term of ["@/server/", "@/server", "server/actions", "server/queries"]) {
-  if (platformRenderer.includes(term)) failures.push(`src/components/platform/EventWebsiteRenderer.tsx: contains platform-owned server import pattern "${term}"`);
+for (const term of ["PublicRsvpResponseForm", "submitRsvpResponseAction", "onSubmit", "type=\"submit\"", "@/server/", "@/server", "server/actions", "server/queries"]) {
+  if (platformRenderer.includes(term)) failures.push(`src/components/platform/EventWebsiteRenderer.tsx: contains forbidden RSVP/backend pattern "${term}"`);
 }
 
 for (const term of ["PublicRsvpResponseForm", "submitRsvpResponseAction", "@supabase/", "@supabase"]) {
   for (const file of await walk(join(root, "src"))) {
     const content = await readFile(file, "utf8");
-    if (content.includes(term)) failures.push(`${file.replace(`${root}/`, "")}: contains forbidden RSVP/backend pattern "${term}"`);
+    if (content.includes(term)) failures.push(`${relative(file)}: contains forbidden RSVP/backend pattern "${term}"`);
   }
 }
 
-const rsvpUrlPath = join(root, "src", "lib", "rsvp-url.ts");
-const rsvpUrl = await readFile(rsvpUrlPath, "utf8");
-
-if (!rsvpUrl.includes("isVercelUrl")) {
-  failures.push("src/lib/rsvp-url.ts: RSVP embed URLs must reject .vercel.app origins");
+for (const term of ["RSVP_SECTION_ID", "RSVP_FORM_ID", "buildRsvpSectionHref"]) {
+  if (!rsvpHelper.includes(term)) failures.push(`src/lib/rsvp-url.ts: missing inline RSVP helper "${term}"`);
 }
 
-if (platformRenderer.includes(".vercel.app")) {
-  failures.push("src/components/platform/EventWebsiteRenderer.tsx: iframe source must not allow .vercel.app origins");
+if (rsvpHelper.includes("/rsvp") || rsvpHelper.includes("/r/")) {
+  failures.push("src/lib/rsvp-url.ts: must not build removed platform RSVP routes");
 }
 
-if (platformRenderer.includes("<iframe") && !platformRenderer.includes("src={rsvpEmbedUrl}")) {
-  failures.push("src/components/platform/EventWebsiteRenderer.tsx: RSVP iframe must use normalized rsvpEmbedUrl only");
+for (const file of docFiles) {
+  const content = await readFile(join(root, file), "utf8");
+
+  if (file === "docs/WEBSITE_FLOW.md") {
+    for (const phrase of ["inline RSVP", "local clone-specific page", "Do not navigate guests"]) {
+      if (!content.toLowerCase().includes(phrase.toLowerCase())) {
+        failures.push(`docs/WEBSITE_FLOW.md: missing required RSVP guidance "${phrase}"`);
+      }
+    }
+  }
 }
 
 if (failures.length) {

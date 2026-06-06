@@ -16,8 +16,6 @@ data.content.sections
 data.sectionsByKey
 data.guestbookMessages
 data.publicGuestbookMessages
-data.urls.rsvpUrl
-data.urls.rsvpEmbedUrl
 data.urls.publicWebsiteUrl
 data.urls.fallbackUrl
 data.formatted
@@ -48,7 +46,6 @@ Known limitations:
 - Guestbook standalone endpoint is placeholder; render approved messages only when included in the public DTO.
 - Gift wallet endpoint is placeholder; do not implement wallet fetching.
 - RSVP custom questions may exist in platform content, but the starter does not submit directly.
-- RSVP iframe mode requires `data.urls.rsvpEmbedUrl` from the platform and must reject `.vercel.app` origins.
-- RSVP CTA URLs should prefer `data.urls.rsvpUrl`, then public RSVP fields such as `data.rsvp.url`, and finally the central fallback route.
+- The main platform no longer exposes separate public RSVP URLs for the starter. Keep RSVP inline in the one-page flow and treat submission integration as platform-owned until an official public contract is published.
 - Public canonical URLs should prefer `data.urls.publicWebsiteUrl` and must never expose hidden `.vercel.app` origins.
 - Dashboard preview may pass a safe `eventSlug` query override, but the public API base URL must always come from `NEXT_PUBLIC_WEBSERBISYO_API_URL`.

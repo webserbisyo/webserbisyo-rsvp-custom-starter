@@ -24,7 +24,7 @@ Read `docs/ASSET_SYSTEM.md` and `docs/MEDIA_GUIDE.md`. Demo media is allowed onl
 
 ## RSVP edits
 
-Starter RSVP is platform-owned. Use iframe mode only when `data.urls.rsvpEmbedUrl` exists, and keep the CTA fallback to `data.urls.rsvpUrl`. Do not copy platform server actions, `PublicRsvpResponseForm`, Supabase logic, or direct submission handlers. True direct submission requires a future official public submission API contract.
+Starter RSVP is platform-owned and inline. Do not depend on removed platform RSVP routes, iframe embeds, `PublicRsvpResponseForm`, platform server actions, Supabase logic, or direct submission handlers. True submission wiring requires a future official public submission API contract.
 
 ## Preparing a per-client custom repo
 

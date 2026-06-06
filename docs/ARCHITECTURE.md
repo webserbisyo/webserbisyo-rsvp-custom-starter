@@ -10,6 +10,8 @@ The protected runtime has three layers:
 - Data adapter layer: public API data is normalized and adapted into the platform-compatible render model without changing API ownership.
 - Customization layer: cloned client repos may add approved theme overrides, custom assets, and optional section styling after the baseline is validated.
 
+The starter RSVP section is part of the same one-page event website flow. The starter must not depend on removed platform RSVP routes, iframe embeds, or copied backend submission logic.
+
 The starter default must not introduce a separate marketing shell, navbar, hero, client theme, or custom UI kit. Those belong only in cloned client repos.
 
 Public guest URL remains the client editable subdomain:

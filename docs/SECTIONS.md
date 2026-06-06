@@ -14,7 +14,7 @@ Wedding registry keys:
 - `attire_motif` -> platform Attire section
 - `extra_info` -> platform Extra Info section
 - `gallery` -> future platform-supported gallery foundation
-- `rsvp_form` -> platform RSVP CTA-only section
+- `rsvp_form` -> platform inline RSVP foundation section
 - `gift_details` -> platform Gift Details section
 - `guestbook` -> platform Guestbook section
 - `story_message` -> platform Love Story section
@@ -45,10 +45,10 @@ The starter default must use the same general section/card rhythm as the main pl
 - Principal Sponsors
 - Attire / Motif
 - Extra Info
+- RSVP
 - Gift Details
 - Guestbook
 - Love Story
-- RSVP CTA
 - Contact/Footer
 
 Gallery is future platform-supported. Keep the foundation section, but do not render Gallery in live mode unless the public API provides real gallery data. Design mode may show an empty gallery note for review.
@@ -74,5 +74,5 @@ Stable anchor mapping:
 - `gallery` -> future platform-supported anchor only when implemented
 - `gift_details` -> `data-preview-section="gift_details"`
 - `guestbook` -> `data-preview-section="guestbook"`
-- `rsvp_form` -> `#rsvp`
+- `rsvp_form` -> `#rsvp` and `#rsvp-form`
 - `contact_socials` -> `data-preview-section="contact_socials"`
