@@ -43,9 +43,12 @@ Protected architecture rules:
 
 Planned customization boundary:
 
-- `src/client/` is the future client-editable boundary.
-- Phase 1 does not implement `src/client/`; it only establishes the docs and guard foundation for it.
-- Until later phases add that boundary, treat protected platform/data files as non-customization targets.
+- `src/client/` is the client-editable boundary introduced in Phase 2.
+- It is inert by default in this phase.
+- Do not import `src/client/client-registry.ts` into the platform renderer yet.
+- Do not wire section slots or section overrides yet.
+- Do not use `src/client/` as a reason to weaken security, API ownership, or RSVP protections.
+- Treat protected platform/data files as non-customization targets unless a later approved runtime-hook phase explicitly changes that.
 
 Starter neutrality:
 

@@ -21,13 +21,27 @@ Current architecture:
 - protected data/runtime files live in `src/lib/*`, `src/types/*`, and `src/components/platform/*`
 - future client design work should target `src/client/` once a later phase creates it
 
+Phase 2 boundary:
+
+- `src/client/` now exists
+- it is inert by default
+- do not wire it into protected runtime files yet unless a later approved phase explicitly requires it
+
 Safe prompt example:
 
 > Add a future-ready client customization boundary under `src/client/` without changing public API fetching, section keys, inline RSVP behavior, or platform renderer ownership.
 
+Safe future prompt example:
+
+> Customize the client visual design inside `src/client/` only. Do not edit `src/lib`, `src/components/platform`, or RSVP routing. Keep RSVP inline at `#rsvp`.
+
 Unsafe prompt patterns:
 
 - "Create a separate `/rsvp` page"
+- "Submit RSVP locally"
+- "Use Supabase directly"
+- "Edit EventWebsiteRenderer for client-specific design"
+- "Add iframe RSVP"
 - "Wire the RSVP form to submit anyway"
 - "Add a temporary fake RSVP success modal"
 - "Replace the public API with local hardcoded client data"

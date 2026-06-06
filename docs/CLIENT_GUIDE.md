@@ -37,3 +37,11 @@ Phase 1 note:
 
 - `src/client/` is planned as the future safe customization boundary
 - this phase only documents that direction; it does not implement it yet
+
+## Phase 2 client boundary
+
+- `src/client/` now exists as the future customization zone
+- it is inert by default
+- future client clones should start with `src/client/client.config.ts`
+- do not expect runtime visual changes from Phase 2 alone
+- runtime hooks and override mechanisms are deferred to a later phase

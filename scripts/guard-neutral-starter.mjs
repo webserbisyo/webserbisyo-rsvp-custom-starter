@@ -39,7 +39,7 @@ const forbiddenEnvNames = [
   "ADMIN_SECRET"
 ];
 
-// Future src/client/** should be allowed as a path. This guard must continue to
+// src/client/** is allowed as a path. This guard must continue to
 // block backend ownership, removed RSVP routes, and fake RSVP success patterns
 // everywhere, including any future client-boundary files.
 const runtimeForbiddenPatterns = [

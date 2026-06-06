@@ -4,7 +4,7 @@ The starter architecture has three layers:
 
 - Layer 0: platform core outside this repo
 - Layer 1: protected starter baseline inside this repo
-- Layer 2: planned future client layer under `src/client/`
+- Layer 2: client layer under `src/client/`
 
 Layer 0: platform core outside this repo
 
@@ -23,16 +23,17 @@ Layer 1: protected starter baseline
 - metadata safety
 - neutral starter CSS baseline
 
-Layer 2: planned future client layer
+Layer 2: client layer
 
 - future path: `src/client/`
 - intended use: client-specific theme overrides, assets, safe wrapper-level customization, and optional additive UI enhancements
-- not implemented in Phase 1
+- present in Phase 2 as an inert boundary
 
-Important Phase 1 note:
+Important Phase 2 note:
 
-- Phase 1 does not create a working `src/client/` runtime layer.
-- Phase 1 only clarifies the docs and guard foundations so later phases can add `src/client/` safely.
+- `src/client/` now exists.
+- It is currently inert and not wired into the active runtime path.
+- Protected platform files remain the source of truth until a later runtime-hook phase is approved.
 
 Rules for future client customization:
 
