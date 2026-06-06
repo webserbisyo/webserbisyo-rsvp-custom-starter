@@ -70,6 +70,6 @@ https://{clientSubdomain}.rsvp.webserbisyo.com
 
 The main platform will later proxy that public wildcard URL to the hidden custom frontend origin.
 
-The RSVP section stays inline within the same one-page event flow. This starter does not depend on removed platform RSVP routes, iframe embeds, or direct RSVP submission logic.
+The RSVP section stays inline within the same one-page event flow. This starter does not depend on removed platform RSVP routes, removed RSVP embed modes, or direct RSVP submission logic.
 
 See `docs/MODES.md`, `docs/DATA_CONTRACT.md`, `docs/PREVIEW_INTEGRATION.md`, `docs/ASSET_SYSTEM.md`, `docs/MEDIA_GUIDE.md`, and `docs/THEME_SYSTEM.md` before customizing the starter.

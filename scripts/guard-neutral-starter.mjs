@@ -14,6 +14,9 @@ const docFiles = [
   "docs/CLIENT_CUSTOMIZATION_RULES.md",
   "docs/CUSTOMIZATION_LAYER.md",
   "docs/AI_PROMPTS.md",
+  "docs/AI_QUICKREF.md",
+  "docs/CLIENT_GUIDE.md",
+  "docs/SECTION_MAP.md",
   "docs/QA_CHECKLIST.md"
 ];
 
@@ -36,15 +39,23 @@ const forbiddenEnvNames = [
   "ADMIN_SECRET"
 ];
 
+// Future src/client/** should be allowed as a path. This guard must continue to
+// block backend ownership, removed RSVP routes, and fake RSVP success patterns
+// everywhere, including any future client-boundary files.
 const runtimeForbiddenPatterns = [
   "rsvpEmbedUrl",
-  'Continue to RSVP Form',
-  'official WebSerbisyo RSVP route',
-  'webserbisyo:rsvp-embed:resize',
-  '<iframe',
-  'postMessage',
-  '/r/${eventSlug}/rsvp',
-  '${apiBaseUrl}/r/${eventSlug}/rsvp'
+  "rsvpUrl",
+  "Continue to RSVP Form",
+  "official WebSerbisyo RSVP route",
+  "webserbisyo:rsvp-embed:resize",
+  "<iframe",
+  "postMessage",
+  "/r/${eventSlug}/rsvp",
+  "/r/[slug]/rsvp",
+  "/r/[slug]/rsvp/embed",
+  "${apiBaseUrl}/r/${eventSlug}/rsvp",
+  "fake RSVP success",
+  "simulated RSVP success"
 ];
 
 async function walk(dir) {
@@ -57,7 +68,7 @@ async function walk(dir) {
       files.push(...await walk(path));
       continue;
     }
-    if (/\.(css|json|mjs|js|jsx|ts|tsx)$/.test(entry.name)) files.push(path);
+    if (/\.(css|json|mjs|js|jsx|ts|tsx|md)$/.test(entry.name)) files.push(path);
   }
 
   return files;
@@ -118,7 +129,16 @@ if (platformRenderer.includes("lucide-react")) {
   failures.push("src/components/platform/EventWebsiteRenderer.tsx: import icons from platform-icons.tsx, not lucide-react");
 }
 
-for (const term of ["PublicRsvpResponseForm", "submitRsvpResponseAction", "onSubmit", "type=\"submit\"", "@/server/", "@/server", "server/actions", "server/queries"]) {
+for (const term of [
+  "PublicRsvpResponseForm",
+  "submitRsvpResponseAction",
+  "onSubmit",
+  'type="submit"',
+  "@/server/",
+  "@/server",
+  "server/actions",
+  "server/queries"
+]) {
   if (platformRenderer.includes(term)) failures.push(`src/components/platform/EventWebsiteRenderer.tsx: contains forbidden RSVP/backend pattern "${term}"`);
 }
 
@@ -141,7 +161,7 @@ for (const file of docFiles) {
   const content = await readFile(join(root, file), "utf8");
 
   if (file === "docs/WEBSITE_FLOW.md") {
-    for (const phrase of ["inline RSVP", "local clone-specific page", "Do not navigate guests"]) {
+    for (const phrase of ["inline RSVP", "#rsvp", "#rsvp-form"]) {
       if (!content.toLowerCase().includes(phrase.toLowerCase())) {
         failures.push(`docs/WEBSITE_FLOW.md: missing required RSVP guidance "${phrase}"`);
       }

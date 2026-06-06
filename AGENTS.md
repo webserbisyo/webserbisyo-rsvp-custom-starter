@@ -1,46 +1,47 @@
 # Agent Instructions
 
-This repo is frontend-only. It renders public custom event design for WebSerbisyo RSVP.
+This repo is the neutral reusable WebSerbisyo RSVP custom starter.
 
-Before editing, read:
+Read before editing:
 
 - `AGENTS.md`
 - `docs/DO_NOT_BREAK.md`
-- `docs/DATA_CONTRACT.md`
-- `docs/SECTIONS.md`
-- `docs/ARCHITECTURE.md`
+- `docs/CLIENT_GUIDE.md`
+- `docs/SECTION_MAP.md`
+- `docs/AI_QUICKREF.md`
 
-Never add Supabase service role keys.
-Never add `DATABASE_URL`.
-Never add admin secrets.
-Never add payment secrets.
-Never add auth, billing, payment, or admin logic.
-Never bypass the WebSerbisyo public API.
-Never show placeholders in live mode.
-Never use `.webserbisyo/event.snapshot.json` in live mode.
-Never expose hidden custom frontend origins in UI, metadata, or public env.
-Never hardcode couple names, dates, venues, sponsors, gifts, or contact details in components.
-Never rename platform section keys without updating the registry, docs, and types.
-Never put secrets in `NEXT_PUBLIC_*`; these values are browser-public and may be inlined at build time.
-Never allow query params to override `NEXT_PUBLIC_WEBSERBISYO_API_URL`.
+Protected runtime/data layer:
 
-Always render from platform section order.
-Always skip unknown section keys safely.
-Always keep RSVP submission platform-owned.
-Always customize themes through CSS variables/tokens before changing component colors.
-Always run typecheck, lint, and build before delivery.
+- `src/app/page.tsx`
+- `src/components/platform/*`
+- `src/lib/env.ts`
+- `src/lib/public-event-api.ts`
+- `src/lib/normalize-public-event.ts`
+- `src/lib/platform-render-model.ts`
+- `src/lib/rsvp-url.ts`
+- `src/types/public-event.ts`
 
-Starter neutrality:
+Rules:
 
-- The starter must stay a neutral reusable WebSerbisyo wedding base.
-- Client-specific visual themes must never be committed as starter defaults.
-- Theme presets may exist only as documented optional examples, not default runtime styles.
-- Every client custom design belongs in the cloned client repo.
-- The default runtime must track the main platform `EventWebsiteRenderer` and public `event-preview-*` CSS baseline.
-- Do not invent a separate default starter UI, shell, marketing navbar, landing hero, or editorial layout.
-- Keep client customization layered above the protected platform renderer/data adapter baseline.
-- Platform renderer icons must go through `src/components/platform/platform-icons.tsx`; do not scatter direct icon library imports across base renderer files.
-- The starter RSVP section must stay inline within the same one-page event flow. Do not depend on removed platform RSVP routes, iframe embeds, or copied platform submission logic.
-- Extra UI libraries such as shadcn, ReactBits, Motion, GSAP, or Framer Motion belong in cloned client repos after baseline validation unless explicitly approved for the starter.
+- Keep this repo frontend-only.
+- Do not bypass the WebSerbisyo public API.
+- Do not add Supabase, server actions, database logic, auth, admin, billing, or payment logic.
+- Do not revive `/rsvp`, `/r/[slug]/rsvp`, `/r/[slug]/rsvp/embed`, iframe RSVP, `postMessage`, `rsvpUrl`, or `rsvpEmbedUrl`.
+- RSVP stays inline only on `/` with `#rsvp` and `#rsvp-form`.
+- Do not fake RSVP success or simulate working submission behavior.
+- Do not put client-specific design, copy, or editorial layout into protected starter platform files.
+- Do not hardcode couple names, dates, venues, sponsors, gifts, or contact details in reusable starter runtime files.
 
-Dashboard preview may pass safe query params such as `eventSlug`, `preview`, and `source`. `eventSlug` can override the configured slug only in local/design/dashboard preview contexts. Guest/live production must not show debug chrome unless design or snapshot mode is active.
+Customization guidance:
+
+- This Phase 1 repo change adds docs and guard foundations only.
+- `src/client/` is the planned future client-editable boundary. Do not assume it is implemented yet.
+- Future client customization should target `src/client/` once that boundary exists.
+- Until then, do not treat protected platform/data files as general customization targets.
+
+Starter expectations:
+
+- Keep the starter neutral and reusable.
+- Preserve the current runtime flow: `src/app/page.tsx` -> `src/components/platform/PublicEventPageContent.tsx` -> `src/components/platform/EventWebsiteRenderer.tsx`.
+- Preserve one-page inline RSVP behavior and local anchor scrolling.
+- Preserve platform section order, safe unknown-key skipping, and public-data ownership.

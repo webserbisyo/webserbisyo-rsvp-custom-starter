@@ -1,57 +1,54 @@
 # Do Not Break
 
+Phase 1 scope:
+
+- This phase creates docs and guard foundations only.
+- Do not change runtime rendering behavior in Phase 1.
+- Do not change data fetching, normalization, section keys, or RSVP behavior in Phase 1.
+
 Protected files:
 
-- `AGENTS.md`
-- `src/lib/env.ts`
 - `src/lib/public-event-api.ts`
 - `src/lib/normalize-public-event.ts`
-- `src/lib/rsvp-url.ts`
 - `src/lib/platform-render-model.ts`
+- `src/lib/env.ts`
+- `src/types/public-event.ts`
 - `src/components/platform/EventWebsiteRenderer.tsx`
 - `src/components/platform/PublicEventPageContent.tsx`
-- `src/components/platform/platform-icons.tsx`
+- `src/lib/rsvp-url.ts`
 - `src/config/wedding-section-registry.ts`
-- `src/types/public-event.ts`
-- `docs/DATA_CONTRACT.md`
-- `docs/SECTIONS.md`
-- `docs/ARCHITECTURE.md`
+- `src/app/page.tsx`
 
-Rules:
+Protected runtime contract:
 
-- No backend database.
-- No Supabase packages.
-- No placeholders in live mode.
-- No direct RSVP submission.
-- No platform server actions copied into the starter.
-- No hidden origin exposure.
-- No `.vercel.app` canonical or guest-facing URL.
-- No snapshot usage in live mode.
-- No fake QR or fake media in live mode.
-- No admin, billing, payment, auth, or private RSVP response logic.
-- No secrets in `NEXT_PUBLIC_*`; these values are browser-public.
-- No query-string API base URL override.
-- No dashboard preview canonical metadata.
-- No direct header RSVP jump to the platform form; scroll to the custom RSVP section first.
-- No direct RSVP API submission until the main platform publishes an official public submission contract.
-- No removed platform RSVP route dependency.
-- No iframe or postMessage RSVP embed mode.
-- No client-specific theme, venue, couple, visual identity, or editorial treatment as the starter default.
-- No theme preset as default runtime styling. Presets may be documented examples only.
-- No invented default starter shell, marketing navbar, landing hero, or separate renderer.
-- No UI libraries such as shadcn, ReactBits, Motion, GSAP, or Framer Motion in the starter unless explicitly approved.
-- `lucide-react` is allowed only for platform visual parity and only behind `src/components/platform/platform-icons.tsx`.
+- The active runtime path is `src/app/page.tsx` -> `src/components/platform/PublicEventPageContent.tsx` -> `src/components/platform/EventWebsiteRenderer.tsx`.
+- RSVP stays inline on `/`.
+- Required RSVP anchors remain `#rsvp` and `#rsvp-form`.
+- No `/rsvp` route.
+- No `/r/[slug]/rsvp` route.
+- No `/r/[slug]/rsvp/embed` route.
+- No iframe or `postMessage` RSVP behavior.
+- No `rsvpUrl` or `rsvpEmbedUrl`.
+- No fake RSVP success or simulated working submission.
+- No direct RSVP submission until an official public WebSerbisyo contract exists.
 
-Protected preview behavior:
+Protected architecture rules:
 
-- `eventSlug` query override is allowed only for local/design/dashboard preview contexts.
-- `preview=dashboard` or `source=dashboard` may show `Custom Preview`.
-- Hidden custom frontend origins must stay out of UI, metadata, and public env.
+- Do not bypass the WebSerbisyo public API.
+- Do not add backend/database logic.
+- Do not add Supabase packages or service-role usage.
+- Do not add server actions, auth, admin, billing, or payment logic.
+- Do not expose hidden custom frontend origins in UI, metadata, or public env.
+- Do not rename platform section keys without updating registry, docs, and types together.
 
-Protected starter shape:
+Planned customization boundary:
 
-- The starter stays neutral and reusable.
-- Client visual design work belongs in cloned client repos.
-- Default runtime must track the main platform `EventWebsiteRenderer` public template and `event-preview-*` CSS structure.
-- The platform renderer and data adapter are protected base layers; client customization is a separate layer.
-- User-entered/client-entered text must wrap safely and never overflow its card or pill.
+- `src/client/` is the future client-editable boundary.
+- Phase 1 does not implement `src/client/`; it only establishes the docs and guard foundation for it.
+- Until later phases add that boundary, treat protected platform/data files as non-customization targets.
+
+Starter neutrality:
+
+- The starter must remain a neutral reusable base.
+- Client-specific visual identity, venue language, couple names, or one-off editorial design must not become starter defaults.
+- Client work belongs in future client-boundary files, not in protected platform/data files.

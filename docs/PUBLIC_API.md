@@ -33,4 +33,4 @@ Current supported public fields include:
 
 Preview query params may choose a safe event slug, but they must never choose the API base URL. `NEXT_PUBLIC_WEBSERBISYO_API_URL` remains the only API origin.
 
-RSVP remains platform-owned. The starter keeps the RSVP section inline within the one-page event flow and does not depend on removed platform RSVP routes or iframe embeds. Any future submission wiring must use an official public contract published by the main platform.
+RSVP remains platform-owned. The starter keeps the RSVP section inline within the one-page event flow and does not depend on removed platform RSVP routes or removed RSVP embed modes. Any future submission wiring must use an official public contract published by the main platform.

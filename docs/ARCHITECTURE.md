@@ -1,27 +1,45 @@
 # Architecture
 
-The main platform repo `webserbisyo-rsvp` owns truth and URLs: wildcard subdomains, dashboards, Supabase, billing, RSVP responses, moderation, publish state, public API, fallback `/r/[slug]`, Website Access, and the future wildcard proxy.
+This repo is the reusable frontend-only WebSerbisyo RSVP custom starter.
 
-This custom repo renders design only. It fetches published public event data through the public API and connects to one platform event by `NEXT_PUBLIC_EVENT_SLUG`.
+Current audited runtime:
 
-The protected runtime has three layers:
+- app entry: `src/app/page.tsx`
+- page wrapper: `src/components/platform/PublicEventPageContent.tsx`
+- active body renderer: `src/components/platform/EventWebsiteRenderer.tsx`
 
-- Platform renderer baseline: `src/components/platform/*`, which mirrors the main platform `EventWebsiteRenderer` public template and `event-preview-*` CSS rhythm.
-- Data adapter layer: public API data is normalized and adapted into the platform-compatible render model without changing API ownership.
-- Customization layer: cloned client repos may add approved theme overrides, custom assets, and optional section styling after the baseline is validated.
+Current runtime behavior:
 
-The starter RSVP section is part of the same one-page event website flow. The starter must not depend on removed platform RSVP routes, iframe embeds, or copied backend submission logic.
+- data is loaded in `src/app/page.tsx`
+- public API fetch and normalization stay in `src/lib/*`
+- `EventWebsiteRenderer.tsx` is the active centralized renderer
+- RSVP is inline-only within the one-page flow
 
-The starter default must not introduce a separate marketing shell, navbar, hero, client theme, or custom UI kit. Those belong only in cloned client repos.
+Current non-runtime code:
 
-Public guest URL remains the client editable subdomain:
+- `src/components/sections/*` is not active in the current runtime path
+- `src/components/layout/*` is not active in the current runtime path
 
-```txt
-https://{clientSubdomain}.rsvp.webserbisyo.com
-```
+Protected baseline:
 
-The platform event slug is the data key. The custom frontend origin URL is the hidden deployed origin stored later in Super Admin as `custom_frontend_origin_url`.
+- the active renderer is parity-sensitive and should be treated as protected
+- the data adapter layer is protected
+- the public API remains platform-owned
 
-Future wildcard proxy behavior: the main platform serves the custom design behind the public subdomain. This repo must be proxy-aware but must not implement the proxy.
+Recommended next architecture direction:
 
-Dashboard preview behavior: the main platform may iframe or open the hidden custom origin with safe query params such as `eventSlug`, `preview=dashboard`, and `source=dashboard`. The custom starter may use the query slug only for local/design/dashboard preview contexts and must never read an API base URL from the query string.
+- Option 2 is the safest next step
+- add a future `src/client/` boundary
+- add client config/docs/guard support
+- add only limited safe override mechanisms later
+
+Deferred/riskier direction:
+
+- a full section-slot system across all base renderer sections is deferred
+- it is riskier because `EventWebsiteRenderer.tsx` is monolithic and tightly coupled to the current baseline
+
+Layer model:
+
+- Layer 0: platform core outside this repo
+- Layer 1: protected starter baseline inside this repo
+- Layer 2: planned future client layer under `src/client/`

@@ -1,35 +1,44 @@
 # Customization Layer
 
-The starter has a protected base layer and a separate customization layer.
+The starter architecture has three layers:
 
-Protected base:
+- Layer 0: platform core outside this repo
+- Layer 1: protected starter baseline inside this repo
+- Layer 2: planned future client layer under `src/client/`
 
-- `src/components/platform/*`
+Layer 0: platform core outside this repo
+
+- public API ownership
+- RSVP backend ownership
+- section key contract
+- moderation, publishing, and hidden custom origin ownership
+
+Layer 1: protected starter baseline
+
+- active runtime flow: `src/app/page.tsx` -> `src/components/platform/PublicEventPageContent.tsx` -> `src/components/platform/EventWebsiteRenderer.tsx`
 - public API fetcher
 - normalized public event data
-- platform render model adapter
-- section order and visibility rules
-- RSVP anchor helper
+- platform render-model adapter
+- inline RSVP anchors and one-page flow
 - metadata safety
-- design/live/snapshot mode rules
-- media safety primitives
-- platform icon adapter
+- neutral starter CSS baseline
 
-Customization belongs in cloned client repos after the baseline is validated against the main platform preview/public renderer.
+Layer 2: planned future client layer
 
-Client repos may add:
+- future path: `src/client/`
+- intended use: client-specific theme overrides, assets, safe wrapper-level customization, and optional additive UI enhancements
+- not implemented in Phase 1
 
-- approved visual theme overrides
-- public client assets
-- section styling overrides
-- optional UI libraries
-- optional animation enhancements
-- future gallery styling when real platform gallery data exists
+Important Phase 1 note:
 
-Client customization must not change API ownership, section keys, inline RSVP section behavior, direct submission rules, metadata safety, or live placeholder rules.
+- Phase 1 does not create a working `src/client/` runtime layer.
+- Phase 1 only clarifies the docs and guard foundations so later phases can add `src/client/` safely.
 
-Client repos may swap the icon implementation through `src/components/platform/platform-icons.tsx`. Do not scatter direct icon library imports across protected renderer files.
+Rules for future client customization:
 
-The reusable starter default must not become a custom theme, marketing page, or alternate renderer.
-
-If a client clone later adds a local `/rsvp` page, treat it as a clone-only layout decision. Do not reintroduce removed platform RSVP route dependencies or iframe embeds into the starter baseline.
+- do not change API ownership
+- do not change protected data normalization
+- do not change section keys
+- do not change inline RSVP ownership or anchors
+- do not revive removed RSVP routes or embed patterns
+- do not fake working submission behavior

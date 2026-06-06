@@ -1,43 +1,39 @@
 # Client Customization Rules
 
-Client repos may customize:
+Client customization is frontend-only.
 
-- Layout polish
-- Public client-approved imagery
-- Theme token overrides
-- Typography choices
-- Section styling
-- Optional custom decoration around existing sections
-- Client-specific token presets
-- Client-approved public gallery styling after platform/API gallery data exists
-- Optional UI libraries after the starter baseline is validated
-- Icon swaps through the platform icon adapter
+Current Phase 1 status:
 
-Every client custom design belongs in the cloned client repo. Do not commit client-specific visual identity, venue language, couple names, theme names, or one-off editorial layout back into this reusable starter.
+- This repo is still the neutral reusable starter.
+- `src/client/` is the planned future customization boundary.
+- Phase 1 defines the rules and guard expectations only. It does not implement the `src/client/` runtime yet.
 
-Starter runtime defaults must continue to track the main platform public/account preview renderer. Do not replace the base renderer with a custom landing page, marketing navbar, client-specific hero, or alternate UI kit in this repo.
+Future client customization should:
 
-Client repos must not customize:
+- live under `src/client/` once that boundary exists
+- keep the platform data layer untouched
+- use public API data instead of hardcoded event content
+- keep the one-page runtime structure intact unless a later approved phase says otherwise
+- use real public-safe client assets and approved visual design work
 
-- Public API path
-- Platform section keys
-- RSVP submission behavior
-- Backend/database/auth/payment/admin logic
-- Hidden custom origin exposure
-- Live placeholder behavior
-- RSVP anchor and local scroll behavior
-- Query-string API base URL behavior
-- Platform renderer baseline behavior
-- Platform data adapter behavior
+Client customization must not:
 
-Keep the starter contract intact. If a platform section key changes, update registry, docs, types, and normalizer together.
+- bypass or replace the WebSerbisyo public API
+- change `src/lib/public-event-api.ts`, `src/lib/normalize-public-event.ts`, `src/lib/platform-render-model.ts`, or `src/types/public-event.ts`
+- add backend/database/auth/admin/billing/payment logic
+- add Supabase or server actions
+- revive `/rsvp`, `/r/[slug]/rsvp`, `/r/[slug]/rsvp/embed`, iframe RSVP, or `postMessage` RSVP
+- use `rsvpUrl` or `rsvpEmbedUrl`
+- fake RSVP success or simulate working RSVP submission
+- expose hidden custom frontend origins as public guest URLs
 
-Do not hardcode couple names, dates, venues, sponsors, gifts, photos, QR images, or contact details in reusable starter components. Use the public API render model and theme tokens instead.
+RSVP rule:
 
-Theme presets may exist only as documented optional examples. They must not be imported, selected, or applied as default runtime styles in the starter.
+- RSVP remains inline on `/`.
+- Keep `#rsvp` and `#rsvp-form`.
+- Any future RSVP submission wiring is out of scope for starter customization and requires an official public WebSerbisyo API contract.
 
-Libraries such as shadcn, ReactBits, Motion, GSAP, and Framer Motion may be added in cloned client repos after baseline acceptance. Library usage must not change API fetching, section order, visibility logic, inline RSVP behavior, metadata safety, or live placeholder rules.
+Starter neutrality rule:
 
-Future client clones may add a local frontend `/rsvp` page only as a clone-specific layout decision. That optional page must remain frontend-local and must not depend on removed platform RSVP routes.
-
-Do not import icon libraries directly in protected renderer files. Swap or extend icons through `src/components/platform/platform-icons.tsx`.
+- Do not commit client-specific design defaults back into the reusable starter.
+- Do not hardcode couple names, dates, venues, sponsors, gifts, QR codes, photos, or contact details into reusable baseline files.

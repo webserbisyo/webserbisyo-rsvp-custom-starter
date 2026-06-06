@@ -24,7 +24,7 @@ Snapshots in `.webserbisyo/` are local-only and ignored by git. They must not be
 
 Dashboard preview:
 
-- The platform may iframe or open the hidden custom origin for preview.
+- The platform may open the hidden custom origin or show it inside embedded dashboard preview screens.
 - Supported query params are `eventSlug`, `preview`, and `source`.
 - Use `preview=dashboard` or `source=dashboard` when the platform needs a dashboard preview badge.
 - Do not add query params for API base URL, auth, admin, billing, payment, or RSVP submission.

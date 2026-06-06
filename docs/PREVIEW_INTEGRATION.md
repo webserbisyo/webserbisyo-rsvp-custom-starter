@@ -1,6 +1,6 @@
 # Preview Integration
 
-The main WebSerbisyo RSVP platform may iframe or open this custom frontend from dashboard preview screens after Super Admin saves `custom_frontend_origin_url` and enables the custom website.
+The main WebSerbisyo RSVP platform may open this custom frontend or display it in an embedded dashboard preview after Super Admin saves `custom_frontend_origin_url` and enables the custom website.
 
 This repo remains frontend-only. It still fetches event data only from:
 
@@ -41,7 +41,7 @@ Guests should continue to use the main platform public wildcard URL:
 https://{clientSubdomain}.rsvp.webserbisyo.com
 ```
 
-The public canonical URL should prefer `data.urls.publicWebsiteUrl`. Dashboard preview mode omits canonical metadata and marks the page noindex so iframe/open preview cannot poison SEO.
+The public canonical URL should prefer `data.urls.publicWebsiteUrl`. Dashboard preview mode omits canonical metadata and marks the page noindex so embedded/open preview cannot poison SEO.
 
 Never expose the hidden custom frontend origin in UI, public metadata, guest docs, or `NEXT_PUBLIC_*` values.
-The RSVP section stays inline in the page flow. Preview integration must not revive removed platform RSVP routes or iframe/embed modes.
+The RSVP section stays inline in the page flow. Preview integration must not revive removed platform RSVP routes or removed RSVP embed modes.
