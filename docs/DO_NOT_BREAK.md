@@ -63,6 +63,12 @@ Phase 4 rule:
 - do not add route groups or multi-page routes yet
 - keep RSVP links on local anchors only
 
+Phase 5 rule:
+
+- the client renderer switch must remain disabled by default in the neutral starter
+- do not modify `src/components/platform/PublicEventPageContent.tsx` or `src/components/platform/EventWebsiteRenderer.tsx` to support client mode
+- do not wire section-level slot overrides yet
+
 Starter neutrality:
 
 - The starter must remain a neutral reusable base.

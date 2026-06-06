@@ -41,6 +41,13 @@ Phase 4 boundary:
 - use local anchors only for navigation
 - multi-page routes are still out of scope
 
+Phase 5 boundary:
+
+- a page-level client renderer switch now exists in `src/client/client.config.ts`
+- it is disabled by default
+- `EventWebsiteRenderer` remains protected
+- do not add section slots yet
+
 Safe prompt example:
 
 > Add a future-ready client customization boundary under `src/client/` without changing public API fetching, section keys, inline RSVP behavior, or platform renderer ownership.
@@ -58,6 +65,7 @@ Unsafe prompt patterns:
 - "Add iframe RSVP"
 - "Add per-section client override slots right now"
 - "Add route groups or a `/rsvp` page for nav"
+- "Rewrite EventWebsiteRenderer to support client mode"
 - "Wire the RSVP form to submit anyway"
 - "Add a temporary fake RSVP success modal"
 - "Replace the public API with local hardcoded client data"

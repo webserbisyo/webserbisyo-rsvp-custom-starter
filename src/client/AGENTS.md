@@ -21,5 +21,6 @@ Safe direction:
 - Put future client-specific config, assets, styles, components, and optional libraries under `src/client/`.
 - Keep runtime hooks limited to wrapper-level concerns in this phase.
 - Keep nav and footer config-driven and anchor-based.
+- Keep the client renderer switch disabled by default in the neutral starter.
 - Keep per-section override wiring deferred until a later approved phase.
 - Keep multi-page routing deferred.

@@ -52,6 +52,14 @@ Current Phase 4 limit:
 - no route groups
 - no section-slot registry wiring
 
+Current Phase 5 limit:
+
+- a page-level client renderer switch is allowed only through `src/client`
+- the switch is disabled by default in the neutral starter
+- `EventWebsiteRenderer` stays protected
+- no section-slot registry wiring
+- no multi-page routes
+
 Rules for future client customization:
 
 - do not change API ownership

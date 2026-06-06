@@ -64,3 +64,12 @@ Phase 1 note:
 - do not add `/rsvp` pages
 - do not add redirect or embedded RSVP flows
 - multi-page routing is still deferred
+
+## Phase 5 page-level client renderer
+
+- the starter now includes a page-level client renderer switch in `src/client/client.config.ts`
+- the default remains `renderer.mode = "platform"` with `allowClientRenderer = false`
+- base starter output remains unchanged by default
+- `src/components/platform/EventWebsiteRenderer.tsx` remains protected
+- section-level slot overrides are still deferred
+- future cloned client repos may opt into a custom client renderer after cloning, using real event data only

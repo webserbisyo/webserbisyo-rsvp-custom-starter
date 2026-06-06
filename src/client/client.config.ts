@@ -1,12 +1,51 @@
 import type { ClientAnchorHref } from "@/client/components/client-nav-utils";
 
-type ClientNavLinkConfig = {
+export type ClientNavLinkConfig = {
   label: string;
   href: ClientAnchorHref;
 };
 
+export type ClientRendererConfig = {
+  mode: "platform" | "client";
+  allowClientRenderer: boolean;
+};
+
+export type ClientConfig = {
+  mode: "starter";
+  renderer: ClientRendererConfig;
+  identity: {
+    displayName: string;
+    subtitle: string;
+  };
+  theme: {
+    preset: string;
+    fonts: {
+      heading: string;
+      body: string;
+    };
+    tokens: Record<string, string>;
+  };
+  layout: {
+    navEnabled: boolean;
+    footerEnabled: boolean;
+  };
+  nav: {
+    links: readonly ClientNavLinkConfig[];
+  };
+  footer: {
+    text: string;
+  };
+  sections: Record<string, unknown>;
+  assets: Record<string, unknown>;
+  libs: readonly string[];
+};
+
 export const clientConfig = {
   mode: "starter",
+  renderer: {
+    mode: "platform",
+    allowClientRenderer: false
+  } satisfies ClientRendererConfig,
   identity: {
     displayName: "",
     subtitle: ""
@@ -35,6 +74,4 @@ export const clientConfig = {
   sections: {},
   assets: {},
   libs: []
-} as const;
-
-export type ClientConfig = typeof clientConfig;
+} satisfies ClientConfig;

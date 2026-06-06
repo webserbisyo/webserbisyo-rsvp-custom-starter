@@ -7,6 +7,12 @@ Active runtime renderer:
 - `src/components/platform/PublicEventPageContent.tsx`
 - `src/components/platform/EventWebsiteRenderer.tsx`
 
+Phase 5 note:
+
+- a page-level client renderer scaffold now exists under `src/client/renderer/*`
+- it is disabled by default in the neutral starter
+- section-level overrides remain deferred
+
 Section list:
 
 ## `host_info`

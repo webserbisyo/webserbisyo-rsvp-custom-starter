@@ -29,12 +29,14 @@ Rules:
 - do not add section-slot overrides here yet
 - keep nav links on local anchors only
 - do not add multi-page route groups here yet
+- do not edit `src/components/platform/PublicEventPageContent.tsx` or `src/components/platform/EventWebsiteRenderer.tsx` to switch renderers
 
-Phase 4 note:
+Phase 5 note:
 
 - this boundary is now imported at the page-shell level only
 - nav and footer are now config-driven
 - default visual output remains unchanged because nav and footer are still disabled
+- the page-level client renderer switch now exists, but it is disabled by default
 - runtime hooks remain limited to the page wrapper in this phase
 - section override mechanisms are deferred to a later phase
 - multi-page routing is still deferred

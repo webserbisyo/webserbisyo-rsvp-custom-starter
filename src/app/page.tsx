@@ -58,7 +58,7 @@ export default async function HomePage({ searchParams }: PageProps) {
   }
 
   return (
-    <ClientPageFrame config={clientConfig}>
+    <ClientPageFrame config={clientConfig} event={result.event}>
       <PublicEventPageContent event={result.event} />
     </ClientPageFrame>
   );
