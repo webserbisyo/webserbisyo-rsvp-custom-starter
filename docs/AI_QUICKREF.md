@@ -27,6 +27,13 @@ Phase 2 boundary:
 - it is inert by default
 - do not wire it into protected runtime files yet unless a later approved phase explicitly requires it
 
+Phase 3 boundary:
+
+- `src/client/` is now imported only at the page-shell level
+- do not edit `src/components/platform/EventWebsiteRenderer.tsx` for client-specific design
+- do not add section-slot overrides yet
+- keep RSVP inline at `#rsvp` and `#rsvp-form`
+
 Safe prompt example:
 
 > Add a future-ready client customization boundary under `src/client/` without changing public API fetching, section keys, inline RSVP behavior, or platform renderer ownership.
@@ -42,6 +49,7 @@ Unsafe prompt patterns:
 - "Use Supabase directly"
 - "Edit EventWebsiteRenderer for client-specific design"
 - "Add iframe RSVP"
+- "Add per-section client override slots right now"
 - "Wire the RSVP form to submit anyway"
 - "Add a temporary fake RSVP success modal"
 - "Replace the public API with local hardcoded client data"

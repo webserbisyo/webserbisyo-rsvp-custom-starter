@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { ClientPageFrame } from "@/client/components";
+import { clientConfig } from "@/client/client.config";
 import { PublicEventPageContent } from "@/components/platform/PublicEventPageContent";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { getPublicEnv } from "@/lib/env";
@@ -55,5 +57,9 @@ export default async function HomePage({ searchParams }: PageProps) {
     return <EmptyState title="Event unavailable" message={result.message} />;
   }
 
-  return <PublicEventPageContent event={result.event} />;
+  return (
+    <ClientPageFrame config={clientConfig}>
+      <PublicEventPageContent event={result.event} />
+    </ClientPageFrame>
+  );
 }

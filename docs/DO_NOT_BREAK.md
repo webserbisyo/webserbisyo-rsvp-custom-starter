@@ -50,6 +50,12 @@ Planned customization boundary:
 - Do not use `src/client/` as a reason to weaken security, API ownership, or RSVP protections.
 - Treat protected platform/data files as non-customization targets unless a later approved runtime-hook phase explicitly changes that.
 
+Phase 3 rule:
+
+- `src/client/` may be imported only at the page-shell level in this phase.
+- Do not modify `src/components/platform/PublicEventPageContent.tsx` or `src/components/platform/EventWebsiteRenderer.tsx` to support client overrides.
+- Do not make sections overrideable yet.
+
 Starter neutrality:
 
 - The starter must remain a neutral reusable base.

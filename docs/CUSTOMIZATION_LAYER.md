@@ -28,12 +28,21 @@ Layer 2: client layer
 - future path: `src/client/`
 - intended use: client-specific theme overrides, assets, safe wrapper-level customization, and optional additive UI enhancements
 - present in Phase 2 as an inert boundary
+- imported in Phase 3 only at the page-shell level
 
 Important Phase 2 note:
 
 - `src/client/` now exists.
-- It is currently inert and not wired into the active runtime path.
+- It is currently wired only through a minimal page-shell wrapper.
+- Default output remains unchanged because the wrapper config is disabled by default.
 - Protected platform files remain the source of truth until a later runtime-hook phase is approved.
+
+Current Phase 3 limit:
+
+- no section slots
+- no per-section override registry wiring
+- no edits to `src/components/platform/EventWebsiteRenderer.tsx`
+- no changes to RSVP behavior
 
 Rules for future client customization:
 

@@ -1,6 +1,6 @@
 # Client Boundary
 
-`src/client/` is the inert client customization boundary introduced in Phase 2.
+`src/client/` is the client customization boundary introduced in Phase 2 and minimally wired in Phase 3.
 
 Use this folder in future client clones for:
 
@@ -9,6 +9,7 @@ Use this folder in future client clones for:
 - client-specific assets
 - optional additive components
 - optional library integration notes
+- wrapper-level UI hooks that do not replace protected platform rendering
 
 Protected files remain outside this folder:
 
@@ -24,8 +25,12 @@ Rules:
 - no backend, Supabase, or server actions
 - no fake submit or fake success
 - keep RSVP inline only with `#rsvp` and `#rsvp-form`
+- do not edit `src/components/platform/EventWebsiteRenderer.tsx` for client-specific design
+- do not add section-slot overrides here yet
 
-Phase 2 note:
+Phase 3 note:
 
-- this boundary exists now, but it is not wired into runtime yet
-- runtime hooks and override mechanisms are deferred to a later phase
+- this boundary is now imported at the page-shell level only
+- default visual output remains unchanged because nav and footer are disabled
+- runtime hooks are limited to the page wrapper in this phase
+- section override mechanisms are deferred to a later phase

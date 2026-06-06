@@ -5,7 +5,8 @@ This folder is the planned AI-safe customization boundary for future cloned clie
 Rules:
 
 - Future client visual customization belongs here.
-- This Phase 2 boundary is inert by default and may not be wired to runtime yet.
+- This Phase 3 boundary is imported only at the page-shell level.
+- Default visual output remains unchanged because wrapper features are disabled by default.
 - Do not edit protected platform/data files for client styling.
 - Do not bypass the WebSerbisyo public API.
 - Do not add backend, database, Supabase, or server actions.
@@ -18,4 +19,5 @@ Rules:
 Safe direction:
 
 - Put future client-specific config, assets, styles, components, and optional libraries under `src/client/`.
-- Keep runtime hooks and override wiring deferred until a later approved phase.
+- Keep runtime hooks limited to wrapper-level concerns in this phase.
+- Keep per-section override wiring deferred until a later approved phase.

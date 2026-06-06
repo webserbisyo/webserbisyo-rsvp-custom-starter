@@ -16,11 +16,14 @@ export const clientConfig = {
     navEnabled: false,
     footerEnabled: false
   },
-  navigation: {
+  nav: {
     links: [
       { label: "Home", href: "#top" },
       { label: "RSVP", href: "#rsvp" }
     ]
+  },
+  footer: {
+    text: ""
   },
   sections: {},
   assets: {},

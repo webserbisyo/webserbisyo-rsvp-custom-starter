@@ -45,3 +45,12 @@ Phase 1 note:
 - future client clones should start with `src/client/client.config.ts`
 - do not expect runtime visual changes from Phase 2 alone
 - runtime hooks and override mechanisms are deferred to a later phase
+
+## Phase 3 wrapper hook
+
+- `src/client/` is now imported at the page-shell level only
+- the active runtime still remains `src/app/page.tsx` -> `src/components/platform/PublicEventPageContent.tsx` -> `src/components/platform/EventWebsiteRenderer.tsx`
+- default visual output remains unchanged because `layout.navEnabled` and `layout.footerEnabled` are both `false`
+- this phase does not add section overrides
+- this phase does not change RSVP behavior
+- future phases may safely enable config-driven nav/footer first before any section-override work
