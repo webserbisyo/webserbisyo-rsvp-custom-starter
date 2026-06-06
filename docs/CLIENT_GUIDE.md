@@ -81,3 +81,22 @@ Phase 1 note:
 - `lucide-react` is already installed and may be used through `@/client/libs/icons`
 - shadcn, Framer Motion, and ReactBits-style libraries are documented for clones only and are not installed in the neutral starter
 - see `docs/LIBRARY_PROTOCOL.md` and `docs/CLONE_READINESS_CHECKLIST.md`
+
+## Final clone workflow
+
+1. Set env vars.
+2. Confirm platform data loads.
+3. Decide whether to enable the client renderer in the clone.
+4. Add UI libraries only under `src/client/libs` or approved `src/client` paths.
+5. Customize `src/client` only.
+6. Test at `375px`, `768px`, and `1280px`.
+7. Verify `#rsvp` and `#rsvp-form`.
+8. Run validation.
+9. Deploy the hidden Vercel origin.
+10. Set the platform custom frontend origin URL in Super Admin later.
+
+Responsiveness note:
+
+- use `docs/RESPONSIVENESS.md`
+- use `src/client/responsive.ts`
+- test enabled client nav, footer, renderer, and any library-driven UI after clone customization

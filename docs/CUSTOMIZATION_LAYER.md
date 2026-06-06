@@ -65,6 +65,13 @@ Current Phase 6 addition:
 - library protocol and wrapper paths now exist under `src/client/libs/`
 - clone-only library usage is documented without changing starter dependencies
 
+Current Phase 7 addition:
+
+- the responsiveness contract now lives in `docs/RESPONSIVENESS.md`
+- shared breakpoint guidance now lives in `src/client/responsive.ts`
+- the customization layer is structurally ready for clones
+- actual client designs still belong in cloned repos, not in the neutral starter
+
 Rules for future client customization:
 
 - do not change API ownership

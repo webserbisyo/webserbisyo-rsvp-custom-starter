@@ -53,6 +53,8 @@ Phase 6 boundary:
 - library usage should be organized under `src/client/libs/`
 - use wrapper imports where practical
 - shadcn, Framer Motion, and ReactBits-style libraries are clone-only unless already installed and approved
+- follow `docs/RESPONSIVENESS.md` and `src/client/responsive.ts`
+- test at `375px`, `768px`, and `1280px`
 
 Safe prompt example:
 
@@ -70,6 +72,12 @@ Safe clone prompt examples:
 
 > In this cloned client repo, add shadcn Button and Card components under `src/client/components/ui` only. Do not modify `EventWebsiteRenderer`.
 
+> Make the client hero responsive at `375px`, `768px`, and `1280px`. Work inside `src/client` only.
+
+> Add a motion reveal inside `src/client`, respect reduced motion, and do not change RSVP behavior.
+
+> Use ReactBits-style components inside `src/client` only and verify no horizontal overflow.
+
 Unsafe prompt patterns:
 
 - "Create a separate `/rsvp` page"
@@ -85,6 +93,9 @@ Unsafe prompt patterns:
 - "Add a temporary fake RSVP success modal"
 - "Replace the public API with local hardcoded client data"
 - "Move section rendering out of the protected platform files without preserving parity"
+- "Fix responsiveness by editing EventWebsiteRenderer"
+- "Create `/rsvp` for mobile users"
+- "Ignore mobile and only design desktop"
 
 Phase 1 reminder:
 

@@ -75,6 +75,13 @@ Phase 6 rule:
 - do not install clone-only libraries into the neutral starter unless explicitly approved
 - do not import client library wrappers into protected platform/data files
 
+Phase 7 rule:
+
+- do not "fix" responsiveness by weakening RSVP rules
+- do not edit protected platform/data files for client-specific responsive design unless a separate approved platform bugfix task requires it
+- do not make the neutral starter client-specific while improving responsive behavior
+- keep responsive clone work inside `src/client` and related clone docs
+
 Starter neutrality:
 
 - The starter must remain a neutral reusable base.

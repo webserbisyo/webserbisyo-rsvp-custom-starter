@@ -20,6 +20,13 @@ export type ClientLibsConfig = {
   effects: readonly string[];
 };
 
+export type ClientResponsiveConfig = {
+  strategy: "mobile-first";
+  testWidths: readonly [375, 768, 1280];
+  requireNoHorizontalOverflow: boolean;
+  respectReducedMotion: boolean;
+};
+
 export type ClientConfig = {
   mode: "starter";
   renderer: ClientRendererConfig;
@@ -48,6 +55,7 @@ export type ClientConfig = {
   sections: Record<string, unknown>;
   assets: Record<string, unknown>;
   libs: ClientLibsConfig;
+  responsive: ClientResponsiveConfig;
 };
 
 export const clientConfig = {
@@ -91,5 +99,11 @@ export const clientConfig = {
     ui: [],
     motion: [],
     effects: []
-  }
+  },
+  responsive: {
+    strategy: "mobile-first",
+    testWidths: [375, 768, 1280],
+    requireNoHorizontalOverflow: true,
+    respectReducedMotion: true
+  } satisfies ClientResponsiveConfig
 } satisfies ClientConfig;

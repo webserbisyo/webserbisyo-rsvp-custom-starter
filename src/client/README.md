@@ -44,3 +44,13 @@ Phase 5 note:
 - section override mechanisms are deferred to a later phase
 - multi-page routing is still deferred
 - the library protocol now lives in `src/client/libs/README.md` and `docs/LIBRARY_PROTOCOL.md`
+
+Responsiveness workflow:
+
+- use `docs/RESPONSIVENESS.md` as the clone responsiveness contract
+- use `src/client/responsive.ts` for shared breakpoint and checklist guidance
+- test at `375px`, `768px`, and `1280px`
+- retest after enabling client nav, client footer, or the client renderer
+- retest after adding Lucide, shadcn, ReactBits-style components, or motion libraries in a clone
+- keep inline RSVP visible and usable at `#rsvp` and `#rsvp-form`
+- do not introduce horizontal overflow while styling client-specific sections

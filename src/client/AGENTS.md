@@ -26,3 +26,15 @@ Safe direction:
 - Keep multi-page routing deferred.
 - Prefer `src/client/libs/*` wrapper imports for client libraries where available.
 - Treat shadcn, ReactBits-style libraries, and motion libraries as clone-only unless already installed and approved.
+
+Responsiveness contract:
+
+- Start at `375px`.
+- Then test `768px` and `1280px`.
+- Use mobile-first CSS and utility patterns.
+- Avoid fixed widths that break long names, long venues, or long addresses.
+- Keep tap targets accessible on touch devices.
+- Respect reduced motion.
+- Re-test after adding UI libraries under `src/client`.
+- Keep RSVP inline only with `#rsvp` and `#rsvp-form`.
+- No `/rsvp`, iframe RSVP, or pretend-success RSVP UI.

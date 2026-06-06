@@ -43,6 +43,9 @@ Validation after adding a library in a clone:
 - confirm RSVP stays inline at `#rsvp` and `#rsvp-form`
 - confirm no `/rsvp` routes were introduced
 - confirm no backend logic was added
+- confirm responsive behavior at `375px`, `768px`, and `1280px`
+- confirm no horizontal overflow
+- confirm inline RSVP still works after the library is added
 - run `npm run typecheck`
 - run `npm run lint`
 - run `npm run build`
