@@ -134,9 +134,16 @@ export type PlatformRenderModel = {
   };
   rsvpForm: {
     body: string;
+    companionAgeEnabled: boolean;
     companionLimit: string;
+    companionNameEnabled: boolean;
+    emailEnabled: boolean;
+    emailRequired: boolean;
+    foodAllergiesEnabled: boolean;
+    messageToHostEnabled: boolean;
     note: string;
     phoneEnabled: boolean;
+    phoneRequired: boolean;
     plusOneEnabled: boolean;
     title: string;
   };
@@ -362,9 +369,16 @@ function buildRsvpForm(content: Record<string, unknown> | undefined, rawRenderMo
   const raw = record(rawRenderModel.rsvpForm);
   return {
     body: firstString(content?.body, content?.description, raw.body),
+    companionAgeEnabled: boolValue(content?.companionAgeEnabled, raw.companionAgeEnabled),
     companionLimit: firstString(content?.companionLimit, raw.companionLimit) || "1",
+    companionNameEnabled: boolValue(content?.companionNameEnabled, raw.companionNameEnabled),
+    emailEnabled: boolValue(content?.emailEnabled, raw.emailEnabled, true),
+    emailRequired: boolValue(content?.emailRequired, raw.emailRequired),
+    foodAllergiesEnabled: boolValue(content?.foodAllergiesEnabled, raw.foodAllergiesEnabled),
+    messageToHostEnabled: boolValue(content?.messageToHostEnabled, raw.messageToHostEnabled, true),
     note: firstString(content?.note, raw.note),
     phoneEnabled: boolValue(content?.phoneEnabled, raw.phoneEnabled),
+    phoneRequired: boolValue(content?.phoneRequired, raw.phoneRequired),
     plusOneEnabled: boolValue(content?.plusOneEnabled, raw.plusOneEnabled),
     title: firstString(content?.title, content?.label, raw.title) || "Confirm Your Attendance"
   };

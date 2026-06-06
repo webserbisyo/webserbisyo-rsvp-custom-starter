@@ -7,7 +7,7 @@ export function PublicEventPageContent({ event }: { event: EventWebsiteRenderMod
 
   return (
     <main
-      className="event-website-public-page min-h-screen text-slate-900"
+      className="event-website-public-page min-h-screen bg-[linear-gradient(180deg,#fff8ef_0%,#ffffff_55%,#fff6ec_100%)] text-slate-900"
       data-preview-mode={context.previewMode}
     >
       <div className="event-preview-public-shell">

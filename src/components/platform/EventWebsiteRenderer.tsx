@@ -20,6 +20,15 @@ import type {
   PlatformSectionKey
 } from "@/lib/platform-render-model";
 
+const RSVP_GUEST_NAME_LABEL = "Guest Name";
+const RSVP_EMAIL_LABEL = "Email Address";
+const RSVP_PHONE_LABEL = "Phone Number";
+const RSVP_ATTENDANCE_LABEL = "Attendance";
+const RSVP_GUEST_COUNT_LABEL = "Guest Count";
+const RSVP_MESSAGE_LABEL = "Message to Host";
+const RSVP_MESSAGE_HELPER = "Optional note, greeting, or guestbook message.";
+const RSVP_MESSAGE_PRIVACY_COPY = "Private by default. The host may show approved messages in the Guestbook.";
+
 type EventWebsiteRendererProps = {
   draft: PlatformRenderModel;
   guestbookMessages?: PlatformGuestbookMessage[];
@@ -417,68 +426,125 @@ function ExtraInfoSection({ draft }: { draft: PlatformRenderModel }) {
 
 function RsvpFormSection({ draft }: { draft: PlatformRenderModel }) {
   const values = draft.rsvpForm;
+  const [previewCompanionCount, setPreviewCompanionCount] = useState(0);
   const title = values.title.trim() || "Confirm Your Attendance";
   const body =
     values.body.trim() ||
-    "Please let the hosts know if you can join the celebration. This starter keeps the RSVP experience inside the same page flow.";
-  const note =
-    values.note.trim() ||
-    "Online response collection can be connected here while keeping the RSVP experience inside the same page flow.";
-  const companionCopy = values.plusOneEnabled
-    ? `Guests may confirm up to ${values.companionLimit.trim() || "1"} companion${(values.companionLimit.trim() || "1") === "1" ? "" : "s"} when allowed by the invitation.`
-    : "Guest responses are limited to the invitee unless the hosts enable companion responses.";
-  const phoneCopy = values.phoneEnabled
-    ? "Contact number collection is enabled in the RSVP configuration."
-    : "Contact number collection is optional unless the hosts enable it later.";
+    "Please confirm your attendance so we can prepare your seat and celebration details.";
+  const maxCompanions = Math.max(1, Number(values.companionLimit) || 1);
+  const companionOptions = Array.from({ length: maxCompanions + 1 }, (_, i) => i);
+  const shouldShowCompanions = values.plusOneEnabled;
+  const shouldShowEmail = values.emailEnabled;
+  const shouldShowPhone = values.phoneEnabled;
+  const shouldShowMessage = values.messageToHostEnabled;
 
   return (
     <section className="event-preview-section">
       <SectionLabel>RSVP</SectionLabel>
       <h3>{title}</h3>
       <p className="event-preview-copy">{body}</p>
-      <div className="event-preview-rsvp-grid">
-        <div className="event-preview-rsvp-card event-preview-rsvp-state">
-          <div className="event-preview-rsvp-state-copy">
-            <h4>RSVP Details</h4>
-            <p>{companionCopy}</p>
-            <p>{phoneCopy}</p>
-          </div>
-        </div>
-        <div className="event-preview-rsvp-card event-preview-rsvp-foundation" id={RSVP_FORM_ID}>
-          <div className="event-preview-rsvp-foundation-copy">
-            <h4>Inline RSVP Foundation</h4>
-            <p>{note}</p>
-          </div>
-          <div className="event-preview-rsvp-form-preview" aria-hidden="true">
-            <div className="event-preview-rsvp-field">
-              <span>Guest Name</span>
-              <div className="event-preview-rsvp-input" />
-            </div>
-            <div className="event-preview-rsvp-field">
-              <span>Attendance</span>
-              <div className="event-preview-rsvp-choice-row">
-                <div className="event-preview-rsvp-choice">Attending</div>
-                <div className="event-preview-rsvp-choice">Unable to Attend</div>
-              </div>
-            </div>
-            {values.phoneEnabled ? (
-              <div className="event-preview-rsvp-field">
-                <span>Contact Number</span>
-                <div className="event-preview-rsvp-input" />
-              </div>
-            ) : null}
-            {values.plusOneEnabled ? (
-              <div className="event-preview-rsvp-field">
-                <span>Companions</span>
-                <div className="event-preview-rsvp-input" />
-              </div>
-            ) : null}
-            <div className="event-preview-rsvp-field">
-              <span>Message to the Hosts</span>
-              <div className="event-preview-rsvp-textarea" />
+      <div className="event-preview-rsvp-public-shell" id={RSVP_FORM_ID}>
+        <form className="event-preview-rsvp-card" aria-describedby="starter-rsvp-note">
+          <label className="event-preview-field">
+            <span>{RSVP_GUEST_NAME_LABEL}</span>
+            <input type="text" placeholder="Your full name" />
+          </label>
+
+          {shouldShowEmail ? (
+            <label className="event-preview-field">
+              <span>{RSVP_EMAIL_LABEL}</span>
+              <input type="email" placeholder="you@example.com" required={values.emailRequired} />
+            </label>
+          ) : null}
+
+          {shouldShowPhone ? (
+            <label className="event-preview-field">
+              <span>{RSVP_PHONE_LABEL}</span>
+              <input type="tel" placeholder="09XXXXXXXXX" required={values.phoneRequired} />
+            </label>
+          ) : null}
+
+          <div className="event-preview-field">
+            <span>{RSVP_ATTENDANCE_LABEL}</span>
+            <div className="event-preview-choice-group" aria-label={RSVP_ATTENDANCE_LABEL}>
+              <button type="button" className="is-selected">
+                Yes, I will attend
+              </button>
+              <button type="button">Sorry, I can&apos;t attend</button>
             </div>
           </div>
-        </div>
+
+          {shouldShowCompanions ? (
+            <div className="event-preview-field">
+              <span>{RSVP_GUEST_COUNT_LABEL}</span>
+              <p className="event-preview-rsvp-helper-copy">
+                Choose how many companions you will bring. You may bring up to {maxCompanions}.
+              </p>
+              {maxCompanions >= 4 ? (
+                <select value={previewCompanionCount} onChange={(event) => setPreviewCompanionCount(Number(event.target.value))}>
+                  {companionOptions.map((count) => (
+                    <option key={count} value={count}>
+                      {count === 0 ? "Just me" : `Me + ${count}`}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <div className="event-preview-choice-group" aria-label="Guest count">
+                  {companionOptions.map((count) => (
+                    <button
+                      key={count}
+                      type="button"
+                      className={count === previewCompanionCount ? "is-selected" : ""}
+                      onClick={() => setPreviewCompanionCount(count)}
+                    >
+                      {count === 0 ? "Just me" : `Me + ${count}`}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          ) : null}
+
+          {shouldShowCompanions &&
+          (values.companionNameEnabled || values.companionAgeEnabled) &&
+          previewCompanionCount > 0 ? (
+            <div className="event-preview-field">
+              <span>Companion Details</span>
+              <div className="event-preview-companion-stack">
+                {Array.from({ length: previewCompanionCount }).map((_, index) => (
+                  <div key={index} className="event-preview-companion-card">
+                    <span className="event-preview-companion-title">Companion {index + 1}</span>
+                    {values.companionNameEnabled ? <input type="text" placeholder="Full Name" className="event-preview-companion-input" /> : null}
+                    {values.companionAgeEnabled ? <input type="text" placeholder="Age" className="event-preview-companion-input" /> : null}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : null}
+
+          {values.foodAllergiesEnabled ? (
+            <label className="event-preview-field">
+              <span>Food Allergies / Dietary Restrictions</span>
+              <textarea placeholder="List any allergies or dietary restrictions for you or your companions." />
+            </label>
+          ) : null}
+
+          {shouldShowMessage ? (
+            <label className="event-preview-field">
+              <span>{RSVP_MESSAGE_LABEL}</span>
+              <p className="event-preview-rsvp-helper-copy">{RSVP_MESSAGE_HELPER}</p>
+              <textarea placeholder="Leave a short message." />
+              <p className="event-preview-rsvp-helper-copy">{RSVP_MESSAGE_PRIVACY_COPY}</p>
+            </label>
+          ) : null}
+
+          <button type="button" className="event-preview-button event-preview-submit-button" disabled>
+            Submit RSVP
+          </button>
+          <p className="event-preview-rsvp-helper-copy" id="starter-rsvp-note">
+            {values.note.trim() || "Submission stays platform-owned. Connect this form only through an approved public RSVP contract."}
+          </p>
+        </form>
       </div>
     </section>
   );

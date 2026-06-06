@@ -144,8 +144,15 @@
           "body": "Please let the hosts know if you can join the celebration. The inline RSVP section stays part of the same page flow.",
           "note": "Online response collection can be connected here while keeping the RSVP experience inside the same page flow.",
           "companionLimit": "1",
+          "emailEnabled": true,
+          "emailRequired": false,
           "plusOneEnabled": true,
-          "phoneEnabled": true
+          "phoneEnabled": true,
+          "phoneRequired": false,
+          "messageToHostEnabled": true,
+          "foodAllergiesEnabled": false,
+          "companionNameEnabled": false,
+          "companionAgeEnabled": false
         }
       },
       "gift_details": {
