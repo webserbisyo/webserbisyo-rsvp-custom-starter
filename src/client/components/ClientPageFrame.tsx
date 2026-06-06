@@ -10,8 +10,7 @@ type ClientPageFrameProps = {
 
 export function ClientPageFrame({ children, config }: ClientPageFrameProps) {
   const resolvedConfig = config ?? clientConfig;
-  const navEnabled = Boolean(resolvedConfig.layout.navEnabled);
-  const footerEnabled = Boolean(resolvedConfig.layout.footerEnabled);
+  const { footerEnabled, navEnabled } = resolvedConfig.layout;
 
   if (!navEnabled && !footerEnabled) {
     return <>{children}</>;

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { isSafeClientAnchorHref } from "@/client/components/client-nav-utils";
 
 type ClientRsvpAnchorHref = "#rsvp" | "#rsvp-form";
 
@@ -13,8 +14,15 @@ export function ClientRsvpAnchorLink({
   className,
   href = "#rsvp"
 }: ClientRsvpAnchorLinkProps) {
+  if (!isSafeClientAnchorHref(href)) {
+    return null;
+  }
+
   return (
-    <a className={className} href={href}>
+    <a
+      className={className}
+      href={href}
+    >
       {children}
     </a>
   );

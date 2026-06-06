@@ -56,6 +56,13 @@ Phase 3 rule:
 - Do not modify `src/components/platform/PublicEventPageContent.tsx` or `src/components/platform/EventWebsiteRenderer.tsx` to support client overrides.
 - Do not make sections overrideable yet.
 
+Phase 4 rule:
+
+- client nav/footer support must remain optional and config-driven
+- defaults must stay disabled in the neutral starter
+- do not add route groups or multi-page routes yet
+- keep RSVP links on local anchors only
+
 Starter neutrality:
 
 - The starter must remain a neutral reusable base.

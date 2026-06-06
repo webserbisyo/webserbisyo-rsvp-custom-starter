@@ -27,10 +27,14 @@ Rules:
 - keep RSVP inline only with `#rsvp` and `#rsvp-form`
 - do not edit `src/components/platform/EventWebsiteRenderer.tsx` for client-specific design
 - do not add section-slot overrides here yet
+- keep nav links on local anchors only
+- do not add multi-page route groups here yet
 
-Phase 3 note:
+Phase 4 note:
 
 - this boundary is now imported at the page-shell level only
-- default visual output remains unchanged because nav and footer are disabled
-- runtime hooks are limited to the page wrapper in this phase
+- nav and footer are now config-driven
+- default visual output remains unchanged because nav and footer are still disabled
+- runtime hooks remain limited to the page wrapper in this phase
 - section override mechanisms are deferred to a later phase
+- multi-page routing is still deferred

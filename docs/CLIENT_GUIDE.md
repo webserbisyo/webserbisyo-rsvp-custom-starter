@@ -54,3 +54,13 @@ Phase 1 note:
 - this phase does not add section overrides
 - this phase does not change RSVP behavior
 - future phases may safely enable config-driven nav/footer first before any section-override work
+
+## Phase 4 optional nav/footer
+
+- `src/client/client.config.ts` now supports config-driven nav/footer scaffolding
+- defaults remain disabled, so the base starter output remains unchanged
+- nav links should stay on local anchors such as `#top`, `#venue`, and `#rsvp`
+- RSVP remains inline only
+- do not add `/rsvp` pages
+- do not add redirect or embedded RSVP flows
+- multi-page routing is still deferred

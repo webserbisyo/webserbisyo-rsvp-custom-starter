@@ -44,6 +44,14 @@ Current Phase 3 limit:
 - no edits to `src/components/platform/EventWebsiteRenderer.tsx`
 - no changes to RSVP behavior
 
+Current Phase 4 limit:
+
+- optional nav/footer support is allowed only through `src/client` config and wrapper components
+- defaults remain disabled
+- no multi-page routes
+- no route groups
+- no section-slot registry wiring
+
 Rules for future client customization:
 
 - do not change API ownership

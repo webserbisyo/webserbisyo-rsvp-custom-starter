@@ -34,6 +34,13 @@ Phase 3 boundary:
 - do not add section-slot overrides yet
 - keep RSVP inline at `#rsvp` and `#rsvp-form`
 
+Phase 4 boundary:
+
+- optional client nav/footer support is config-driven inside `src/client`
+- defaults remain disabled
+- use local anchors only for navigation
+- multi-page routes are still out of scope
+
 Safe prompt example:
 
 > Add a future-ready client customization boundary under `src/client/` without changing public API fetching, section keys, inline RSVP behavior, or platform renderer ownership.
@@ -50,6 +57,7 @@ Unsafe prompt patterns:
 - "Edit EventWebsiteRenderer for client-specific design"
 - "Add iframe RSVP"
 - "Add per-section client override slots right now"
+- "Add route groups or a `/rsvp` page for nav"
 - "Wire the RSVP form to submit anyway"
 - "Add a temporary fake RSVP success modal"
 - "Replace the public API with local hardcoded client data"

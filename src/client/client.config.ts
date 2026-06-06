@@ -1,3 +1,10 @@
+import type { ClientAnchorHref } from "@/client/components/client-nav-utils";
+
+type ClientNavLinkConfig = {
+  label: string;
+  href: ClientAnchorHref;
+};
+
 export const clientConfig = {
   mode: "starter",
   identity: {
@@ -20,7 +27,7 @@ export const clientConfig = {
     links: [
       { label: "Home", href: "#top" },
       { label: "RSVP", href: "#rsvp" }
-    ]
+    ] satisfies readonly ClientNavLinkConfig[]
   },
   footer: {
     text: ""
