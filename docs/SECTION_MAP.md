@@ -12,6 +12,7 @@ Phase 5 note:
 - a page-level client renderer scaffold now exists under `src/client/renderer/*`
 - it is disabled by default in the neutral starter
 - section-level overrides remain deferred
+- clone-only presentation libraries should stay in `src/client/libs/*` and must not change section-key or RSVP contracts
 
 Section list:
 

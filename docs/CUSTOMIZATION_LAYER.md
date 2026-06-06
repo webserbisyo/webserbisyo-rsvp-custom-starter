@@ -60,6 +60,11 @@ Current Phase 5 limit:
 - no section-slot registry wiring
 - no multi-page routes
 
+Current Phase 6 addition:
+
+- library protocol and wrapper paths now exist under `src/client/libs/`
+- clone-only library usage is documented without changing starter dependencies
+
 Rules for future client customization:
 
 - do not change API ownership

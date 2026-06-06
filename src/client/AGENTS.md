@@ -24,3 +24,5 @@ Safe direction:
 - Keep the client renderer switch disabled by default in the neutral starter.
 - Keep per-section override wiring deferred until a later approved phase.
 - Keep multi-page routing deferred.
+- Prefer `src/client/libs/*` wrapper imports for client libraries where available.
+- Treat shadcn, ReactBits-style libraries, and motion libraries as clone-only unless already installed and approved.

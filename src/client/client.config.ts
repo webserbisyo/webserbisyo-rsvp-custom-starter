@@ -10,6 +10,16 @@ export type ClientRendererConfig = {
   allowClientRenderer: boolean;
 };
 
+export type ClientLibsConfig = {
+  icons: {
+    provider: string;
+    importFrom: string;
+  };
+  ui: readonly string[];
+  motion: readonly string[];
+  effects: readonly string[];
+};
+
 export type ClientConfig = {
   mode: "starter";
   renderer: ClientRendererConfig;
@@ -37,7 +47,7 @@ export type ClientConfig = {
   };
   sections: Record<string, unknown>;
   assets: Record<string, unknown>;
-  libs: readonly string[];
+  libs: ClientLibsConfig;
 };
 
 export const clientConfig = {
@@ -73,5 +83,13 @@ export const clientConfig = {
   },
   sections: {},
   assets: {},
-  libs: []
+  libs: {
+    icons: {
+      provider: "lucide-react",
+      importFrom: "@/client/libs/icons"
+    },
+    ui: [],
+    motion: [],
+    effects: []
+  }
 } satisfies ClientConfig;

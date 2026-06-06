@@ -48,6 +48,12 @@ Phase 5 boundary:
 - `EventWebsiteRenderer` remains protected
 - do not add section slots yet
 
+Phase 6 boundary:
+
+- library usage should be organized under `src/client/libs/`
+- use wrapper imports where practical
+- shadcn, Framer Motion, and ReactBits-style libraries are clone-only unless already installed and approved
+
 Safe prompt example:
 
 > Add a future-ready client customization boundary under `src/client/` without changing public API fetching, section keys, inline RSVP behavior, or platform renderer ownership.
@@ -55,6 +61,14 @@ Safe prompt example:
 Safe future prompt example:
 
 > Customize the client visual design inside `src/client/` only. Do not edit `src/lib`, `src/components/platform`, or RSVP routing. Keep RSVP inline at `#rsvp`.
+
+Safe clone prompt examples:
+
+> In this cloned client repo, add a ReactBits-inspired hero inside `src/client/renderer` only. Do not edit `src/lib` or platform renderer. Keep RSVP inline.
+
+> In this cloned client repo, use motion only inside `src/client` for scroll reveals. Do not add fake RSVP success.
+
+> In this cloned client repo, add shadcn Button and Card components under `src/client/components/ui` only. Do not modify `EventWebsiteRenderer`.
 
 Unsafe prompt patterns:
 
@@ -66,6 +80,7 @@ Unsafe prompt patterns:
 - "Add per-section client override slots right now"
 - "Add route groups or a `/rsvp` page for nav"
 - "Rewrite EventWebsiteRenderer to support client mode"
+- "Install shadcn and rewrite EventWebsiteRenderer"
 - "Wire the RSVP form to submit anyway"
 - "Add a temporary fake RSVP success modal"
 - "Replace the public API with local hardcoded client data"

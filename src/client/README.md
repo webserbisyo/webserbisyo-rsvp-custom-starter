@@ -10,6 +10,7 @@ Use this folder in future client clones for:
 - optional additive components
 - optional library integration notes
 - wrapper-level UI hooks that do not replace protected platform rendering
+- organized library wrappers under `src/client/libs/`
 
 Protected files remain outside this folder:
 
@@ -30,6 +31,8 @@ Rules:
 - keep nav links on local anchors only
 - do not add multi-page route groups here yet
 - do not edit `src/components/platform/PublicEventPageContent.tsx` or `src/components/platform/EventWebsiteRenderer.tsx` to switch renderers
+- prefer `src/client/libs/*` wrapper imports when a library hub exists
+- shadcn, ReactBits-style libraries, and motion libraries are clone-only unless already installed and approved
 
 Phase 5 note:
 
@@ -40,3 +43,4 @@ Phase 5 note:
 - runtime hooks remain limited to the page wrapper in this phase
 - section override mechanisms are deferred to a later phase
 - multi-page routing is still deferred
+- the library protocol now lives in `src/client/libs/README.md` and `docs/LIBRARY_PROTOCOL.md`

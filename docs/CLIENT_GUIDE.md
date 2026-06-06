@@ -73,3 +73,11 @@ Phase 1 note:
 - `src/components/platform/EventWebsiteRenderer.tsx` remains protected
 - section-level slot overrides are still deferred
 - future cloned client repos may opt into a custom client renderer after cloning, using real event data only
+
+## Phase 6 library protocol
+
+- client UI libraries should be organized under `src/client/libs/`
+- use wrapper hubs where practical, especially for icons
+- `lucide-react` is already installed and may be used through `@/client/libs/icons`
+- shadcn, Framer Motion, and ReactBits-style libraries are documented for clones only and are not installed in the neutral starter
+- see `docs/LIBRARY_PROTOCOL.md` and `docs/CLONE_READINESS_CHECKLIST.md`

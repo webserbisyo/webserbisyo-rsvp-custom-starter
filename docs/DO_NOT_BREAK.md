@@ -69,6 +69,12 @@ Phase 5 rule:
 - do not modify `src/components/platform/PublicEventPageContent.tsx` or `src/components/platform/EventWebsiteRenderer.tsx` to support client mode
 - do not wire section-level slot overrides yet
 
+Phase 6 rule:
+
+- optional client libraries must stay under `src/client` patterns
+- do not install clone-only libraries into the neutral starter unless explicitly approved
+- do not import client library wrappers into protected platform/data files
+
 Starter neutrality:
 
 - The starter must remain a neutral reusable base.
