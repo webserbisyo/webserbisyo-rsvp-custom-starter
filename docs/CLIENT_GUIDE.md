@@ -30,6 +30,7 @@ Rules for future client clones:
 - support clone-local `/rsvp` as the dedicated custom RSVP page
 - do not add iframe RSVP
 - do not wire fake RSVP submit or fake success behavior
+- custom RSVP forms must call the same-origin platform API: `POST /api/public/events/[eventSlug]/rsvp`
 - do not expose hidden origin URLs as public guest URLs
 
 Deployment note:

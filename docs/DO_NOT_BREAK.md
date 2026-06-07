@@ -120,5 +120,6 @@ Website QR and RSVP QR Contract:
 - Fallback RSVP URL remains the official platform `/r/[slug]/rsvp`.
 - Old `/r/[slug]/rsvp/embed` remains forbidden.
 - iframe RSVP remains forbidden.
+- custom RSVP forms must call the same-origin platform API: `POST /api/public/events/[eventSlug]/rsvp`
 - fake RSVP success remains forbidden.
 - direct Supabase writes remain forbidden.

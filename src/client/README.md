@@ -26,6 +26,7 @@ Rules:
 - no iframe RSVP
 - no backend, Supabase, or server actions
 - no fake submit or fake success
+- custom RSVP forms must call the same-origin platform API: `POST /api/public/events/[eventSlug]/rsvp`
 - keep homepage RSVP anchors stable with `#rsvp` and `#rsvp-form`
 - do not edit `src/components/platform/EventWebsiteRenderer.tsx` for client-specific design
 - do not add section-slot overrides here yet

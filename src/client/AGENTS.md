@@ -59,6 +59,7 @@ Website QR and RSVP QR Contract:
 - The legacy embed RSVP path remains forbidden.
 - iframe RSVP remains forbidden.
 - pretend-success RSVP behavior remains forbidden.
+- custom RSVP forms must call the same-origin platform API: `POST /api/public/events/[eventSlug]/rsvp`
 - direct Supabase writes remain forbidden.
 
 Responsiveness contract:

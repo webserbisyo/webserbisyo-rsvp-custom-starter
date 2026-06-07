@@ -13,6 +13,7 @@ Hard rules:
 - do not add backend, database, Supabase, server actions, auth, admin, billing, or payment logic
 - do not revive `/r/[slug]/rsvp/embed`, iframe RSVP, `postMessage`, or `rsvpEmbedUrl`
 - do not fake RSVP success or simulated working submit behavior
+- custom RSVP forms must call the same-origin platform API: `POST /api/public/events/[eventSlug]/rsvp`
 - do not hardcode custom section order when the platform already provides ordered enabled sections
 - keep homepage RSVP anchors stable on `/` with `#rsvp` and `#rsvp-form`
 - use local `/rsvp` for the dedicated custom RSVP page
