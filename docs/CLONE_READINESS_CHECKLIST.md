@@ -7,9 +7,10 @@
 5. Verify `#rsvp` and `#rsvp-form` exist.
 6. Enable the client renderer only in a clone when ready.
 7. Add UI libraries only under `src/client` patterns.
-8. Run validation.
-9. Deploy to a hidden Vercel origin.
-10. Paste the hidden origin into the platform custom frontend origin field later.
+8. Verify dashboard/Event Website section reorder still works in the clone.
+9. Run validation.
+10. Deploy to a hidden Vercel origin.
+11. Paste the hidden origin into the platform custom frontend origin field later.
 
 Final readiness checks:
 
@@ -22,6 +23,10 @@ Final readiness checks:
 - client clones can add UI libraries under `src/client`
 - client clones must test `375px`, `768px`, and `1280px`
 - starter default output remains unchanged
+- dashboard section reorder remains intact
+- disabled sections stay hidden
+- nav anchors only target rendered sections
+- Website QR and RSVP QR rules are understood
 - no `/rsvp`
 - no fake submit
 - no platform data ownership changes
@@ -29,6 +34,38 @@ Final readiness checks:
 Never do these in the starter or clone baseline:
 
 - add a `/rsvp` route
+- add `/r/[slug]/rsvp`
 - add iframe RSVP
 - add backend or Supabase logic
 - add fake RSVP success
+
+Dashboard Section Order Contract:
+
+- Dashboard/Event Website section order is the source of truth.
+- Custom client renderers must render from the ordered enabled `event.sections` list or the platform render-context section list.
+- Do not hardcode section order unless explicitly approved for a client-specific exception.
+- Disabled sections must not render.
+- Nav links should derive from enabled sections or only point to valid anchors.
+- Custom layout is allowed under `src/client/`, but order and enabled/disabled state must remain platform-driven.
+
+Safe renderer pattern:
+
+```tsx
+const orderedSections = event.sections.filter((section) => section.enabled);
+
+return orderedSections.map((section) => {
+  const renderSection = sectionRenderers[section.key];
+  if (!renderSection) return null;
+  return <Fragment key={section.key}>{renderSection(section)}</Fragment>;
+});
+```
+
+Website QR and RSVP QR Contract:
+
+- Website QR opens the full clean public website URL.
+- RSVP QR opens the same clean public website URL plus `#rsvp`.
+- Fallback website URL remains `/r/[slug]`.
+- Old `/r/[slug]/rsvp` remains forbidden.
+- iframe RSVP remains forbidden.
+- fake RSVP success remains forbidden.
+- Clone-only `/rsvp` routing is not the default and requires explicit future approval.

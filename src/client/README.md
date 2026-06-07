@@ -22,6 +22,7 @@ Protected files remain outside this folder:
 Rules:
 
 - no `/rsvp`
+- no legacy route-specific RSVP path
 - no iframe RSVP
 - no backend, Supabase, or server actions
 - no fake submit or fake success
@@ -33,6 +34,27 @@ Rules:
 - do not edit `src/components/platform/PublicEventPageContent.tsx` or `src/components/platform/EventWebsiteRenderer.tsx` to switch renderers
 - prefer `src/client/libs/*` wrapper imports when a library hub exists
 - shadcn, ReactBits-style libraries, and motion libraries are clone-only unless already installed and approved
+
+Dashboard Section Order Contract:
+
+- Dashboard/Event Website section order is the source of truth.
+- Custom client renderers must render from the ordered enabled `event.sections` list or the equivalent platform render-context section list.
+- Do not hardcode section order unless explicitly approved for a client-specific exception.
+- Disabled sections must not render.
+- Nav links should derive from enabled sections or only point to valid rendered anchors.
+- Custom layout remains allowed under `src/client/`, including structure, cards, grids, spacing, animations, and section UI.
+
+Safe renderer pattern:
+
+```tsx
+const orderedSections = event.sections.filter((section) => section.enabled);
+
+return orderedSections.map((section) => {
+  const renderSection = sectionRenderers[section.key];
+  if (!renderSection) return null;
+  return <Fragment key={section.key}>{renderSection(section)}</Fragment>;
+});
+```
 
 Phase 5 note:
 
@@ -54,3 +76,13 @@ Responsiveness workflow:
 - retest after adding Lucide, shadcn, ReactBits-style components, or motion libraries in a clone
 - keep inline RSVP visible and usable at `#rsvp` and `#rsvp-form`
 - do not introduce horizontal overflow while styling client-specific sections
+
+Website QR and RSVP QR Contract:
+
+- Website QR opens the full clean public website URL.
+- RSVP QR opens the same clean public website URL plus `#rsvp`.
+- Fallback website URL remains `/r/[slug]`.
+- The legacy route-specific RSVP path remains forbidden.
+- iframe RSVP remains forbidden.
+- pretend-success RSVP behavior remains forbidden.
+- Clone-only `/rsvp` routing is not the default and requires explicit future approval.

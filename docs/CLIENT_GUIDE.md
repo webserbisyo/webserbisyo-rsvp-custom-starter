@@ -20,6 +20,11 @@ Rules for future client clones:
 - keep the platform data layer untouched
 - keep `src/lib/public-event-api.ts`, `src/lib/normalize-public-event.ts`, `src/lib/platform-render-model.ts`, and `src/types/public-event.ts` unchanged unless a platform contract update requires it
 - use real platform data instead of hardcoded event content in the reusable baseline
+- keep Dashboard/Event Website section order as the source of truth
+- render custom sections from the ordered enabled `event.sections` list or the platform render-context section list
+- do not hardcode section order unless a client-specific exception is explicitly approved
+- do not render disabled sections
+- keep nav links derived from enabled sections or constrained to valid rendered anchors only
 - keep RSVP inline on `/`
 - keep `#rsvp` and `#rsvp-form`
 - do not add `/rsvp`
@@ -54,6 +59,25 @@ Phase 1 note:
 - this phase does not add section overrides
 - this phase does not change RSVP behavior
 - future phases may safely enable config-driven nav/footer first before any section-override work
+
+## Dashboard Section Order Contract
+
+- Dashboard/Event Website section order is the source of truth.
+- Custom client renderers must respect the ordered enabled platform section list.
+- Custom layout is allowed inside `src/client/`, but order and enabled/disabled behavior must remain platform-driven.
+- Custom clones may change cards, grids, spacing, animation, and section presentation under `src/client/`.
+
+Safe renderer pattern:
+
+```tsx
+const orderedSections = event.sections.filter((section) => section.enabled);
+
+return orderedSections.map((section) => {
+  const renderSection = sectionRenderers[section.key];
+  if (!renderSection) return null;
+  return <Fragment key={section.key}>{renderSection(section)}</Fragment>;
+});
+```
 
 ## Phase 4 optional nav/footer
 
@@ -94,6 +118,16 @@ Phase 1 note:
 8. Run validation.
 9. Deploy the hidden Vercel origin.
 10. Set the platform custom frontend origin URL in Super Admin later.
+
+## Website QR and RSVP QR Contract
+
+- Website QR opens the full clean public website URL.
+- RSVP QR opens the same clean public website URL plus `#rsvp`.
+- Fallback website URL remains `/r/[slug]`.
+- Do not revive `/r/[slug]/rsvp`.
+- Do not use iframe RSVP.
+- Do not fake RSVP success.
+- Clone-only `/rsvp` routing is not the default and requires explicit future approval.
 
 Responsiveness note:
 

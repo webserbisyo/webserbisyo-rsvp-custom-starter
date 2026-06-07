@@ -80,3 +80,34 @@ Rules for future client customization:
 - do not change inline RSVP ownership or anchors
 - do not revive removed RSVP routes or embed patterns
 - do not fake working submission behavior
+
+Dashboard Section Order Contract:
+
+- Dashboard/Event Website section order is the source of truth.
+- Custom client renderers must render from the ordered enabled `event.sections` list or the equivalent platform render-context section list.
+- Do not hardcode section order unless a client-specific exception is explicitly approved.
+- Disabled sections must not render.
+- Nav links should derive from enabled sections or only point to valid rendered anchors.
+- Custom layout remains allowed inside `src/client/`, including structure, cards, grids, spacing, animations, and section UI.
+
+Safe renderer pattern:
+
+```tsx
+const orderedSections = event.sections.filter((section) => section.enabled);
+
+return orderedSections.map((section) => {
+  const renderSection = sectionRenderers[section.key];
+  if (!renderSection) return null;
+  return <Fragment key={section.key}>{renderSection(section)}</Fragment>;
+});
+```
+
+Website QR and RSVP QR Contract:
+
+- Website QR opens the full clean public website URL.
+- RSVP QR opens the same clean public website URL plus `#rsvp`.
+- Fallback website URL remains `/r/[slug]`.
+- Old `/r/[slug]/rsvp` remains forbidden.
+- iframe RSVP remains forbidden.
+- fake RSVP success remains forbidden.
+- Clone-only `/rsvp` routing is not the default and requires explicit future approval.

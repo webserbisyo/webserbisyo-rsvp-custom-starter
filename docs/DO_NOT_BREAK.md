@@ -22,6 +22,8 @@ Protected files:
 Protected runtime contract:
 
 - The active runtime path is `src/app/page.tsx` -> `src/components/platform/PublicEventPageContent.tsx` -> `src/components/platform/EventWebsiteRenderer.tsx`.
+- Dashboard/Event Website section order is the source of truth.
+- Required section order and enabled/disabled state must continue to come from the ordered `event.sections` list or the platform render-context section list.
 - RSVP stays inline on `/`.
 - Required RSVP anchors remain `#rsvp` and `#rsvp-form`.
 - No `/rsvp` route.
@@ -40,6 +42,9 @@ Protected architecture rules:
 - Do not add server actions, auth, admin, billing, or payment logic.
 - Do not expose hidden custom frontend origins in UI, metadata, or public env.
 - Do not rename platform section keys without updating registry, docs, and types together.
+- Do not hardcode section order in a custom renderer unless a later task explicitly approves a client-specific exception.
+- Do not let disabled sections render.
+- Do not let nav links point to anchors for sections that are not actually rendered.
 
 Planned customization boundary:
 
@@ -87,3 +92,32 @@ Starter neutrality:
 - The starter must remain a neutral reusable base.
 - Client-specific visual identity, venue language, couple names, or one-off editorial design must not become starter defaults.
 - Client work belongs in future client-boundary files, not in protected platform/data files.
+
+Dashboard Section Order Contract:
+
+- Dashboard/Event Website section order is the source of truth for clones.
+- Custom client renderers must render from the ordered enabled `event.sections` list or the equivalent platform render-context section list.
+- Custom layout is allowed, but section order and enabled/disabled status must remain platform-driven.
+- Custom clones may change structure, cards, grids, spacing, animations, and section UI under `src/client/`.
+
+Safe renderer pattern:
+
+```tsx
+const orderedSections = event.sections.filter((section) => section.enabled);
+
+return orderedSections.map((section) => {
+  const renderSection = sectionRenderers[section.key];
+  if (!renderSection) return null;
+  return <Fragment key={section.key}>{renderSection(section)}</Fragment>;
+});
+```
+
+Website QR and RSVP QR Contract:
+
+- Website QR opens the full clean public website URL.
+- RSVP QR opens the same clean public website URL plus `#rsvp`.
+- Fallback website URL remains `/r/[slug]`.
+- Old `/r/[slug]/rsvp` remains forbidden.
+- iframe RSVP remains forbidden.
+- fake RSVP success remains forbidden.
+- Clone-only `/rsvp` routing is not the default and requires explicit future approval.
