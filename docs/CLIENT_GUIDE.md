@@ -25,9 +25,9 @@ Rules for future client clones:
 - do not hardcode section order unless a client-specific exception is explicitly approved
 - do not render disabled sections
 - keep nav links derived from enabled sections or constrained to valid rendered anchors only
-- keep RSVP inline on `/`
+- keep homepage RSVP behavior config-driven on `/`
 - keep `#rsvp` and `#rsvp-form`
-- do not add `/rsvp`
+- support clone-local `/rsvp` as the dedicated custom RSVP page
 - do not add iframe RSVP
 - do not wire fake RSVP submit or fake success behavior
 - do not expose hidden origin URLs as public guest URLs
@@ -84,8 +84,8 @@ return orderedSections.map((section) => {
 - `src/client/client.config.ts` now supports config-driven nav/footer scaffolding
 - defaults remain disabled, so the base starter output remains unchanged
 - nav links should stay on local anchors such as `#top`, `#venue`, and `#rsvp`
-- RSVP remains inline only
-- do not add `/rsvp` pages
+- homepage RSVP may stay inline, compact, or CTA-only
+- use `/rsvp` for the dedicated custom RSVP page
 - do not add redirect or embedded RSVP flows
 - multi-page routing is still deferred
 
@@ -122,12 +122,13 @@ return orderedSections.map((section) => {
 ## Website QR and RSVP QR Contract
 
 - Website QR opens the full clean public website URL.
-- RSVP QR opens the same clean public website URL plus `#rsvp`.
+- RSVP QR opens the dedicated custom `/rsvp` URL when the clone supports it.
 - Fallback website URL remains `/r/[slug]`.
-- Do not revive `/r/[slug]/rsvp`.
+- Fallback RSVP URL remains the official platform `/r/[slug]/rsvp`.
+- Do not revive `/r/[slug]/rsvp/embed`.
 - Do not use iframe RSVP.
 - Do not fake RSVP success.
-- Clone-only `/rsvp` routing is not the default and requires explicit future approval.
+- Do not bypass the official platform validation contract.
 
 Responsiveness note:
 

@@ -26,8 +26,9 @@ Rules:
 - Keep this repo frontend-only.
 - Do not bypass the WebSerbisyo public API.
 - Do not add Supabase, server actions, database logic, auth, admin, billing, or payment logic.
-- Do not revive `/rsvp`, `/r/[slug]/rsvp`, `/r/[slug]/rsvp/embed`, iframe RSVP, `postMessage`, `rsvpUrl`, or `rsvpEmbedUrl`.
-- RSVP stays inline only on `/` with `#rsvp` and `#rsvp-form`.
+- Do not revive `/r/[slug]/rsvp`, `/r/[slug]/rsvp/embed`, iframe RSVP, `postMessage`, or `rsvpEmbedUrl`.
+- Keep homepage RSVP anchors stable on `/` with `#rsvp` and `#rsvp-form`.
+- Use local `/rsvp` for the dedicated custom RSVP page.
 - Do not fake RSVP success or simulate working submission behavior.
 - Do not put client-specific design, copy, or editorial layout into protected starter platform files.
 - Do not hardcode couple names, dates, venues, sponsors, gifts, or contact details in reusable starter runtime files.

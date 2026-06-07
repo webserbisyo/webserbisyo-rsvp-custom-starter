@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { ClientPageFrame } from "@/client/components";
 import { clientConfig } from "@/client/client.config";
+import { ClientRsvpPage } from "@/client/rsvp";
 import { loadPublicEvent } from "@/app/public-event-loader";
-import { PublicEventPageContent } from "@/components/platform/PublicEventPageContent";
 import { EmptyState } from "@/components/ui/EmptyState";
-import { buildPageDescription, buildPageTitle, safePublicCanonicalUrl } from "@/lib/metadata";
+import { buildPageDescription, buildPageTitle } from "@/lib/metadata";
 import { type PreviewQuery } from "@/lib/preview-context";
 
 type PageProps = {
@@ -17,22 +17,19 @@ export async function generateMetadata({ searchParams }: PageProps = {}): Promis
 
   if (result.status !== "available") {
     return {
-      title: "Event Unavailable | WebSerbisyo RSVP",
-      description: "This event website is not currently available."
+      title: "RSVP | Event Unavailable",
+      description: "This event RSVP page is not currently available.",
     };
   }
 
-  const canonical = result.event.previewMode === "dashboard" ? undefined : safePublicCanonicalUrl(result.event.publicUrl);
-
   return {
-    title: buildPageTitle(result.event),
+    title: `RSVP | ${buildPageTitle(result.event)}`,
     description: buildPageDescription(result.event),
-    alternates: canonical ? { canonical } : undefined,
-    robots: result.event.previewMode === "dashboard" ? { index: false, follow: false } : undefined
+    robots: result.event.previewMode === "dashboard" ? { index: false, follow: false } : undefined,
   };
 }
 
-export default async function HomePage({ searchParams }: PageProps) {
+export default async function RsvpPage({ searchParams }: PageProps) {
   const result = await loadPublicEvent(await searchParams);
 
   if (result.status === "setup_error") {
@@ -45,7 +42,7 @@ export default async function HomePage({ searchParams }: PageProps) {
 
   return (
     <ClientPageFrame config={clientConfig} event={result.event}>
-      <PublicEventPageContent event={result.event} />
+      <ClientRsvpPage config={clientConfig} event={result.event} />
     </ClientPageFrame>
   );
 }

@@ -24,13 +24,13 @@ Protected runtime contract:
 - The active runtime path is `src/app/page.tsx` -> `src/components/platform/PublicEventPageContent.tsx` -> `src/components/platform/EventWebsiteRenderer.tsx`.
 - Dashboard/Event Website section order is the source of truth.
 - Required section order and enabled/disabled state must continue to come from the ordered `event.sections` list or the platform render-context section list.
-- RSVP stays inline on `/`.
+- Homepage RSVP may stay inline, become compact, or become CTA-only on `/`.
 - Required RSVP anchors remain `#rsvp` and `#rsvp-form`.
-- No `/rsvp` route.
+- Local `/rsvp` is the supported dedicated custom RSVP page.
 - No `/r/[slug]/rsvp` route.
 - No `/r/[slug]/rsvp/embed` route.
 - No iframe or `postMessage` RSVP behavior.
-- No `rsvpUrl` or `rsvpEmbedUrl`.
+- No `rsvpEmbedUrl`.
 - No fake RSVP success or simulated working submission.
 - No direct RSVP submission until an official public WebSerbisyo contract exists.
 
@@ -115,9 +115,10 @@ return orderedSections.map((section) => {
 Website QR and RSVP QR Contract:
 
 - Website QR opens the full clean public website URL.
-- RSVP QR opens the same clean public website URL plus `#rsvp`.
+- RSVP QR opens the dedicated custom `/rsvp` URL when the clone supports it.
 - Fallback website URL remains `/r/[slug]`.
-- Old `/r/[slug]/rsvp` remains forbidden.
+- Fallback RSVP URL remains the official platform `/r/[slug]/rsvp`.
+- Old `/r/[slug]/rsvp/embed` remains forbidden.
 - iframe RSVP remains forbidden.
 - fake RSVP success remains forbidden.
-- Clone-only `/rsvp` routing is not the default and requires explicit future approval.
+- direct Supabase writes remain forbidden.

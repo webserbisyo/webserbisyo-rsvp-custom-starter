@@ -10,11 +10,12 @@ Rules:
 
 RSVP flow:
 
-- Inline RSVP stays within the same page
-- use local anchor scrolling only
+- Homepage RSVP stays within the same page when inline or compact mode is enabled
+- inline RSVP remains supported on `/`
+- use local anchor scrolling for homepage RSVP
 - required anchors are `#rsvp` and `#rsvp-form`
-- do not add a separate RSVP page
-- do not use removed platform RSVP routes
+- local `/rsvp` is the approved dedicated custom RSVP page
+- do not use platform `/r/[slug]/rsvp` inside a custom clone
 - do not use iframe or embed RSVP
 - do not add submit wiring in the starter
 

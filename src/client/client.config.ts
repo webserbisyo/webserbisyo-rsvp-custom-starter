@@ -5,6 +5,8 @@ export type ClientNavLinkConfig = {
   href: ClientAnchorHref;
 };
 
+export type ClientRsvpHomepageMode = "inline-form" | "compact-form" | "cta-only";
+
 export type ClientRendererConfig = {
   mode: "platform" | "client";
   allowClientRenderer: boolean;
@@ -30,6 +32,11 @@ export type ClientResponsiveConfig = {
 export type ClientConfig = {
   mode: "starter";
   renderer: ClientRendererConfig;
+  rsvp: {
+    dedicatedPageEnabled: boolean;
+    dedicatedPagePath: string;
+    homepageMode: ClientRsvpHomepageMode;
+  };
   identity: {
     displayName: string;
     subtitle: string;
@@ -64,6 +71,11 @@ export const clientConfig = {
     mode: "platform",
     allowClientRenderer: false
   } satisfies ClientRendererConfig,
+  rsvp: {
+    dedicatedPageEnabled: true,
+    dedicatedPagePath: "/rsvp",
+    homepageMode: "inline-form"
+  },
   identity: {
     displayName: "",
     subtitle: ""

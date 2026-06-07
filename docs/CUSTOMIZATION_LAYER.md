@@ -105,9 +105,10 @@ return orderedSections.map((section) => {
 Website QR and RSVP QR Contract:
 
 - Website QR opens the full clean public website URL.
-- RSVP QR opens the same clean public website URL plus `#rsvp`.
+- RSVP QR opens the dedicated custom `/rsvp` URL when the clone supports it.
 - Fallback website URL remains `/r/[slug]`.
-- Old `/r/[slug]/rsvp` remains forbidden.
+- Fallback RSVP URL remains the official platform `/r/[slug]/rsvp`.
+- Old `/r/[slug]/rsvp/embed` remains forbidden.
 - iframe RSVP remains forbidden.
 - fake RSVP success remains forbidden.
-- Clone-only `/rsvp` routing is not the default and requires explicit future approval.
+- direct Supabase writes remain forbidden.

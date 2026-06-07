@@ -27,8 +27,8 @@ This starter stays neutral by default. Client-specific responsive polish belongs
 - Keep images and decorative assets responsive
 - Wrap long Filipino names, long venue names, and long addresses safely
 - Respect reduced motion
-- Keep RSVP inline on `/`
-- Do not create `/rsvp`
+- Keep homepage RSVP anchors stable on `/`
+- Verify `/rsvp` if the clone enables the dedicated page
 - Do not simulate submit success
 
 ## Client library checks
@@ -39,7 +39,8 @@ After adding clone-only libraries such as shadcn, ReactBits-style components, mo
 - test at `768px`
 - test at `1280px`
 - verify no horizontal overflow
-- verify inline RSVP still works
+- verify homepage RSVP anchors still work
+- verify `/rsvp` still works if enabled
 - verify motion respects reduced motion
 
 ## Known platform baseline checks
@@ -49,7 +50,7 @@ The protected baseline already includes several responsive safeguards and should
 - `src/styles/components.css` already uses responsive grids and `@media (max-width: 640px)` adjustments
 - platform text blocks already use `overflow-wrap` protections in several areas
 - platform layouts already include `min-width: 0` protections to avoid grid and flex overflow
-- the active renderer already keeps RSVP inline with `#rsvp` and `#rsvp-form`
+- the active renderer keeps homepage RSVP anchors at `#rsvp` and `#rsvp-form`
 
 If a future task finds a true platform responsiveness bug, handle that as a separate platform-safe bugfix task. Do not edit protected platform files in clone customization work just to chase a client-specific look.
 

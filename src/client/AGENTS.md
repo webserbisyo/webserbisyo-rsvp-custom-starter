@@ -11,11 +11,12 @@ Rules:
 - Do not bypass the WebSerbisyo public API.
 - Do not add backend, database, Supabase, or server actions.
 - Do not add auth, admin, billing, or payment logic.
-- Do not add standalone RSVP routes or route-based RSVP flows.
+- Do not add platform RSVP routes or route-based embed flows.
 - Do not add embedded RSVP modes, cross-window messaging, or legacy RSVP URL helpers.
 - Do not simulate working RSVP submission outcomes.
 - Do not hardcode section order when the platform already provides ordered enabled sections.
-- RSVP remains inline on `/` with `#rsvp` and `#rsvp-form`.
+- Keep homepage RSVP anchors stable at `#rsvp` and `#rsvp-form`.
+- Use local `/rsvp` for the dedicated custom RSVP page.
 
 Safe direction:
 
@@ -52,12 +53,13 @@ return orderedSections.map((section) => {
 Website QR and RSVP QR Contract:
 
 - Website QR opens the full clean public website URL.
-- RSVP QR opens the same clean public website URL plus `#rsvp`.
+- RSVP QR opens the dedicated custom `/rsvp` URL when the clone supports it.
 - Fallback website URL remains `/r/[slug]`.
-- The legacy route-specific RSVP path remains forbidden.
+- Fallback RSVP URL remains the official platform fallback RSVP page.
+- The legacy embed RSVP path remains forbidden.
 - iframe RSVP remains forbidden.
 - pretend-success RSVP behavior remains forbidden.
-- Clone-only `/rsvp` routing is not the default and requires explicit future approval.
+- direct Supabase writes remain forbidden.
 
 Responsiveness contract:
 
@@ -68,5 +70,5 @@ Responsiveness contract:
 - Keep tap targets accessible on touch devices.
 - Respect reduced motion.
 - Re-test after adding UI libraries under `src/client`.
-- Keep RSVP inline only with `#rsvp` and `#rsvp-form`.
-- No `/rsvp`, iframe RSVP, or pretend-success RSVP UI.
+- Keep homepage RSVP anchors at `#rsvp` and `#rsvp-form`.
+- No iframe RSVP, platform RSVP routes, or pretend-success RSVP UI.

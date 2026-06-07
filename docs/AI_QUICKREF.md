@@ -11,10 +11,11 @@ Hard rules:
 
 - do not touch protected data/runtime files unless the task explicitly requires it
 - do not add backend, database, Supabase, server actions, auth, admin, billing, or payment logic
-- do not revive `/rsvp`, `/r/[slug]/rsvp`, `/r/[slug]/rsvp/embed`, iframe RSVP, `postMessage`, `rsvpUrl`, or `rsvpEmbedUrl`
+- do not revive `/r/[slug]/rsvp/embed`, iframe RSVP, `postMessage`, or `rsvpEmbedUrl`
 - do not fake RSVP success or simulated working submit behavior
 - do not hardcode custom section order when the platform already provides ordered enabled sections
-- keep RSVP inline on `/` with `#rsvp` and `#rsvp-form`
+- keep homepage RSVP anchors stable on `/` with `#rsvp` and `#rsvp-form`
+- use local `/rsvp` for the dedicated custom RSVP page
 
 Current architecture:
 
@@ -33,7 +34,7 @@ Phase 3 boundary:
 - `src/client/` is now imported only at the page-shell level
 - do not edit `src/components/platform/EventWebsiteRenderer.tsx` for client-specific design
 - do not add section-slot overrides yet
-- keep RSVP inline at `#rsvp` and `#rsvp-form`
+- keep homepage RSVP anchors at `#rsvp` and `#rsvp-form`
 
 Phase 4 boundary:
 
@@ -63,7 +64,7 @@ Safe prompt example:
 
 Safe future prompt example:
 
-> Customize the client visual design inside `src/client/` only. Do not edit `src/lib`, `src/components/platform`, or RSVP routing. Keep RSVP inline at `#rsvp`.
+> Customize the client visual design inside `src/client/` only. Do not edit `src/lib` or `src/components/platform`. Keep homepage RSVP anchors stable and use local `/rsvp` for the dedicated page.
 
 Safe clone prompt examples:
 
@@ -83,13 +84,13 @@ Safe clone prompt examples:
 
 Unsafe prompt patterns:
 
-- "Create a separate `/rsvp` page"
+- "Point a custom clone to `/r/[slug]/rsvp` instead of using local `/rsvp`"
 - "Submit RSVP locally"
 - "Use Supabase directly"
 - "Edit EventWebsiteRenderer for client-specific design"
 - "Add iframe RSVP"
 - "Add per-section client override slots right now"
-- "Add route groups or a `/rsvp` page for nav"
+- "Recreate `/r/[slug]/rsvp/embed` or iframe RSVP"
 - "Rewrite EventWebsiteRenderer to support client mode"
 - "Install shadcn and rewrite EventWebsiteRenderer"
 - "Wire the RSVP form to submit anyway"
@@ -98,7 +99,7 @@ Unsafe prompt patterns:
 - "Move section rendering out of the protected platform files without preserving parity"
 - "Hardcode a custom section order and ignore dashboard reorder"
 - "Fix responsiveness by editing EventWebsiteRenderer"
-- "Create `/rsvp` for mobile users"
+- "Keep `/rsvp` but wire fake success or direct Supabase writes"
 - "Ignore mobile and only design desktop"
 
 Dashboard Section Order Contract:
@@ -123,10 +124,10 @@ return orderedSections.map((section) => {
 Website QR and RSVP QR Contract:
 
 - Website QR opens the full clean public website URL.
-- RSVP QR opens the same clean public website URL plus `#rsvp`.
+- RSVP QR opens the dedicated custom `/rsvp` URL when the clone supports it.
 - Fallback website URL remains `/r/[slug]`.
-- Old `/r/[slug]/rsvp` remains forbidden.
-- Clone-only `/rsvp` routing requires explicit future approval.
+- Fallback RSVP URL remains the official platform `/r/[slug]/rsvp`.
+- Old `/r/[slug]/rsvp/embed` remains forbidden.
 
 Phase 1 reminder:
 

@@ -22,14 +22,15 @@ Client customization must not:
 - change `src/lib/public-event-api.ts`, `src/lib/normalize-public-event.ts`, `src/lib/platform-render-model.ts`, or `src/types/public-event.ts`
 - add backend/database/auth/admin/billing/payment logic
 - add Supabase or server actions
-- revive `/rsvp`, `/r/[slug]/rsvp`, `/r/[slug]/rsvp/embed`, iframe RSVP, or `postMessage` RSVP
-- use `rsvpUrl` or `rsvpEmbedUrl`
+- revive `/r/[slug]/rsvp/embed`, iframe RSVP, or `postMessage` RSVP
+- use `rsvpEmbedUrl`
 - fake RSVP success or simulate working RSVP submission
 - expose hidden custom frontend origins as public guest URLs
 
 RSVP rule:
 
-- RSVP remains inline on `/`.
+- Homepage RSVP may remain inline on `/`, become compact, or become CTA-only.
+- Local `/rsvp` is the supported dedicated custom RSVP page.
 - Keep `#rsvp` and `#rsvp-form`.
 - Any future RSVP submission wiring is out of scope for starter customization and requires an official public WebSerbisyo API contract.
 

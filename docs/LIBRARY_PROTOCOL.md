@@ -40,8 +40,8 @@ Recommended import paths:
 Validation after adding a library in a clone:
 
 - confirm the page still renders
-- confirm RSVP stays inline at `#rsvp` and `#rsvp-form`
-- confirm no `/rsvp` routes were introduced
+- confirm homepage RSVP anchors stay at `#rsvp` and `#rsvp-form`
+- confirm local `/rsvp` still renders if the clone supports it
 - confirm no backend logic was added
 - confirm responsive behavior at `375px`, `768px`, and `1280px`
 - confirm no horizontal overflow

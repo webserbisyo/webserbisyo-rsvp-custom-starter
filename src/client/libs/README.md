@@ -22,5 +22,5 @@ Prohibited:
 - Supabase or backend libraries for client presentation
 - service-role keys
 - local RSVP submission or fake success
-- `/rsvp` routes
+- platform fallback RSVP routes inside custom frontends
 - iframe RSVP

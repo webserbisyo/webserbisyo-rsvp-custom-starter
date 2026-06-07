@@ -21,12 +21,12 @@ Protected files remain outside this folder:
 
 Rules:
 
-- no `/rsvp`
+- local `/rsvp` is the supported dedicated custom RSVP page
 - no legacy route-specific RSVP path
 - no iframe RSVP
 - no backend, Supabase, or server actions
 - no fake submit or fake success
-- keep RSVP inline only with `#rsvp` and `#rsvp-form`
+- keep homepage RSVP anchors stable with `#rsvp` and `#rsvp-form`
 - do not edit `src/components/platform/EventWebsiteRenderer.tsx` for client-specific design
 - do not add section-slot overrides here yet
 - keep nav links on local anchors only
@@ -74,15 +74,16 @@ Responsiveness workflow:
 - test at `375px`, `768px`, and `1280px`
 - retest after enabling client nav, client footer, or the client renderer
 - retest after adding Lucide, shadcn, ReactBits-style components, or motion libraries in a clone
-- keep inline RSVP visible and usable at `#rsvp` and `#rsvp-form`
+- keep homepage RSVP visible and usable at `#rsvp` and `#rsvp-form`
 - do not introduce horizontal overflow while styling client-specific sections
 
 Website QR and RSVP QR Contract:
 
 - Website QR opens the full clean public website URL.
-- RSVP QR opens the same clean public website URL plus `#rsvp`.
+- RSVP QR opens the dedicated custom `/rsvp` URL when the clone supports it.
 - Fallback website URL remains `/r/[slug]`.
-- The legacy route-specific RSVP path remains forbidden.
+- Fallback RSVP URL remains the official platform fallback RSVP page.
+- The legacy embed RSVP path remains forbidden.
 - iframe RSVP remains forbidden.
 - pretend-success RSVP behavior remains forbidden.
-- Clone-only `/rsvp` routing is not the default and requires explicit future approval.
+- direct Supabase writes remain forbidden.

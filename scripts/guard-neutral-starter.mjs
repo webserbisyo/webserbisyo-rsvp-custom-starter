@@ -169,6 +169,13 @@ for (const file of docFiles) {
   }
 }
 
+const localRsvpRoutePath = join(root, "src", "app", "rsvp", "page.tsx");
+try {
+  await readFile(localRsvpRoutePath, "utf8");
+} catch {
+  failures.push("src/app/rsvp/page.tsx: missing approved local dedicated RSVP page");
+}
+
 if (failures.length) {
   console.error("Neutral starter guard failed:");
   for (const failure of failures) console.error(`- ${failure}`);

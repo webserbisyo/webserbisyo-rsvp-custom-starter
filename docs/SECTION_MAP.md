@@ -135,7 +135,7 @@ Section list:
 - PlatformRenderModel fields: `rsvpForm.title`, `rsvpForm.body`, `rsvpForm.note`, `rsvpForm.plusOneEnabled`, `rsvpForm.companionLimit`, `rsvpForm.companionNameEnabled`, `rsvpForm.companionAgeEnabled`, `rsvpForm.emailEnabled`, `rsvpForm.emailRequired`, `rsvpForm.phoneEnabled`, `rsvpForm.phoneRequired`, `rsvpForm.foodAllergiesEnabled`, `rsvpForm.messageToHostEnabled`
 - Anchor guidance: `#rsvp` and `#rsvp-form`
 - Future customization note: future `src/client/` work may style or wrap the section, but must not change ownership or submission behavior
-- Special rule: inline only, disabled submit, no separate route, no iframe, no fake success
+- Special rule: homepage anchors stay inline, dedicated local `/rsvp` is allowed, submit stays disabled, no iframe, no fake success
 
 ## `gift_details`
 

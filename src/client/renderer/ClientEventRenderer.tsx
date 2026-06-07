@@ -1,6 +1,7 @@
+import { ClientRsvpForm } from "@/client/rsvp";
 import type { ClientEventRendererProps } from "@/client/renderer/client-renderer-types";
 
-export function ClientEventRenderer({ event }: ClientEventRendererProps) {
+export function ClientEventRenderer({ config, event }: ClientEventRendererProps) {
   const title = event.coupleDisplayName || event.title || "WebSerbisyo RSVP Event";
   const ceremonySection = event.sections.find((section) => section.key === "main_event");
   const venueSection = event.sections.find((section) => section.key === "venue");
@@ -41,16 +42,16 @@ export function ClientEventRenderer({ event }: ClientEventRendererProps) {
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cocoa/50">RSVP</p>
         <h2 className="mt-3 font-serif text-2xl text-charcoal">Inline RSVP Section</h2>
         <p className="mt-3 text-sm leading-7 text-cocoa/80">
-          RSVP remains inline only. Submission stays platform-owned until an approved public contract exists.
+          The homepage RSVP section can stay inline, become compact, or become CTA-only while the
+          dedicated `/rsvp` page remains available for direct guest access.
         </p>
-        <div className="mt-5 rounded-2xl border border-cocoa/10 bg-ivory/60 p-5" id="rsvp-form">
-          <button
-            className="rounded-full border border-cocoa/15 px-4 py-2 text-sm font-semibold text-cocoa/60"
-            disabled
-            type="button"
-          >
-            RSVP submission is not enabled in the starter scaffold
-          </button>
+        <div className="mt-5">
+          <ClientRsvpForm
+            dedicatedPageEnabled={config.rsvp.dedicatedPageEnabled}
+            dedicatedPagePath={config.rsvp.dedicatedPagePath}
+            event={event}
+            mode={config.rsvp.homepageMode}
+          />
         </div>
       </section>
     </main>
