@@ -32,7 +32,7 @@ Protected runtime contract:
 - No iframe or `postMessage` RSVP behavior.
 - No `rsvpEmbedUrl`.
 - No fake RSVP success or simulated working submission.
-- No direct RSVP submission until an official public WebSerbisyo contract exists.
+- Direct RSVP submission must call the official platform API contract.
 
 Protected architecture rules:
 
@@ -92,6 +92,19 @@ Starter neutrality:
 - The starter must remain a neutral reusable base.
 - Client-specific visual identity, venue language, couple names, or one-off editorial design must not become starter defaults.
 - Client work belongs in future client-boundary files, not in protected platform/data files.
+
+Realtime Contract:
+
+- Custom frontends must submit RSVPs only through: `POST /api/public/events/[eventSlug]/rsvp`
+- Custom repos must not write directly to Supabase.
+- Custom repos must not add service-role keys.
+- Custom repos must not fake RSVP success.
+- Custom repos must not bypass the platform API.
+- Dashboard realtime notifications and RSVP Responses table refresh depend on the platform API inserting into `rsvp_responses`.
+- Future clones may customize UI, layout, animations, and styling, but must preserve the submit adapter/data boundary.
+- `eventSlug` must remain the stable platform data key.
+- Same-origin `/api` is required in the wildcard production flow because `/api` stays platform-owned.
+- Local direct starter dev may not own `/api`; that is expected unless local rewrite/proxy support is intentionally added later.
 
 Dashboard Section Order Contract:
 
