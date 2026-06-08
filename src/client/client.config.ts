@@ -68,8 +68,8 @@ export type ClientConfig = {
 export const clientConfig = {
   mode: "starter",
   renderer: {
-    mode: "platform",
-    allowClientRenderer: false
+    mode: "client",
+    allowClientRenderer: true
   } satisfies ClientRendererConfig,
   rsvp: {
     dedicatedPageEnabled: true,

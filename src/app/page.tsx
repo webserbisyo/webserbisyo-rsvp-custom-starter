@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ClientPageFrame } from "@/client/components";
 import { clientConfig } from "@/client/client.config";
+import { ClientEventRenderer } from "@/client/renderer";
 import { loadPublicEvent } from "@/app/public-event-loader";
 import { PublicEventPageContent } from "@/components/platform/PublicEventPageContent";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -43,9 +44,16 @@ export default async function HomePage({ searchParams }: PageProps) {
     return <EmptyState title="Event unavailable" message={result.message} />;
   }
 
+  const { renderer } = clientConfig;
+  const useClientRenderer = renderer.mode === "client" && renderer.allowClientRenderer;
+
   return (
     <ClientPageFrame config={clientConfig} event={result.event}>
-      <PublicEventPageContent event={result.event} />
+      {useClientRenderer ? (
+        <ClientEventRenderer config={clientConfig} event={result.event} />
+      ) : (
+        <PublicEventPageContent event={result.event} />
+      )}
     </ClientPageFrame>
   );
 }

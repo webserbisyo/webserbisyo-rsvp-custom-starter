@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { ClientFooter } from "@/client/components/ClientFooter";
 import { ClientNav } from "@/client/components/ClientNav";
 import { clientConfig, type ClientConfig } from "@/client/client.config";
-import { ClientEventRenderer } from "@/client/renderer";
+
 import type { EventWebsiteRenderModel } from "@/types/public-event";
 
 type ClientPageFrameProps = {
@@ -11,20 +11,18 @@ type ClientPageFrameProps = {
   event?: EventWebsiteRenderModel;
 };
 
-export function ClientPageFrame({ children, config, event }: ClientPageFrameProps) {
+export function ClientPageFrame({ children, config }: ClientPageFrameProps) {
   const resolvedConfig = config ?? clientConfig;
   const { footerEnabled, navEnabled } = resolvedConfig.layout;
-  const useClientRenderer = resolvedConfig.renderer.mode === "client" && resolvedConfig.renderer.allowClientRenderer && Boolean(event);
-  const content = useClientRenderer && event ? <ClientEventRenderer config={resolvedConfig} event={event} /> : children;
 
   if (!navEnabled && !footerEnabled) {
-    return <>{content}</>;
+    return <>{children}</>;
   }
 
   return (
     <>
       {navEnabled ? <ClientNav config={resolvedConfig} /> : null}
-      {content}
+      {children}
       {footerEnabled ? <ClientFooter config={resolvedConfig} /> : null}
     </>
   );
