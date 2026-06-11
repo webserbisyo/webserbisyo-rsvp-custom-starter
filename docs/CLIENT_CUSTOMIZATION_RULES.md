@@ -26,6 +26,7 @@ Client customization must not:
 - use `rsvpEmbedUrl`
 - fake RSVP success or simulate working RSVP submission
 - expose hidden custom frontend origins as public guest URLs
+- weaken the offline/PWA safety rules
 
 RSVP rule:
 
@@ -33,6 +34,13 @@ RSVP rule:
 - Local `/rsvp` is the supported dedicated custom RSVP page.
 - Keep `#rsvp` and `#rsvp-form`.
 - Any future RSVP submission wiring is out of scope for starter customization and requires an official public WebSerbisyo API contract.
+
+PWA rule:
+
+- Future clones may customize manifest names, theme colors, and local icon assets.
+- Keep service workers navigation-only for offline fallback.
+- Do not cache `/api/*`, RSVP `POST`s, RSVP responses, or private data.
+- Do not queue or fake offline RSVP submissions.
 
 Starter neutrality rule:
 

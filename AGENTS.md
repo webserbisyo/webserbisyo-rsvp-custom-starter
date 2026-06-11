@@ -31,6 +31,9 @@ Rules:
 - Use local `/rsvp` for the dedicated custom RSVP page.
 - Same-origin `/api` belongs to the platform wildcard/custom-domain flow. Treat raw `.vercel.app` deployments as preview-only unless API origin behavior is intentionally configured.
 - Do not fake RSVP success or simulate working submission behavior.
+- Keep PWA behavior narrow: cache only the static offline shell and local icon assets.
+- Do not cache `/api/*`, RSVP `POST`s, or RSVP responses.
+- Do not queue or fake offline RSVP submissions.
 - Do not put client-specific design, copy, or editorial layout into protected starter platform files.
 - Do not hardcode couple names, dates, venues, sponsors, gifts, or contact details in reusable starter runtime files.
 

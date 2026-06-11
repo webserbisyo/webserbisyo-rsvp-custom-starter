@@ -32,6 +32,7 @@ This starter stays neutral by default. Client-specific responsive polish belongs
 - Verify `/rsvp` if the clone enables the dedicated page
 - Keep form controls full-width and reserve select chevron spacing
 - Do not simulate submit success
+- Re-test offline fallback at mobile widths after changing icons, manifest, or offline copy
 
 ## Client library checks
 

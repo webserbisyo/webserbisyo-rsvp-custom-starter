@@ -109,6 +109,9 @@ Realtime Contract:
 - Capacity and validation failures must display the platform API message.
 - Rejected RSVP moderation remains dashboard/platform-owned only.
 - Gift QR/image rendering is public-data-only in this starter. Do not add upload/storage ownership here.
+- PWA caching must stay static-only: offline shell, local logo, local icons, and manifest.
+- Never cache `/api/*`, authenticated data, RSVP `POST`s, or RSVP submission responses.
+- Never queue or fake offline RSVP success.
 
 Dashboard Section Order Contract:
 

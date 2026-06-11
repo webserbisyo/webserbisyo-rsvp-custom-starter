@@ -15,3 +15,8 @@
 - Confirm select controls keep safe right-side chevron spacing at `360px`, `361px`, and `375px`.
 - Confirm gift QR/image renders only when the public DTO provides a valid public URL.
 - Confirm live mode does not show fake QR/photos or gallery placeholders.
+- Confirm favicon/tab icon appears.
+- Confirm `manifest.webmanifest` is reachable.
+- Confirm the service worker registers without caching `/api/*` or RSVP `POST`s.
+- Confirm offline navigation falls back to `offline.html`.
+- Confirm offline mode does not fake successful RSVP submission.

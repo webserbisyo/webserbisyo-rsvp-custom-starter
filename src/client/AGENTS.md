@@ -65,6 +65,8 @@ Website QR and RSVP QR Contract:
 - capacity and validation failures must display the platform API message
 - rejected RSVP moderation remains dashboard/platform-owned only
 - gift QR/image rendering is public-data-only; do not add upload ownership here
+- PWA support must remain static-only; do not cache `/api/*`, RSVP `POST`s, RSVP responses, or private data
+- do not queue or fake offline RSVP submissions
 
 Responsiveness contract:
 

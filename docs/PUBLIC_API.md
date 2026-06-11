@@ -38,3 +38,5 @@ RSVP remains platform-owned. The starter keeps the RSVP section inline within th
 Capacity and validation failures must surface the platform API message. Rejected RSVP moderation remains dashboard/platform-owned only.
 
 Same-origin `/api` works through the proper wildcard/custom-domain production path. Raw hidden `.vercel.app` deployments are preview-only unless API origin behavior is intentionally configured.
+
+PWA/offline support in this starter is static-only. Do not cache `/api/*`, RSVP `POST`s, RSVP responses, or private data. Offline mode must not queue or fake RSVP submissions.

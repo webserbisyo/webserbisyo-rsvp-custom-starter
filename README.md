@@ -74,4 +74,15 @@ Guest-facing same-origin `/api` works only when the clone is served through the 
 
 The RSVP section stays inline within the same one-page event flow by default, and the starter also supports a dedicated local `/rsvp` page. This repo does not own Supabase, storage, auth, or RSVP backend logic. Submission and validation remain platform-owned through `POST /api/public/events/[eventSlug]/rsvp`.
 
+## PWA And Offline
+
+The starter now includes a clone-safe favicon, manifest, offline shell, and service worker baseline.
+
+- Cache only static offline assets and local icon files.
+- Do not cache `/api/*`.
+- Do not cache RSVP `POST` requests or responses.
+- Do not queue offline RSVP submissions.
+- Do not fake successful RSVP submissions offline.
+- The offline page must explain that internet is required for the latest event data and real RSVP submission.
+
 See `docs/MODES.md`, `docs/DATA_CONTRACT.md`, `docs/PREVIEW_INTEGRATION.md`, `docs/ASSET_SYSTEM.md`, `docs/MEDIA_GUIDE.md`, and `docs/THEME_SYSTEM.md` before customizing the starter.
