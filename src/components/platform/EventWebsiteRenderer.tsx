@@ -481,13 +481,20 @@ function RsvpFormSection({ draft }: { draft: PlatformRenderModel }) {
                 Choose how many companions you will bring. You may bring up to {maxCompanions}.
               </p>
               {maxCompanions >= 4 ? (
-                <select value={previewCompanionCount} onChange={(event) => setPreviewCompanionCount(Number(event.target.value))}>
-                  {companionOptions.map((count) => (
-                    <option key={count} value={count}>
-                      {count === 0 ? "Just me" : `Me + ${count}`}
-                    </option>
-                  ))}
-                </select>
+                <div className="event-preview-select-shell">
+                  <select value={previewCompanionCount} onChange={(event) => setPreviewCompanionCount(Number(event.target.value))}>
+                    {companionOptions.map((count) => (
+                      <option key={count} value={count}>
+                        {count === 0 ? "Just me" : `Me + ${count}`}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="event-preview-select-chevron" aria-hidden="true">
+                    <svg viewBox="0 0 20 20" fill="none">
+                      <path d="M5 7.5 10 12.5 15 7.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
+                    </svg>
+                  </span>
+                </div>
               ) : (
                 <div className="event-preview-choice-group" aria-label="Guest count">
                   {companionOptions.map((count) => (

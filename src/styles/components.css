@@ -655,9 +655,31 @@
   outline: none;
 }
 
+.event-website-public-page .event-preview-select-shell {
+  position: relative;
+  width: 100%;
+}
+
 .event-website-public-page .event-preview-field select {
+  appearance: none;
   min-height: 44px;
-  padding-right: 2.75rem;
+  padding-right: 3.25rem;
+}
+
+.event-website-public-page .event-preview-select-chevron {
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  width: 16px;
+  height: 16px;
+  transform: translateY(-50%);
+  color: #8c7f75;
+}
+
+.event-website-public-page .event-preview-select-chevron svg {
+  width: 100%;
+  height: 100%;
 }
 
 .event-website-public-page .event-preview-field textarea {
