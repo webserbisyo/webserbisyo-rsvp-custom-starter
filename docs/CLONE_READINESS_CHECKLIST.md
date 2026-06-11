@@ -21,7 +21,7 @@ Final readiness checks:
 - library protocol is complete
 - responsiveness contract is complete
 - client clones can add UI libraries under `src/client`
-- client clones must test `375px`, `768px`, and `1280px`
+- client clones must test `360px`, `361px`, `375px`, `768px`, and `1280px`
 - starter default output remains unchanged
 - dashboard section reorder remains intact
 - disabled sections stay hidden
@@ -30,6 +30,7 @@ Final readiness checks:
 - local `/rsvp` route is present
 - no fake submit
 - no platform data ownership changes
+- raw `.vercel.app` is treated as preview-only unless API origin behavior is intentionally configured
 
 Never do these in the starter or clone baseline:
 

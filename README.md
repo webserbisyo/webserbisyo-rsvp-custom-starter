@@ -70,6 +70,8 @@ https://{clientSubdomain}.rsvp.webserbisyo.com
 
 The main platform will later proxy that public wildcard URL to the hidden custom frontend origin.
 
-The RSVP section stays inline within the same one-page event flow. This starter does not depend on removed platform RSVP routes, removed RSVP embed modes, or direct RSVP submission logic.
+Guest-facing same-origin `/api` works only when the clone is served through the proper wildcard/custom-domain path that the main platform owns. A raw hidden `.vercel.app` deployment is preview-only unless API base/origin behavior is intentionally configured for that environment.
+
+The RSVP section stays inline within the same one-page event flow by default, and the starter also supports a dedicated local `/rsvp` page. This repo does not own Supabase, storage, auth, or RSVP backend logic. Submission and validation remain platform-owned through `POST /api/public/events/[eventSlug]/rsvp`.
 
 See `docs/MODES.md`, `docs/DATA_CONTRACT.md`, `docs/PREVIEW_INTEGRATION.md`, `docs/ASSET_SYSTEM.md`, `docs/MEDIA_GUIDE.md`, and `docs/THEME_SYSTEM.md` before customizing the starter.

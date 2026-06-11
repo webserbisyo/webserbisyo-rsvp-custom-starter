@@ -31,6 +31,9 @@ Rules for future client clones:
 - do not add iframe RSVP
 - do not wire fake RSVP submit or fake success behavior
 - custom RSVP forms must call the same-origin platform API: `POST /api/public/events/[eventSlug]/rsvp`
+- capacity and validation failures must display the platform API message
+- rejected RSVP moderation remains dashboard/platform-owned only
+- gift QR/image rendering is public-data-only in the clone unless the main platform contract changes
 - do not expose hidden origin URLs as public guest URLs
 
 Deployment note:
@@ -38,6 +41,7 @@ Deployment note:
 - the hidden Vercel origin is an implementation detail
 - the platform/Super Admin will connect that hidden origin later
 - guests should continue to use the public WebSerbisyo guest domain, not the hidden deployment URL
+- raw `.vercel.app` deployments are preview-only unless API origin behavior is intentionally configured
 
 Phase 1 note:
 
@@ -114,7 +118,7 @@ return orderedSections.map((section) => {
 3. Decide whether to enable the client renderer in the clone.
 4. Add UI libraries only under `src/client/libs` or approved `src/client` paths.
 5. Customize `src/client` only.
-6. Test at `375px`, `768px`, and `1280px`.
+6. Test at `360px`, `361px`, `375px`, `768px`, and `1280px`.
 7. Verify `#rsvp` and `#rsvp-form`.
 8. Run validation.
 9. Deploy the hidden Vercel origin.
@@ -136,3 +140,4 @@ Responsiveness note:
 - use `docs/RESPONSIVENESS.md`
 - use `src/client/responsive.ts`
 - test enabled client nav, footer, renderer, and any library-driven UI after clone customization
+- keep select controls padded for the native chevron on mobile

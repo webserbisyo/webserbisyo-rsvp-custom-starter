@@ -655,6 +655,11 @@
   outline: none;
 }
 
+.event-website-public-page .event-preview-field select {
+  min-height: 44px;
+  padding-right: 2.75rem;
+}
+
 .event-website-public-page .event-preview-field textarea {
   min-height: 110px;
   resize: vertical;

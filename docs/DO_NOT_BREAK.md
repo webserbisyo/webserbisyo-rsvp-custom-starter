@@ -104,7 +104,11 @@ Realtime Contract:
 - Future clones may customize UI, layout, animations, and styling, but must preserve the submit adapter/data boundary.
 - `eventSlug` must remain the stable platform data key.
 - Same-origin `/api` is required in the wildcard production flow because `/api` stays platform-owned.
+- Raw hidden `.vercel.app` origins are preview-only unless API origin behavior is intentionally configured for that environment.
 - Local direct starter dev may not own `/api`; that is expected unless local rewrite/proxy support is intentionally added later.
+- Capacity and validation failures must display the platform API message.
+- Rejected RSVP moderation remains dashboard/platform-owned only.
+- Gift QR/image rendering is public-data-only in this starter. Do not add upload/storage ownership here.
 
 Dashboard Section Order Contract:
 
@@ -136,3 +140,4 @@ Website QR and RSVP QR Contract:
 - custom RSVP forms must call the same-origin platform API: `POST /api/public/events/[eventSlug]/rsvp`
 - fake RSVP success remains forbidden.
 - direct Supabase writes remain forbidden.
+- no iframe/embed RSVP is allowed

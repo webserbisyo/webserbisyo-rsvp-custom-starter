@@ -29,6 +29,7 @@ Rules:
 - Do not revive `/r/[slug]/rsvp`, `/r/[slug]/rsvp/embed`, iframe RSVP, `postMessage`, or `rsvpEmbedUrl`.
 - Keep homepage RSVP anchors stable on `/` with `#rsvp` and `#rsvp-form`.
 - Use local `/rsvp` for the dedicated custom RSVP page.
+- Same-origin `/api` belongs to the platform wildcard/custom-domain flow. Treat raw `.vercel.app` deployments as preview-only unless API origin behavior is intentionally configured.
 - Do not fake RSVP success or simulate working submission behavior.
 - Do not put client-specific design, copy, or editorial layout into protected starter platform files.
 - Do not hardcode couple names, dates, venues, sponsors, gifts, or contact details in reusable starter runtime files.
@@ -46,3 +47,6 @@ Starter expectations:
 - Preserve the current runtime flow: `src/app/page.tsx` -> `src/components/platform/PublicEventPageContent.tsx` -> `src/components/platform/EventWebsiteRenderer.tsx`.
 - Preserve one-page inline RSVP behavior and local anchor scrolling.
 - Preserve platform section order, safe unknown-key skipping, and public-data ownership.
+- Capacity failures must surface the platform API message.
+- Rejected RSVP moderation remains dashboard/platform-owned only.
+- Gift QR/image rendering is public-data-only in this starter. Do not add upload ownership here.

@@ -14,9 +14,12 @@ Hard rules:
 - do not revive `/r/[slug]/rsvp/embed`, iframe RSVP, `postMessage`, or `rsvpEmbedUrl`
 - do not fake RSVP success or simulated working submit behavior
 - custom RSVP forms must call the same-origin platform API: `POST /api/public/events/[eventSlug]/rsvp`
+- capacity and validation failures must display the platform API message
+- rejected RSVP moderation stays dashboard/platform-owned
 - do not hardcode custom section order when the platform already provides ordered enabled sections
 - keep homepage RSVP anchors stable on `/` with `#rsvp` and `#rsvp-form`
 - use local `/rsvp` for the dedicated custom RSVP page
+- treat raw `.vercel.app` deployments as preview-only unless API origin behavior is intentionally configured
 
 Current architecture:
 
@@ -57,7 +60,7 @@ Phase 6 boundary:
 - use wrapper imports where practical
 - shadcn, Framer Motion, and ReactBits-style libraries are clone-only unless already installed and approved
 - follow `docs/RESPONSIVENESS.md` and `src/client/responsive.ts`
-- test at `375px`, `768px`, and `1280px`
+- test at `360px`, `361px`, `375px`, `768px`, and `1280px`
 
 Safe prompt example:
 
@@ -101,6 +104,7 @@ Unsafe prompt patterns:
 - "Hardcode a custom section order and ignore dashboard reorder"
 - "Fix responsiveness by editing EventWebsiteRenderer"
 - "Keep `/rsvp` but wire fake success or direct Supabase writes"
+- "Hide platform capacity errors behind a generic success/failure banner"
 - "Ignore mobile and only design desktop"
 
 Dashboard Section Order Contract:

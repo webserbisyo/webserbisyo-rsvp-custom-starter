@@ -4,14 +4,15 @@ This starter stays neutral by default. Client-specific responsive polish belongs
 
 ## Target widths
 
-- Mobile baseline: `375px`
+- Mobile baseline: `360px`
+- Mobile regression checks: `361px` and `375px`
 - Tablet target: `768px`
 - Desktop target: `1280px`
 - Optional wide target: `1440px`
 
 ## Required checks for every client clone
 
-- Test `/` at `375px`, `768px`, and `1280px`
+- Test `/` at `360px`, `361px`, `375px`, `768px`, and `1280px`
 - Verify `#rsvp` and `#rsvp-form`
 - Verify enabled client nav if `layout.navEnabled` is `true`
 - Verify enabled client footer if `layout.footerEnabled` is `true`
@@ -29,12 +30,15 @@ This starter stays neutral by default. Client-specific responsive polish belongs
 - Respect reduced motion
 - Keep homepage RSVP anchors stable on `/`
 - Verify `/rsvp` if the clone enables the dedicated page
+- Keep form controls full-width and reserve select chevron spacing
 - Do not simulate submit success
 
 ## Client library checks
 
 After adding clone-only libraries such as shadcn, ReactBits-style components, motion, or decorative effects:
 
+- test at `360px`
+- test at `361px`
 - test at `375px`
 - test at `768px`
 - test at `1280px`
@@ -56,6 +60,8 @@ If a future task finds a true platform responsiveness bug, handle that as a sepa
 
 ## Final checklist
 
+- `360px` passed
+- `361px` passed
 - `375px` passed
 - `768px` passed
 - `1280px` passed

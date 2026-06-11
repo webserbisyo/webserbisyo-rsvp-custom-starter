@@ -11,4 +11,7 @@
 - Confirm design mode sample content is not used in live mode.
 - Confirm RSVP appears inline on the homepage and uses the local `#rsvp` section anchor.
 - Confirm the dedicated custom RSVP page does not redirect guests to platform RSVP routes.
+- Confirm capacity/validation errors show the platform API message.
+- Confirm select controls keep safe right-side chevron spacing at `360px`, `361px`, and `375px`.
+- Confirm gift QR/image renders only when the public DTO provides a valid public URL.
 - Confirm live mode does not show fake QR/photos or gallery placeholders.

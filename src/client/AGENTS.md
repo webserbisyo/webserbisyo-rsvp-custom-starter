@@ -17,6 +17,7 @@ Rules:
 - Do not hardcode section order when the platform already provides ordered enabled sections.
 - Keep homepage RSVP anchors stable at `#rsvp` and `#rsvp-form`.
 - Use local `/rsvp` for the dedicated custom RSVP page.
+- Treat raw `.vercel.app` deployments as preview-only unless API origin behavior is intentionally configured.
 
 Safe direction:
 
@@ -61,14 +62,19 @@ Website QR and RSVP QR Contract:
 - pretend-success RSVP behavior remains forbidden.
 - custom RSVP forms must call the same-origin platform API: `POST /api/public/events/[eventSlug]/rsvp`
 - direct Supabase writes remain forbidden.
+- capacity and validation failures must display the platform API message
+- rejected RSVP moderation remains dashboard/platform-owned only
+- gift QR/image rendering is public-data-only; do not add upload ownership here
 
 Responsiveness contract:
 
-- Start at `375px`.
+- Start at `360px`.
+- Re-test `361px` and `375px`.
 - Then test `768px` and `1280px`.
 - Use mobile-first CSS and utility patterns.
 - Avoid fixed widths that break long names, long venues, or long addresses.
 - Keep tap targets accessible on touch devices.
+- Select controls must reserve right-side chevron spacing and avoid text collision.
 - Respect reduced motion.
 - Re-test after adding UI libraries under `src/client`.
 - Keep homepage RSVP anchors at `#rsvp` and `#rsvp-form`.

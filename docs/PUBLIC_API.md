@@ -33,4 +33,8 @@ Current supported public fields include:
 
 Preview query params may choose a safe event slug, but they must never choose the API base URL. `NEXT_PUBLIC_WEBSERBISYO_API_URL` remains the only API origin.
 
-RSVP remains platform-owned. The starter keeps the RSVP section inline within the one-page event flow and does not depend on removed platform RSVP routes or removed RSVP embed modes. Any future submission wiring must use an official public contract published by the main platform.
+RSVP remains platform-owned. The starter keeps the RSVP section inline within the one-page event flow by default and may also expose a dedicated local `/rsvp` page. Submission must stay on the official same-origin platform contract: `POST /api/public/events/[eventSlug]/rsvp`.
+
+Capacity and validation failures must surface the platform API message. Rejected RSVP moderation remains dashboard/platform-owned only.
+
+Same-origin `/api` works through the proper wildcard/custom-domain production path. Raw hidden `.vercel.app` deployments are preview-only unless API origin behavior is intentionally configured.
