@@ -16,6 +16,7 @@ export async function loadPublicEvent(searchParams?: PreviewQuery) {
   }
 
   return fetchPublicEvent({
+    accessToken: preview.accessToken,
     apiBaseUrl: env.apiBaseUrl,
     eventSlug: preview.eventSlug,
     previewMode: preview.previewMode,

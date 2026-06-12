@@ -11,6 +11,9 @@
 - Confirm design mode sample content is not used in live mode.
 - Confirm RSVP appears inline on the homepage and uses the local `#rsvp` section anchor.
 - Confirm the dedicated custom RSVP page does not redirect guests to platform RSVP routes.
+- Confirm `/?access=...` preserves the query when navigating to `/rsvp`.
+- Confirm `/rsvp?access=...` forwards the token to both the public GET and RSVP POST API calls.
+- Confirm an invalid or regenerated-old `?access=` token does not load event data or submit RSVP.
 - Confirm capacity/validation errors show the platform API message.
 - Confirm select controls keep safe right-side chevron spacing at `360px`, `361px`, and `375px`.
 - Confirm gift QR/image renders only when the public DTO provides a valid public URL.

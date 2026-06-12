@@ -30,6 +30,7 @@ Rules:
 - Keep homepage RSVP anchors stable on `/` with `#rsvp` and `#rsvp-form`.
 - Use local `/rsvp` for the dedicated custom RSVP page.
 - Same-origin `/api` belongs to the platform wildcard/custom-domain flow. Treat raw `.vercel.app` deployments as preview-only unless API origin behavior is intentionally configured.
+- Preserve `?access=` private-link queries and forward them to the platform public GET and RSVP POST APIs.
 - Do not fake RSVP success or simulate working submission behavior.
 - Keep PWA behavior narrow: cache only the static offline shell and local icon assets.
 - Do not cache `/api/*`, RSVP `POST`s, or RSVP responses.
@@ -53,3 +54,4 @@ Starter expectations:
 - Capacity failures must surface the platform API message.
 - Rejected RSVP moderation remains dashboard/platform-owned only.
 - Gift QR/image rendering is public-data-only in this starter. Do not add upload ownership here.
+- Private Link is a capability URL, not full auth. Keep the token only in the URL/query flow and never invent offline/private access behavior.

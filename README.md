@@ -48,6 +48,11 @@ The API path is centralized in `src/lib/urls.ts` and `src/lib/public-event-api.t
 
 Dashboard preview may pass `eventSlug`, `preview`, and `source`. The query slug is accepted only for local/design/dashboard preview contexts. The API base URL is never accepted from query params.
 
+Private Link mode uses a long `?access=` capability URL from the main platform. When that query param is present, the starter must preserve it and forward it to both:
+
+- `GET /api/public/events/[eventSlug]?access=...`
+- `POST /api/public/events/[eventSlug]/rsvp?access=...`
+
 ## Prefetch
 
 ```bash
@@ -73,6 +78,8 @@ The main platform will later proxy that public wildcard URL to the hidden custom
 Guest-facing same-origin `/api` works only when the clone is served through the proper wildcard/custom-domain path that the main platform owns. A raw hidden `.vercel.app` deployment is preview-only unless API base/origin behavior is intentionally configured for that environment.
 
 The RSVP section stays inline within the same one-page event flow by default, and the starter also supports a dedicated local `/rsvp` page. This repo does not own Supabase, storage, auth, or RSVP backend logic. Submission and validation remain platform-owned through `POST /api/public/events/[eventSlug]/rsvp`.
+
+If a guest lands on `/?access=...`, navigation to `/rsvp` must preserve that query. Offline mode does not grant private access and must not fake RSVP success.
 
 ## PWA And Offline
 

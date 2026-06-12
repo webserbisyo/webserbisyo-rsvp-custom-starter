@@ -25,7 +25,10 @@ export async function generateMetadata({ searchParams }: PageProps = {}): Promis
   return {
     title: `RSVP | ${buildPageTitle(result.event)}`,
     description: buildPageDescription(result.event),
-    robots: result.event.previewMode === "dashboard" ? { index: false, follow: false } : undefined,
+    robots:
+      result.event.previewMode === "dashboard" || result.event.raw.visibility === "private"
+        ? { index: false, follow: false }
+        : undefined,
   };
 }
 

@@ -1,8 +1,10 @@
 import type { PublicEnv } from "@/lib/env";
+import { normalizePrivateAccessToken } from "@/lib/private-access";
 
 export type PreviewQuery = Record<string, string | string[] | undefined>;
 
 export type PreviewContext = {
+  accessToken?: string;
   eventSlug: string;
   previewMode?: "dashboard";
   querySource?: string;
@@ -23,12 +25,14 @@ function safeSource(value: string): string | undefined {
 
 export function getPreviewContext(env: PublicEnv, query?: PreviewQuery): PreviewContext {
   const preview = firstValue(query?.preview).toLowerCase();
+  const accessToken = normalizePrivateAccessToken(firstValue(query?.access));
   const querySource = safeSource(firstValue(query?.source));
   const dashboardPreview = preview === "dashboard" || querySource === "dashboard";
   const querySlug = safeSlug(firstValue(query?.eventSlug));
   const canUseQuerySlug = Boolean(querySlug && (dashboardPreview || env.designMode || process.env.NODE_ENV === "development"));
 
   return {
+    accessToken: accessToken ?? undefined,
     eventSlug: canUseQuerySlug ? querySlug : env.eventSlug,
     previewMode: dashboardPreview ? "dashboard" : undefined,
     querySource

@@ -34,6 +34,8 @@ RSVP rule:
 - Local `/rsvp` is the supported dedicated custom RSVP page.
 - Keep `#rsvp` and `#rsvp-form`.
 - Any future RSVP submission wiring is out of scope for starter customization and requires an official public WebSerbisyo API contract.
+- Preserve `?access=` when linking from `/` to `/rsvp`.
+- Forward `?access=` to the platform public GET and RSVP POST endpoints when Private Link mode is used.
 
 PWA rule:
 

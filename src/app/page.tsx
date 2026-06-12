@@ -24,12 +24,14 @@ export async function generateMetadata({ searchParams }: PageProps = {}): Promis
   }
 
   const canonical = result.event.previewMode === "dashboard" ? undefined : safePublicCanonicalUrl(result.event.publicUrl);
+  const shouldNoIndex =
+    result.event.previewMode === "dashboard" || result.event.raw.visibility === "private";
 
   return {
     title: buildPageTitle(result.event),
     description: buildPageDescription(result.event),
-    alternates: canonical ? { canonical } : undefined,
-    robots: result.event.previewMode === "dashboard" ? { index: false, follow: false } : undefined
+    alternates: shouldNoIndex || !canonical ? undefined : { canonical },
+    robots: shouldNoIndex ? { index: false, follow: false } : undefined
   };
 }
 

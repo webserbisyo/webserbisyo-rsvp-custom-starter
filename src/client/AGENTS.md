@@ -81,3 +81,5 @@ Responsiveness contract:
 - Re-test after adding UI libraries under `src/client`.
 - Keep homepage RSVP anchors at `#rsvp` and `#rsvp-form`.
 - No iframe RSVP, platform RSVP routes, or pretend-success RSVP UI.
+- Preserve `?access=` when the homepage links to the dedicated `/rsvp` page.
+- Forward `?access=` to the platform public GET and RSVP POST requests.

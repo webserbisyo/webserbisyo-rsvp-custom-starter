@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { appendPrivateAccessToken, normalizePrivateAccessToken } from "@/lib/private-access";
 import type { EventWebsiteRenderModel, NormalizedSection } from "@/types/public-event";
 import { submitPublicRsvp, type PublicRsvpPayload } from "./submit-rsvp";
 
@@ -43,6 +45,9 @@ export function ClientRsvpForm({
   event,
   mode,
 }: ClientRsvpFormProps) {
+  const searchParams = useSearchParams();
+  const accessToken = normalizePrivateAccessToken(searchParams.get("access"));
+  const dedicatedPageHref = appendPrivateAccessToken(dedicatedPagePath, accessToken) ?? dedicatedPagePath;
   const rsvpConfig = getStarterRsvpConfig(event.sections.find((section) => section.key === "rsvp_form"));
   const showFullForm = mode === "inline-form";
   const showCompactFields = mode === "compact-form";
@@ -111,7 +116,7 @@ export function ClientRsvpForm({
       payload.message = message.trim();
     }
 
-    const result = await submitPublicRsvp(event.eventSlug, payload);
+    const result = await submitPublicRsvp(event.eventSlug, payload, accessToken);
 
     if (result.error) {
       setStatus("idle");
@@ -148,8 +153,8 @@ export function ClientRsvpForm({
         <div className="space-y-2">
           <p className="text-sm leading-7 text-cocoa/70">
             The dedicated RSVP page is available at{" "}
-            <a className="font-semibold text-terracotta underline-offset-2 hover:underline" href={dedicatedPagePath}>
-              {dedicatedPagePath}
+            <a className="font-semibold text-terracotta underline-offset-2 hover:underline" href={dedicatedPageHref}>
+              {dedicatedPageHref}
             </a>
             .
           </p>
@@ -301,7 +306,7 @@ export function ClientRsvpForm({
             {dedicatedPageEnabled && mode !== "cta-only" ? (
               <a
                 className="text-sm font-semibold text-terracotta underline-offset-2 hover:underline"
-                href={dedicatedPagePath}
+                href={dedicatedPageHref}
               >
                 Open the dedicated RSVP page
               </a>

@@ -1,8 +1,10 @@
 import { normalizePublicEvent } from "@/lib/normalize-public-event";
+import { appendPrivateAccessToken } from "@/lib/private-access";
 import { joinPublicApiUrl } from "@/lib/urls";
 import type { PublicEventApiError, PublicEventApiResponse, PublicEventResult } from "@/types/public-event";
 
 type FetchInput = {
+  accessToken?: string;
   apiBaseUrl: string;
   eventSlug: string;
   previewMode?: "dashboard";
@@ -28,7 +30,12 @@ function debugFetchIssue(message: string, details?: Record<string, unknown>): vo
   console.warn(`[webserbisyo-public-api] ${message}`, details ?? {});
 }
 
-export async function fetchPublicEvent({ apiBaseUrl, eventSlug, previewMode }: FetchInput): Promise<PublicEventResult> {
+export async function fetchPublicEvent({
+  accessToken,
+  apiBaseUrl,
+  eventSlug,
+  previewMode,
+}: FetchInput): Promise<PublicEventResult> {
   if (!apiBaseUrl || !eventSlug) {
     return {
       status: "setup_error",
@@ -37,7 +44,7 @@ export async function fetchPublicEvent({ apiBaseUrl, eventSlug, previewMode }: F
   }
 
   try {
-    const response = await fetch(joinPublicApiUrl(apiBaseUrl, eventSlug), {
+    const response = await fetch(appendPrivateAccessToken(joinPublicApiUrl(apiBaseUrl, eventSlug), accessToken) ?? joinPublicApiUrl(apiBaseUrl, eventSlug), {
       cache: "no-store",
       headers: {
         Accept: "application/json"

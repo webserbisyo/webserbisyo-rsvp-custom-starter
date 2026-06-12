@@ -35,6 +35,13 @@ Preview query params may choose a safe event slug, but they must never choose th
 
 RSVP remains platform-owned. The starter keeps the RSVP section inline within the one-page event flow by default and may also expose a dedicated local `/rsvp` page. Submission must stay on the official same-origin platform contract: `POST /api/public/events/[eventSlug]/rsvp`.
 
+Private Link support uses the platform capability URL query: `?access=LONG_TOKEN`.
+
+- Public event reads must forward `?access=` to `GET /api/public/events/[eventSlug]`.
+- RSVP submits must forward `?access=` to `POST /api/public/events/[eventSlug]/rsvp`.
+- Do not rename the query key.
+- Do not hide or reimplement private-link verification inside the clone.
+
 Capacity and validation failures must surface the platform API message. Rejected RSVP moderation remains dashboard/platform-owned only.
 
 Same-origin `/api` works through the proper wildcard/custom-domain production path. Raw hidden `.vercel.app` deployments are preview-only unless API origin behavior is intentionally configured.

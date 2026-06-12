@@ -144,3 +144,6 @@ Website QR and RSVP QR Contract:
 - fake RSVP success remains forbidden.
 - direct Supabase writes remain forbidden.
 - no iframe/embed RSVP is allowed
+- if Private Link mode is active, preserve and forward `?access=` on homepage and `/rsvp`
+- do not strip `?access=` during local `/` -> `/rsvp` navigation
+- invalid or regenerated-old private links must not leak event data

@@ -1,3 +1,5 @@
+import { appendPrivateAccessToken } from "@/lib/private-access";
+
 export type PublicRsvpPayload = {
   guestName: string;
   attendanceStatus: "attending" | "not_attending";
@@ -32,16 +34,23 @@ export type PublicRsvpSubmitResult =
 export async function submitPublicRsvp(
   eventSlug: string,
   payload: PublicRsvpPayload,
+  accessToken?: string | null,
 ): Promise<PublicRsvpSubmitResult> {
   try {
     const response = await fetch(
-      `/api/public/events/${encodeURIComponent(eventSlug)}/rsvp`,
+      appendPrivateAccessToken(
+        `/api/public/events/${encodeURIComponent(eventSlug)}/rsvp`,
+        accessToken,
+      ) ?? `/api/public/events/${encodeURIComponent(eventSlug)}/rsvp`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          ...payload,
+          ...(accessToken ? { accessToken } : {}),
+        }),
       },
     );
 
