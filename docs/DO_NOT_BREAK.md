@@ -112,6 +112,10 @@ Realtime Contract:
 - PWA caching must stay static-only: offline shell, local logo, local icons, and manifest.
 - Never cache `/api/*`, authenticated data, RSVP `POST`s, or RSVP submission responses.
 - Never queue or fake offline RSVP success.
+- Never drop `?access=` during local route changes, canonical handling, or custom nav components.
+- Never remove request-scoped public event loader dedupe between metadata and page rendering.
+- Never let clone-only effects force large eager imports into the root layout or both public routes by default.
+- Never point manifest icons to relative paths that depend on the current route depth.
 
 Dashboard Section Order Contract:
 

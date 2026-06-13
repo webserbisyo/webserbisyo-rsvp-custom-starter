@@ -20,6 +20,11 @@
 - Confirm live mode does not show fake QR/photos or gallery placeholders.
 - Confirm favicon/tab icon appears.
 - Confirm `manifest.webmanifest` is reachable.
+- Confirm `/favicon.ico`, `/icon.png`, `/apple-icon.png`, `/icons/icon-192.png`, `/icons/icon-512.png`, and `/icons/icon-512-maskable.png` return the expected asset, not HTML.
+- Confirm `/` and `/rsvp` both inherit the same favicon and manifest metadata.
+- Confirm `/?access=...` and `/rsvp?access=...` still show the same favicon and manifest links.
 - Confirm the service worker registers without caching `/api/*` or RSVP `POST`s.
 - Confirm offline navigation falls back to `offline.html`.
 - Confirm offline mode does not fake successful RSVP submission.
+- Confirm no duplicate public event fetches occur between metadata generation and page render for the same request.
+- Confirm clone-only heavy animations or media widgets are lazy-loaded instead of blocking first paint.
