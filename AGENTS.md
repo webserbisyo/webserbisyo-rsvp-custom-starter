@@ -31,6 +31,8 @@ Rules:
 - Use local `/rsvp` for the dedicated custom RSVP page.
 - Same-origin `/api` belongs to the platform wildcard/custom-domain flow. Treat raw `.vercel.app` deployments as preview-only unless API origin behavior is intentionally configured.
 - Preserve `?access=` private-link queries and forward them to the platform public GET and RSVP POST APIs.
+- Avoid React hydration errors (#418): Never use non-deterministic values (random, current time, Intl.DateTimeFormat) or browser-only globals (window, localStorage) during initial render. Use `useEffect` or `suppressHydrationWarning` for values that must differ between server and client.
+- Fast routing: Preserve SPA-like navigation between `/` and `/rsvp`. If query params (like `?access=`) are used in client components to build links, update them in `useEffect` after mount to avoid server/client mismatch.
 - Do not fake RSVP success or simulate working submission behavior.
 - Keep PWA behavior narrow: cache only the static offline shell and local icon assets.
 - Do not cache `/api/*`, RSVP `POST`s, or RSVP responses.
